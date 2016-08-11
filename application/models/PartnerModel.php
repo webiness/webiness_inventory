@@ -17,11 +17,13 @@ class PartnerModel extends WsModel
             'iban' => WsLocalize::msg('international bank account number'),
             'address1' => WsLocalize::msg('address'),
             'address2' => WsLocalize::msg('address (line 2)'),
+            'region_state' => WsLocalize::msg('region/state'),
             'zip' => WsLocalize::msg('postal code'),
             'city' => WsLocalize::msg('city'),
             'country' => WsLocalize::msg('country'),
             'email' => WsLocalize::msg('contact email address'),
-            'web' => WsLocalize::msg('partners web address')
+            'web' => WsLocalize::msg('partners web address'),
+            'phone_number' => WsLocalize::msg('phone number')
         );
 
         $this->columnType['logo'] = 'file_type';

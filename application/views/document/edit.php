@@ -65,18 +65,18 @@
                     </label>
                     <select name="d_type" class="webiness_select"
                         style="width: 100%">
-                        <option value="entrance"
-                                <?php $d_type == 'entrance' ? print ' selected'
+                        <option value="purchase"
+                                <?php $d_type == 'purchase' ? print ' selected'
                                     :false; ?>>
-<?php echo WsLocalize::msg('entrance'); ?></option>
-                        <option value="issue"
-                                <?php $d_type == 'issue' ? print ' selected'
-                                    :false; ?>>
-<?php echo WsLocalize::msg('issue'); ?></option>
+<?php echo WsLocalize::msg('purchase'); ?></option>
                         <option value="sale"
                                 <?php $d_type == 'sale' ? print ' selected'
                                     :false; ?>>
 <?php echo WsLocalize::msg('sale'); ?></option>
+                        <option value="dismission"
+                                <?php $d_type == 'dismission' ? print ' selected'
+                                    :false; ?>>
+<?php echo WsLocalize::msg('dismission'); ?></option>
                     </select>
                 </div>
 
@@ -91,11 +91,6 @@
                                     $d_status == 'draft' ? print ' selected'
                                         :false; ?>>
 <?php echo WsLocalize::msg('draft'); ?></option>
-                        <option value="reviewed"
-                                <?php
-                                    $d_status == 'reviewed' ? print ' selected'
-                                        :false; ?>>
-<?php echo WsLocalize::msg('reviewed'); ?></option>
                         <option value="approved"
                                 <?php
                                     $d_status == 'approved' ? print ' selected'
@@ -121,12 +116,12 @@
             <div class="row">
                 <div class="column column-12">
                     <p>
-                        <input type="button" onClick="addRow('diTable')"
+                        <input type="button" onClick="addRow('dpTable')"
                             class="success" value="<?php
-                            echo WsLocalize::msg('add item'); ?>"/>
-                        <input type="button" onClick="removeRow('diTable')"
+                            echo WsLocalize::msg('add product'); ?>"/>
+                        <input type="button" onClick="removeRow('dpTable')"
                             class="error" value="<?php
-                            echo WsLocalize::msg('remove item'); ?>"/>
+                            echo WsLocalize::msg('remove product'); ?>"/>
                     </p>
                     <p class="text-primary">
                         <?php
@@ -138,13 +133,13 @@
 
             <div class="row">
                 <div class="column column-12">
-                    <table id="diTable" class="grid">
+                    <table id="dpTable" class="grid">
                         <thead>
                             <tr>
                                 <th class="ws_th">
                                 </th>
                                 <th class="ws_th">
-                                    <?php echo WsLocalize::msg('item'); ?>
+                                    <?php echo WsLocalize::msg('product'); ?>
                                 </th>
                                 <th class="ws_th">
                                     <?php echo WsLocalize::msg('quantity'); ?>
@@ -157,13 +152,13 @@
                                     <input type="checkbox" name="chk[]"/>
                                 </td>
                                 <td class="ws_td">
-                                    <select name="DI_item[]"
+                                    <select name="DP_product[]"
                                         style="width: 100%;">
                                         <?php
-                                        foreach ($all_items as $item) {
+                                        foreach ($all_products as $product) {
                                             echo '<option value="'
-                                                    .$item['id'].'">';
-                                            echo $item['item_name'];
+                                                    .$product['id'].'">';
+                                            echo $product['product_name'];
                                             echo '</option>';
                                         }
                                         ?>
@@ -172,11 +167,11 @@
                                 <td class="ws_td">
                                     <input type="number"
                                         class="webiness_numericinput"
-                                        name="DI_qnty[]"/>
+                                        name="DP_qnty[]"/>
                                 </td>
                             </tr>
                             <?php
-                            for ($x=0; $x < count($DI_item); $x++) {
+                            for ($x=0; $x < count($DP_product); $x++) {
                             ?>
                             <tr class="ws_tr">
                                 <td class="ws_td">
@@ -184,20 +179,20 @@
                                         name="chk[]"/>
                                 </td>
                                 <td class="ws_td">
-                                    <select name="DI_item[]"
+                                    <select name="DP_product[]"
                                         class="webiness_select"
                                         style="width: 100%;">
                                         <?php
-                                        foreach ($all_items as $item) {
-                                            if ($DI_item[$x] == $item['id']) {
+                                        foreach ($all_products as $product) {
+                                            if ($DP_product[$x] == $product['id']) {
                                                 echo '<option selected '
                                                     .'value="'
-                                                    .$item['id'].'">';
+                                                    .$product['id'].'">';
                                             } else {
                                                 echo '<option value="'
-                                                    .$item['id'].'">';
+                                                    .$product['id'].'">';
                                             }
-                                            echo $item['item_name'];
+                                            echo $product['product_name'];
                                             echo '</option>';
                                         }
                                         ?>
@@ -206,9 +201,9 @@
                                 <td class="ws_td">
                                     <input type="number"
                                         class="webiness_numericinput"
-                                        name="DI_qnty[]"
+                                        name="DP_qnty[]"
                                         value="<?php
-                                            echo $DI_qnty[$x]; ?>"/>
+                                            echo $DP_qnty[$x]; ?>"/>
                                 </td>
                             </tr>
                             <?php
@@ -252,7 +247,7 @@
 
             }
         } else {
-            alert("Max items per document is 30");
+            alert("Max products per document is 30");
         }
     }
 
@@ -266,7 +261,7 @@
             var chkbox = row.cells[0].childNodes[1];
             if (null !== chkbox && true === chkbox.checked) {
                 if (rowCount <= 2) {
-                alert("Can't remove all items");
+                alert("Can't remove all products");
                 break;
                 }
                 table.deleteRow(i);

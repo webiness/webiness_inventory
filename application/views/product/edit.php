@@ -9,29 +9,29 @@
         <div class="row">
             <div class="column column-2 column-offset-10 link-button success">
                 <a class="text-warning" target="_blank"
-                    href="<?php echo WsUrl::link('item', 'card', array(
+                    href="<?php echo WsUrl::link('product', 'card', array(
                         'id' => $id)); ?>">
-                    <?php echo WsLocalize::msg('Item Card'); ?>
+                    <?php echo WsLocalize::msg('Product Card'); ?>
                 </a>
             </div>
         </div>
 
         <form id="item_form"
             class="ws_form"
-            action="<?php echo WsUrl::link('item', 'edit'); ?>"
+            action="<?php echo WsUrl::link('product', 'edit'); ?>"
             enctype="multipart/form-data"
             method="post">
 
             <div class="row">
                 <div class="column column-6">
                     <label for="item_name">
-                        <?php echo WsLocalize::msg('item name'); ?>
+                        <?php echo WsLocalize::msg('product name'); ?>
                     </label>
                     <input type="hidden" name="csrf"
                         value="<? echo $_SESSION['ws_auth_token']; ?>"/>
                     <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                    <input type="text" name="item_name"
-                        value="<?php echo $item_name; ?>"/>
+                    <input type="text" name="product_name"
+                        value="<?php echo $product_name; ?>"/>
                 </div>
 
                 <div class="column column-6">
@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="column column-6">
                     <label for="picture">
-                        <?php echo WsLocalize::msg('item image'); ?>
+                        <?php echo WsLocalize::msg('product image'); ?>
                     </label>
                     <input type="file" name="picture" />
                     <?php
@@ -96,7 +96,7 @@
                         id="category_id"
                         style="width: 100%">
                         <?php
-                        foreach ($all_item_categories as $category) {
+                        foreach ($all_product_categories as $category) {
                             if ($category['category_name'] == $category_id) {
                                 echo '<option value="'.$category['id']
                                         .'" selected>';
@@ -218,7 +218,7 @@
 <script type="text/javascript">
     function get_tax_rates() {
         var result = "";
-        $.get("<?php echo WsUrl::link('item', 'tax_rates'); ?>", {
+        $.get("<?php echo WsUrl::link('product', 'tax_rates'); ?>", {
             category_id: $("#category_id").val()
         }, function (data) {
             var result = JSON.parse(JSON.stringify(data));
@@ -302,7 +302,7 @@
 
         $.ajax({
             type: "POST",
-            url: "<?php echo WsUrl::link('item', 'edit'); ?>",
+            url: "<?php echo WsUrl::link('product', 'edit'); ?>",
             contentType: false,
             processData: false,
             data: fd,

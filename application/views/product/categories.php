@@ -1,5 +1,5 @@
 <?php
-$CategoriesGrid = new WsModelGridView($ICModel);
+$CategoriesGrid = new WsModelGridView($PCModel);
 $CategoriesGrid->itemsPerPage = 5;
 ?>
 

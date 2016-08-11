@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS company (
 );
 
 
-CREATE TABLE IF NOT EXISTS item_category (
+CREATE TABLE IF NOT EXISTS product_category (
     id SERIAL PRIMARY KEY,
     category_name VARCHAR(80) NOT NULL,
     description TEXT,
@@ -25,15 +25,15 @@ CREATE TABLE IF NOT EXISTS item_category (
 );
 
 
-CREATE TABLE IF NOT EXISTS item (
+CREATE TABLE IF NOT EXISTS product (
     id SERIAL PRIMARY KEY,
     barcode VARCHAR(128),
-    item_name VARCHAR(256) NOT NULL,
+    product_name VARCHAR(256) NOT NULL,
     description TEXT,
     declaration TEXT,
     picture VARCHAR(256),
     pos VARCHAR(80),
-    category_id INTEGER NOT NULL REFERENCES item_category(id),
+    category_id INTEGER NOT NULL REFERENCES product_category(id),
     quantitymin FLOAT NOT NULL DEFAULT 0.0,
     uom VARCHAR(4),
     purchase_price FLOAT NOT NULL DEFAULT 0.0,
@@ -50,16 +50,18 @@ CREATE TABLE IF NOT EXISTS partner (
     iban VARCHAR(34),
     address1 VARCHAR(80),
     address2 VARCHAR(80),
+    region_state VARCHAR(80),
     zip VARCHAR(5),
     city VARCHAR(60),
     country VARCHAR(60),
     email VARCHAR(60),
-    web VARCHAR(60)
+    web VARCHAR(60),
+    phone_number VARCHAR(20)
 );
 
 
-CREATE TYPE DOCUMENT_TYPE AS ENUM ('entrance', 'issue', 'sale');
-CREATE TYPE DOCUMENT_STATUS AS ENUM ('draft', 'reviewed', 'approved');
+CREATE TYPE DOCUMENT_TYPE AS ENUM ('purchase', 'sale', 'dismission');
+CREATE TYPE DOCUMENT_STATUS AS ENUM ('draft', 'approved');
 CREATE TABLE IF NOT EXISTS document (
     id SERIAL PRIMARY KEY,
     d_date DATE NOT NULL DEFAULT NOW(),
@@ -71,9 +73,9 @@ CREATE TABLE IF NOT EXISTS document (
 );
 
 
-CREATE TABLE IF NOT EXISTS document_item (
+CREATE TABLE IF NOT EXISTS document_product (
     id SERIAL PRIMARY KEY,
     document_id INTEGER NOT NULL REFERENCES document(id),
-    item_id INTEGER NOT NULL REFERENCES item(id),
+    product_id INTEGER NOT NULL REFERENCES product(id),
     quantity FLOAT NOT NULL
 );

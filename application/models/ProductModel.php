@@ -1,22 +1,22 @@
 <?php
 
-Class ItemModel extends WsModel
+Class ProductModel extends WsModel
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->metaName = WsLocalize::msg('Stock Items');
+        $this->metaName = WsLocalize::msg('Product list');
 
         $this->columnHeaders = array(
             'id' => 'ID',
-            'barcode' => WsLocalize::msg('item barcode'),
-            'item_name' => WsLocalize::msg('name of item'),
-            'description' => WsLocalize::msg('description of item'),
-            'declaration' => WsLocalize::msg('item declaration'),
-            'picture' => WsLocalize::msg('item image'),
-            'pos' => WsLocalize::msg('position'),
-            'category_id' => WsLocalize::msg('item category'),
+            'barcode' => WsLocalize::msg('product barcode'),
+            'item_name' => WsLocalize::msg('name of product'),
+            'description' => WsLocalize::msg('product description'),
+            'declaration' => WsLocalize::msg('declaration text'),
+            'picture' => WsLocalize::msg('image of product'),
+            'pos' => WsLocalize::msg('product position'),
+            'category_id' => WsLocalize::msg('product category'),
             'quantitymin' => WsLocalize::msg('minimum quantity'),
             'uom' => WsLocalize::msg('measuring unit'),
             'purchase_price' => WsLocalize::msg('purchase price'),

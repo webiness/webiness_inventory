@@ -1,12 +1,12 @@
 <?php
 
-class Item_categoryModel extends WsModel
+class Product_categoryModel extends WsModel
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->metaName = WsLocalize::msg('Categories of items');
+        $this->metaName = WsLocalize::msg('Product category');
 
         $this->columnHeaders = array(
             'id' => 'ID',

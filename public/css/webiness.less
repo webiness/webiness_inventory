@@ -1,17 +1,18 @@
 @media print {
-    .no-print, .no-print * {
-        display: none !important;
+    .no-print {
+        display: none;
     }
     .page-break {
         page-break-after: always;
     }
 }
+
 /* site colors */
-@color-site-0: #29506D; /* Main Primary color */
-@color-site-1: #D2DDE6;
-@color-site-2: #65849D;
-@color-site-3: #07263E;
-@color-site-4: #00090F;
+@color-site-0: #e9ffe3;
+@color-site-1: #7aa36d;
+@color-site-2: #d3d7cf;
+@color-site-3: #b2c0ae;
+@color-site-4: #1a1d19;
 /* colors for primary class */
 @color-primary-0: #323875;
 @color-primary-1: #B0B8FF;
@@ -44,14 +45,16 @@
 @color-gray-4: #7E8C8C;
 
 body, h1, h2, h3, h4, h5, h6 {
-    color: @color-site-0;
+    color: @color-site-4;
+    font-family: Tahoma, Geneva, sans-serif;
 }
 fieldset {
     border: 0 none;
-    border-radius: 15px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
+    border-radius: 15px;
     margin-top: 10px;
+
 }
 legend {
     padding: 0.2em 0.5em;
@@ -122,23 +125,25 @@ input[type="tel"],
 input[type="number"],
 textarea {
     width: 100%;
-    box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
+    box-sizing: border-box;
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    transition: all 0.30s ease-in-out;
     outline: none;
     font-size: 16px;
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
     border: 1px solid @color-site-2;
-    border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     vertical-align: middle;
 }
 input[type="text"]:read-only,
@@ -151,7 +156,8 @@ input[type="url"]:read-only,
 input[type="tel"]:read-only,
 input[type="number"]:read-only,
 textarea:read-only {
-    background-color: @color-site-1;
+    background-color: @color-site-2;
+    border: 1px solid @color-site-4;
 }
 input[type="text"]:-moz-read-only,
 input[type="password"]:-moz-read-only,
@@ -163,7 +169,8 @@ input[type="url"]:-moz-read-only,
 input[type="tel"]:-moz-read-only,
 input[type="number"]:-moz-read-only,
 textarea:-moz-read-only {
-    background-color: @color-site-1;
+    background-color: @color-site-2;
+    border: 1px solid @color-site-4;
 }
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -175,7 +182,7 @@ input[type="url"]:focus,
 input[type="tel"]:focus,
 input[type="number"]:focus,
 textarea:focus {
-    box-shadow: 0 0 2px @color-gray-4 inset;
+    box-shadow: 0 0 2px @color-site-4 inset;
 }
 input[type="submit"],
 input[type="button"],
@@ -184,9 +191,9 @@ button,
     margin-top: 5px;
     margin-bottom: 5px;
     border: 1px solid;
-    border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+    border-radius: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
@@ -195,7 +202,7 @@ button,
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
     opacity: 0.85;
     filter: alpha(opacity=85);
 }
@@ -234,7 +241,7 @@ select {
 label {
     font-size: 16px;
     font-weight: bold;
-    font-family: arial, helvetica, sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
     display: block;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -246,9 +253,8 @@ label span {
     vertical-align: middle;
 }
 .link-button {
-    padding-top: 0px;
+    padding-top: 0;
     margin-bottom: 15px;
-    float: top;
 }
 .link-button a {
     display: block;
@@ -261,6 +267,7 @@ label span {
 .link-button a:hover {
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
     transition: all 0.3s;
     -webkit-box-shadow: 5px 5px 10px @color-gray-0;
     -moz-box-shadow: 5px 5px 10px @color-gray-0;
@@ -282,18 +289,17 @@ label span {
     vertical-align: middle;
     font-weight: normal;
     font-size: 16px;
-    border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 .search-form .add-button {
-    border: none;
     color: @color-success-0;
     background-color: @color-success-1;
     border: 1px solid @color-success-4;
-    border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     width: 40px;
     margin-right: 15px;
     padding: 3px;
@@ -316,6 +322,8 @@ label span {
     font-size: 16px;
     font-weight: bold;
     border: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     color: @color-primary-0;
     background-color: @color-primary-1;
@@ -328,7 +336,7 @@ label span {
 }
 /* CALLOUT */
 .callout {
-    margin: 10px 0px;
+    margin: 10px 0;
     padding: 20px;
     border: 1px solid;
 }
@@ -353,7 +361,7 @@ label span {
 }
 /* TABLES */
 table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", "Sans-Serif";
+    font-family: Tahoma, Geneva, sans-serif;
     font-size: 12px;
     background: #ffffff;
     width: 100%;
@@ -365,18 +373,18 @@ table {
     font-weight: bold;
     padding: 10px 8px;
     color: @color-site-4;
-    border-bottom: 2px solid @color-site-1;
+    border-bottom: 2px solid @color-site-4;
 }
 .ws_td {
     font-size: 12px;
-    color: @color-site-3;
-    padding: 9px 8px 0px 8px;
-    border-bottom: 1px solid @color-site-1;
+    color: @color-site-4;
+    padding: 9px 8px 0 8px;
+    border-bottom: 1px solid @color-site-3;
 }
 .ws_tr:hover .ws_td
 {
-    background-color: @color-site-1;;
-    border-bottom: 1px solid @color-site-0;;
+    background-color: @color-site-2;
+    border-bottom: 1px solid @color-site-1;
 }
 .ws_td .action-button
 {
@@ -389,9 +397,9 @@ table {
     font-size: 18px;
     font-weight: bold;
     border: solid 1px;
-    border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     opacity: 0.85;
     filter: alpha(opacity=85);
 }
@@ -417,7 +425,6 @@ a {
     background-color: transparent;
 }
 a:hover, a:active {
-    outline: none;
     text-decoration: none;
     color: @color-primary-4;
 }
@@ -428,22 +435,17 @@ a.active {
 }
 
 
-a:focus {
-    outline: none;
-}
-
-
 /* PAGINATION */
 ul.pagination {
     display: inline-block;
     padding: 5px;
 }
 ul.pagination li {
-    padding-top: 0px;
+    padding-top: 0;
     display: inline;
 }
 ul.pagination li a {
-    border: 1px solid @color-site-3;
+    border: 1px solid @color-site-2;
     color: @color-site-4;
     float: left;
     padding: 8px 8px;
@@ -452,8 +454,8 @@ ul.pagination li a {
     font-size: 10px;
 }
 ul.pagination li a.active {
-    background-color: @color-site-1;
-    color: @color-site-0;
+    background-color: @color-site-4;
+    color: @color-site-2;
 }
 ul.pagination li a:hover:not(.active) {
     background-color: @color-site-2;
@@ -472,7 +474,7 @@ ul.pagination li a:hover:not(.active) {
     background-color: @color-site-1;
     background: @color-site-1;
     display: inline-block;
-    padding: 0px;
+    padding: 0;
     top: -25px;
 }
 .ws-header ul {
@@ -483,7 +485,7 @@ ul.pagination li a:hover:not(.active) {
 }
 .ws-header ul li {
     background-color: @color-site-1;
-    padding-top: 0px;
+    padding-top: 0;
     float: left;
 }
 .ws-header ul li a {
@@ -495,10 +497,10 @@ ul.pagination li a:hover:not(.active) {
     text-decoration: none;
 }
 .ws-header ul li:hover {
-    background-color: @color-site-4;
-    transition: background-color 1s;
+    background-color: @color-site-3;
     -moz-transition: background-color 1s;
     -webkit-transition: background-color 1s;
+    transition: background-color 1s;
 }
 .ws-header ul li:hover a {
     text-decoration: none;
@@ -509,16 +511,17 @@ ul.pagination li a:hover:not(.active) {
     display: none;
     position: relative;
     padding: 0;
-    box-shadow: 0px 8px 16px 0px @color-gray-0;
-    -moz-box-shadow: 0px 8px 16px 0px @color-gray-0;
-    -webkit-box-shadow: 0px 8px 16px 0px @color-gray-0;
+    -moz-box-shadow: 0 8px 16px 0 @color-gray-0;
+    -webkit-box-shadow: 0 8px 16px 0 @color-gray-0;
+    box-shadow: 0 8px 16px 0 @color-gray-0;
 }
 .ws-header ul ul li:hover a {
-    background-color: @color-site-4;
+    background-color: @color-site-3;
     color: @color-site-1;
-    transition: background-color 1s;
     -moz-transition: background-color 1s;
     -webkit-transition: background-color 1s;
+    -o-transition: background-color 1s;
+    transition: background-color 1s;
 }
 .ws-header .show-menu {
     text-decoration: none;
@@ -539,22 +542,22 @@ ul.pagination li a:hover:not(.active) {
     left: 0;
     top: 4px;
     background: @color-site-0;
-    box-shadow:
-        0px 4px 0px 0px @color-site-0,
-        0px 8px 0px 0px @color-site-0;
     -webkit-box-shadow:
-        0px 4px 0px 0px @color-site-0,
-        0px 8px 0px 0px @color-site-0;
+        0 4px 0 0 @color-site-0,
+        0 8px 0 0 @color-site-0;
     -moz-box-shadow:
-        0px 4px 0px 0px @color-site-0,
-        0px 8px 0px 0px @color-site-0;
+        0 4px 0 0 @color-site-0,
+        0 8px 0 0 @color-site-0;
+    box-shadow:
+        0 4px 0 0 @color-site-0,
+        0 8px 0 0 @color-site-0;
 }
 .ws-header input[type=checkbox] {
     display: none;
 }
 @media all and (min-width: 760px) {
     .ws-header .right {
-        padding-top: 0px;
+        padding-top: 0;
         float: right;
         display: inline;
     }
@@ -592,9 +595,9 @@ ul.pagination li a:hover:not(.active) {
         display: none;
     }
     .ws-header ul ul {
-        box-shadow: none;
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
+        box-shadow: none;
     }
     .ws-header ul li a {
         font-weight: bold;
@@ -603,7 +606,7 @@ ul.pagination li a:hover:not(.active) {
     .ws-header ul ul li {
         float: none;
         position: relative;
-        margin: 0px;
+        margin: 0;
     }
     .ws-header ul ul li a {
         font-weight: normal;
@@ -629,6 +632,8 @@ ul.pagination li a:hover:not(.active) {
 .column {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
     box-sizing: border-box;
 }
 .row:before,
@@ -746,6 +751,6 @@ ul.pagination li a:hover:not(.active) {
     .column-offset-9,
     .column-offset-10,
     .column-offset-11 {
-        margin-left: 0%;
+        margin-left: 0;
     }
 }

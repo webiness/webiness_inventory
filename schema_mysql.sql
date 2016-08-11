@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS company (
 );
 
 
-CREATE TABLE IF NOT EXISTS item_category (
+CREATE TABLE IF NOT EXISTS product_category (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(80) NOT NULL,
     description TEXT,
@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS item_category (
 );
 
 
-CREATE TABLE IF NOT EXISTS item (
+CREATE TABLE IF NOT EXISTS product (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     barcode VARCHAR(128),
-    item_name VARCHAR(256) NOT NULL,
+    product_name VARCHAR(256) NOT NULL,
     description TEXT,
     declaration TEXT,
     picture VARCHAR(256),
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS item (
     purchase_price FLOAT NOT NULL DEFAULT 0.0,
     trading_margin FLOAT NOT NULL DEFAULT 0.0,
 
-    FOREIGN KEY (category_id) REFERENCES item_category(id)
+    FOREIGN KEY (category_id) REFERENCES product_category(id)
 );
 
 
@@ -52,19 +52,21 @@ CREATE TABLE IF NOT EXISTS partner (
     iban VARCHAR(34),
     address1 VARCHAR(80),
     address2 VARCHAR(80),
+    region_state VARCHAR(80),
     zip VARCHAR(5),
     city VARCHAR(60),
     country VARCHAR(60),
     email VARCHAR(60),
-    web VARCHAR(60)
+    web VARCHAR(60),
+    phone_number VARCHAR(20)
 );
 
 
 CREATE TABLE IF NOT EXISTS document (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     d_date DATE NOT NULL,
-    d_type ENUM('entrance', 'issue', 'sale') NOT NULL,
-    d_status ENUM('draft', 'reviewed', 'approved') NOT NULL,
+    d_type ENUM('purchase', 'sale', 'dismission') NOT NULL,
+    d_status ENUM('draft', 'approved') NOT NULL,
     d_user INTEGER NOT NULL,
     d_partner INTEGER NOT NULL,
     discount FLOAT NOT NULL DEFAULT 0.0,
@@ -74,12 +76,12 @@ CREATE TABLE IF NOT EXISTS document (
 );
 
 
-CREATE TABLE IF NOT EXISTS document_item (
+CREATE TABLE IF NOT EXISTS document_product (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     document_id INTEGER NOT NULL,
-    item_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
     quantity FLOAT NOT NULL,
 
     FOREIGN KEY (document_id) REFERENCES document(id),
-    FOREIGN KEY (item_id) REFERENCES item(id)
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );

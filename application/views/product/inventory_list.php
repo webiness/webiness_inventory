@@ -20,7 +20,7 @@ $cur_date = strftime("%x");
                 <div class="column column-6 text-left text-error">
                     <div class="grid-title">
                         <?php
-                            echo WsLocalize::msg('Inventory List')
+                            echo WsLocalize::msg('Inventory Summary')
                                 .WsLocalize::msg(' on ').$cur_date;
                         ?>
                     </div>
@@ -35,19 +35,19 @@ $cur_date = strftime("%x");
                         <?php echo WsLocalize::msg('barcode'); ?>
                     </th>
                     <th class="ws_th">
-                        <?php echo WsLocalize::msg('item name'); ?>
+                        <?php echo WsLocalize::msg('product name'); ?>
                     </th>
                     <th class="ws_th">
                         <?php echo WsLocalize::msg('position'); ?>
                     </th>
                     <th class="ws_th text-right">
-                        <?php echo WsLocalize::msg('entered'); ?>
-                    </th>
-                    <th class="ws_th text-right">
-                        <?php echo WsLocalize::msg('issued'); ?>
+                        <?php echo WsLocalize::msg('purchased'); ?>
                     </th>
                     <th class="ws_th text-right">
                         <?php echo WsLocalize::msg('sold'); ?>
+                    </th>
+                    <th class="ws_th text-right">
+                        <?php echo WsLocalize::msg('dismission'); ?>
                     </th>
                     <th class="ws_th text-right">
                         <?php echo WsLocalize::msg('minimum'); ?>
@@ -58,33 +58,25 @@ $cur_date = strftime("%x");
             </thead>
             <tbody>
             <?php
-                foreach ($items as $item) {
-                    $entrance = floatval($item['entrance']);
-                    $issue = floatval($item['issue']);
-                    $sale = floatval($item['sale']);
-                    $min_qnty = floatval($item['min_qnty']);
+                foreach ($products as $product) {
+                    $purchase = floatval($product['purchase']);
+                    $sale = floatval($product['sale']);
+                    $dismission = floatval($product['dismission']);
+                    $min_qnty = floatval($product['min_qnty']);
 
-                    $total = $entrance - $issue - $sale;
+                    $total = $purchase - $sale - $dismission;
 
                     echo '<tr class="ws_tr">';
-                    echo '<td class="ws_td">'.$item['barcode'].'</td>';
-                    echo '<td class="ws_td">'.$item['name'].'</td>';
-                    echo '<td class="ws_td">'.$item['pos'].'</td>';
+                    echo '<td class="ws_td">'.$product['barcode'].'</td>';
+                    echo '<td class="ws_td">'.$product['name'].'</td>';
+                    echo '<td class="ws_td">'.$product['pos'].'</td>';
 
-                    if ($entrance == intval($entrance)) {
+                    if ($purchase == intval($purchase)) {
                         echo '<td class="ws_td text-right">'
-                            .number_format($entrance, 0, ',', '.').'</td>';
+                            .number_format($purchase, 0, ',', '.').'</td>';
                     } else {
                         echo '<td class="ws_td text-right">'
-                            .number_format($entrance, 3, ',', '.').'</td>';
-                    }
-
-                    if ($issue == intval($issue)) {
-                        echo '<td class="ws_td text-right">'
-                            .number_format($issue, 0, ',', '.').'</td>';
-                    } else {
-                        echo '<td class="ws_td text-right">'
-                            .number_format($issue, 3, ',', '.').'</td>';
+                            .number_format($purchase, 3, ',', '.').'</td>';
                     }
 
                     if ($sale == intval($sale)) {
@@ -93,6 +85,14 @@ $cur_date = strftime("%x");
                     } else {
                         echo '<td class="ws_td text-right">'
                             .number_format($sale, 3, ',', '.').'</td>';
+                    }
+
+                    if ($dismission == intval($dismission)) {
+                        echo '<td class="ws_td text-right">'
+                            .number_format($dismission, 0, ',', '.').'</td>';
+                    } else {
+                        echo '<td class="ws_td text-right">'
+                            .number_format($dismission, 3, ',', '.').'</td>';
                     }
 
                     if ($min_qnty == intval($min_qnty)) {
@@ -107,12 +107,12 @@ $cur_date = strftime("%x");
                         echo '<td class="ws_td text-right"><strong>'
                             .number_format($total, 0, ',', '.')
                             .'</strong>'
-                            .' '.$item['uom'].'</td>';
+                            .' '.$product['uom'].'</td>';
                     } else {
                         echo '<td class="ws_td text-right"><strong>'
                             .number_format($total, 3, ',', '.')
                             .'</strong>'
-                            .' '.$item['uom'].'</td>';
+                            .' '.$product['uom'].'</td>';
                     }
 
                     echo '</tr>';

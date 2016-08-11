@@ -23,7 +23,7 @@ WsConfig::set('html_encoding', 'utf-8');
 // default layout file for HTML rendering. File is located in public/layouts
 WsConfig::set('html_layout', 'inventory.php');
 // site administrators email address - needed for WsAuth
-WsConfig::set('auth_admin', 'bojan.kajfes@posta.hr');
+WsConfig::set('auth_admin', 'bojan.kajfes@gmail.com');
 // enable semantic (pretty) URLs
 WsConfig::set('pretty_urls', 'yes');
 // END OF FRAMEWORK CONFIG VARIABLES

@@ -50,10 +50,10 @@
                     src="<?php echo WsUrl::asset('img/webiness.png'); ?>"/>
                 <div
                     style="vertical-align: middle; display: table-cell;">
-                    <h1 style="color: #d2dde2">
+                    <h1>
                         <?php echo WsLocalize::msg('Webiness Inventory'); ?>
                     </h1>
-                    <h3 style="color: #d2dde2">
+                    <h3>
                         <?php echo WsLocalize::msg('- easely manage stock inventory -'); ?>
                     </h3>
                 </div>
@@ -88,18 +88,18 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="<?php echo WsUrl::link('item', 'categories'); ?>">
-                                <?php echo WsLocalize::msg('Categories of items'); ?>
+                            <a href="<?php echo WsUrl::link('product', 'categories'); ?>">
+                                <?php echo WsLocalize::msg('Product categories'); ?>
                             </a>
                         </li>
                         <li>
-                            <a href="<?php echo WsUrl::link('item', 'items'); ?>">
-                                <?php echo WsLocalize::msg('Stock items'); ?>
+                            <a href="<?php echo WsUrl::link('product', 'products'); ?>">
+                                <?php echo WsLocalize::msg('Products'); ?>
                             </a>
                         </li>
                         <li>
-                            <a href="<?php echo WsUrl::link('item', 'inventory_list'); ?>">
-                                <?php echo WsLocalize::msg('Inventory list'); ?>
+                            <a href="<?php echo WsUrl::link('product', 'inventory_list'); ?>">
+                                <?php echo WsLocalize::msg('Inventory summary'); ?>
                             </a>
                         </li>
                     </ul>
@@ -241,7 +241,7 @@
             jQuery('.webiness_datepicker').datepicker({
                     changeMonth: true,
                     changeYear: true,
-                    gotoCurrent: true,
+                    gotoCurrent: true
                 },
                 "option", $.datepicker.regional["<?php echo $lang; ?>"]
             );
@@ -287,7 +287,7 @@
                 // Allow: backspace, delete, tab, escape, enter and .
                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
-                (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                (e.keyCode === 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
                 // Allow: home, end, left, right, down, up
                 (e.keyCode >= 35 && e.keyCode <= 40)) {
                     // let it happen, don't do anything
