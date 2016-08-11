@@ -4,7 +4,7 @@ class DocumentController extends WsController
 {
     public function index()
     {
-        $this->title = WsLocalize::msg(' - Documents');
+        $this->title = WsLocalize::msg('Webiness Inventory - Documents');
         // breadcrumbs
         $this->breadcrumbs = array(
             WsLocalize::msg('home') => array(
@@ -63,13 +63,13 @@ class DocumentController extends WsController
                 FILTER_SANITIZE_NUMBER_INT);
             $discount = filter_input(INPUT_POST, 'discount',
                 FILTER_SANITIZE_NUMBER_FLOAT);
-            $DI_item = $_POST['DI_item'];
-            $DI_qnty = $_POST['DI_qnty'];
+            $DP_product = $_POST['DP_product'];
+            $DP_qnty = $_POST['DP_qnty'];
 
             // save changes to document
-            if (count($DI_item) > 0) {
+            if (count($DP_product) > 0) {
                 // remove old items from document
-                $db->execute('DELETE FROM document_item WHERE document_id=:id',
+                $db->execute('DELETE FROM document_product WHERE document_id=:id',
                     array('id' => $id));
 
                 // save document
@@ -84,15 +84,15 @@ class DocumentController extends WsController
                 $document_model->save();
 
                 // save document items
-                for ($x=0; $x < count($DI_item); $x++) {
-                    if (floatval($DI_qnty[$x]) > 0) {
-                        $db->execute('INSERT INTO document_item'
-                            .' (document_id, item_id, quantity) '
+                for ($x=0; $x < count($DP_product); $x++) {
+                    if (floatval($DP_qnty[$x]) > 0) {
+                        $db->execute('INSERT INTO document_product'
+                            .' (document_id, product_id, quantity) '
                             .' VALUES (:a, :b, :c)',
                             array(
                                 'a' => $id,
-                                'b' => intval($DI_item[$x]),
-                                'c' => floatval($DI_qnty[$x])
+                                'b' => intval($DP_product[$x]),
+                                'c' => floatval($DP_qnty[$x])
                             ));
                     }
                 }
@@ -113,20 +113,20 @@ class DocumentController extends WsController
                 $d_status = $document_model->d_status;
                 $d_partner = $document_model->d_partner;
                 $discount = $document_model->discount;
-                $DI_item = array();
-                $DI_qnty = array();
+                $DP_product = array();
+                $DP_qnty = array();
 
-                $items = $db->query(
-                    'SELECT item_id, quantity'
-                    .' FROM document_item'
+                $products = $db->query(
+                    'SELECT product_id, quantity'
+                    .' FROM document_product'
                     .' WHERE document_id=:id', array(
                         'id' => $id
                 ));
-                foreach ($items as $item) {
-                    array_push($DI_item, $item['item_id']);
-                    array_push($DI_qnty, $item['quantity']);
+                foreach ($products as $product) {
+                    array_push($DP_product, $product['product_id']);
+                    array_push($DP_qnty, $product['quantity']);
                 }
-                unset($items);
+                unset($products);
             } else {
                 // default values for document fields
                 $id = $document_model->getNextId();
@@ -136,8 +136,8 @@ class DocumentController extends WsController
                 $d_user = $auth->currentUserID();
                 $d_partner = 0;
                 $discount = 0;
-                $DI_item = array();
-                $DI_qnty = array();
+                $DP_product = array();
+                $DP_qnty = array();
             }
         } else {
             // default values for document fields
@@ -148,16 +148,16 @@ class DocumentController extends WsController
             $d_user = $auth->currentUserID();
             $d_partner = 0;
             $discount = 0;
-            $DI_item = array();
-            $DI_qnty = array();
+            $DP_product = array();
+            $DP_qnty = array();
         }
 
         // list of all partners
         $all_partners = $db->query('SELECT id, partner_name FROM partner');
-        // list of all items
-        $all_items = $db->query('SELECT id, item_name FROM item');
+        // list of all products
+        $all_products = $db->query('SELECT id, product_name FROM product');
 
-        $this->title = WsLocalize::msg(' - Document '.$id);
+        $this->title = WsLocalize::msg('Webiness Inventory - Document '.$id);
         // breadcrumbs
         $this->breadcrumbs = array(
             WsLocalize::msg('home') => array(
@@ -182,10 +182,10 @@ class DocumentController extends WsController
             'd_user' => $d_user,
             'd_partner' => $d_partner,
             'discount' => $discount,
-            'DI_item' => $DI_item,
-            'DI_qnty' => $DI_qnty,
+            'DP_product' => $DP_product,
+            'DP_qnty' => $DP_qnty,
             'all_partners' => $all_partners,
-            'all_items' => $all_items,
+            'all_products' => $all_products,
         ));
     }
 
@@ -225,13 +225,13 @@ class DocumentController extends WsController
                 FILTER_SANITIZE_NUMBER_INT);
             $discount = filter_input(INPUT_POST, 'discount',
                 FILTER_SANITIZE_NUMBER_FLOAT);
-            $DI_item = $_POST['DI_item'];
-            $DI_qnty = $_POST['DI_qnty'];
+            $DP_product = $_POST['DP_product'];
+            $DP_qnty = $_POST['DP_qnty'];
 
             // save changes to document
-            if (count($DI_item) > 0) {
+            if (count($DP_product) > 0) {
                 // remove old items from document
-                $db->execute('DELETE FROM document_item WHERE document_id=:id',
+                $db->execute('DELETE FROM document_product WHERE document_id=:id',
                     array('id' => $id));
 
                 // save document
@@ -246,15 +246,15 @@ class DocumentController extends WsController
                 $document_model->save();
 
                 // save document items
-                for ($x=0; $x < count($DI_item); $x++) {
-                    if (floatval($DI_qnty[$x]) > 0) {
-                        $db->execute('INSERT INTO document_item'
-                            .' (document_id, item_id, quantity) '
+                for ($x=0; $x < count($DP_product); $x++) {
+                    if (floatval($DP_qnty[$x]) > 0) {
+                        $db->execute('INSERT INTO document_product'
+                            .' (document_id, product_id, quantity) '
                             .' VALUES (:p1, :p2, :p3)',
                             array(
                                 'p1' => $id,
-                                'p2' => intval($DI_item[$x]),
-                                'p3' => floatval($DI_qnty[$x])
+                                'p2' => intval($DP_product[$x]),
+                                'p3' => floatval($DP_qnty[$x])
                             ));
                     }
                 }
@@ -284,7 +284,7 @@ class DocumentController extends WsController
 
         if ($document_model->idExists($id)) {
             // delete document items
-            $sql = 'DELETE FROM document_item WHERE document_id=:id';
+            $sql = 'DELETE FROM document_product WHERE document_id=:id';
             $db->execute($sql, array('id' => $id));
             // delete document
             $sql = 'DELETE FROM document WHERE id=:id';
