@@ -11,35 +11,35 @@
  * {
  *     public function __construct()
  *     {
- *         # autodetect columns, column types, etc
+ *         // autodetect columns, column types, etc
  *         parent::__construct();
  *
- *         # change some column types
- *         # change column type for column
+ *         // change some column types
+ *         // change column type for column
  *         $this->columnType['enter_date'] = 'date_type';
- *         # change column type for other column
+ *         // change column type for other column
  *         $this->columnType['is_checked'] = 'bool_type';
- *         # leave other column types unchanged (autodetected)
+ *         // leave other column types unchanged (autodetected)
  *     }
  * }
  *
- * # use model
+ * // use model
  * $m = new TestModel();
  *
- * # get one record with ID 100 from database
+ * // get one record with ID 100 from database
  * $m->getOne(100);
- * # show field value for retrived record
+ * // show field value for retrived record
  * echo $m->name.'\n';
  *
- * # change value of one column in record with ID 100
+ * // change value of one column in record with ID 100
  * $m->name = 'New Name';
- * # save changes
+ * // save changes
  * $m->save();
  *
- * # delete record with ID 100 from database
+ * // delete record with ID 100 from database
  * $m->id = 100;
  * $m->delete();
- * # same as above
+ * // same as above
  * $m->delete(100);
  * </code>
  *
@@ -101,7 +101,7 @@ class WsModel extends WsDatabase
      * name.
      *
      * Usage:
-     * \code{.php}
+     * <code>
      * $foreignKeys = array(
      *     'column_name' => array(
      *         'table' => 'foreign_table_name',
@@ -109,7 +109,7 @@ class WsModel extends WsDatabase
      *         'display' => 'foreign_column_that_would_be_used_for_display'
      *     )
      * );
-     * \endcode
+     * </code>
      * @var array $foreignKeys
      *
      */
@@ -601,7 +601,7 @@ WHERE table_name= :table_name';
 
         unset($query, $query2);
 
-        return $result;
+        return $result[0];
     }
 
 
@@ -802,6 +802,7 @@ WHERE table_name= :table_name';
      * Gets next ID value from model
      *
      * @return integer $next_id
+     *
      */
     public function getNextId()
     {

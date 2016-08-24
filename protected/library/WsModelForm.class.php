@@ -8,17 +8,17 @@
  * Example usage:
  *
  * <code>
- * # add a new record to model
+ * // add a new record to model
  * $m = new MyModel();
  * $form = new WsModelForm($m, 'form-name');
- * # change label for field
+ * // change label for field
  * $form->fieldLabels['name'] = 'First Name';
- * # change text of submit button
+ * // change text of submit button
  * $form->submitButtonText = "Save Me";
- * # show form
+ * // show form
  * $form->show()
  *
- * # edit existing record
+ * // edit existing record
  * $m->getOne(1);
  * $form2 = new WsModelForm($m, 'form-name');
  * $form2->show();
@@ -300,5 +300,17 @@ class WsModelForm extends WsForm
     public function show()
     {
         echo $this->_form;
+    }
+
+
+    /*
+     * Return name of model
+     *
+     * @return string Model name.
+     *
+     */
+    public function getModelName()
+    {
+        return $this->_model->className;
     }
 }

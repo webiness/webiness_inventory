@@ -190,14 +190,10 @@ button,
 .button {
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    border: 1px single;
+    outline: 2px solid #FFFFFF;
+    outline-offset: -3px;
+    padding: 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -236,7 +232,6 @@ select {
 }
 .ws_form label {
     margin-top: 10px;
-
 }
 label {
     font-size: 16px;
@@ -273,6 +268,32 @@ label span {
     -moz-box-shadow: 5px 5px 10px @color-gray-0;
     box-shadow: 5px 5px 10px @color-gray-0;
     text-decoration: none;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #ef2929;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px double #3465a4;
+    outline: 2px solid #FFFFFF;
+    outline-offset: -3px;
+}
+.inputfile:focus + label,
+.inputfile + label:hover {
+    border: 1px double #204a87;
+    outline: 2px solid #FFFFFF;
+    outline-offset: -3px;
 }
 .grid-header {
     margin-top: 5px;

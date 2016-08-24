@@ -30,6 +30,7 @@ require_once WsROOT.'/protected/library/WsDatabase.class.php';
 require_once WsROOT.'/protected/library/WsModel.class.php';
 require_once WsROOT.'/protected/library/WsForm.class.php';
 require_once WsROOT.'/protected/library/WsModelForm.class.php';
+require_once WsROOT.'/protected/library/WsImage.class.php';
 
 // model
 if (filter_input(INPUT_POST, 'model') !== NULL) {

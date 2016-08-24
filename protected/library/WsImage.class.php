@@ -8,16 +8,16 @@
  * <code>
  * $img = new WsImage()
  *
- * # load image from file
+ * // load image from file
  * $img->read('public/img/webiness_white.png');
  *
- * # add wattermark to image
+ * // add wattermark to image
  * $img->addWatermark('copyright (c) me@myaddress.com');
  *
- * # show image thumbnail
+ * // show image thumbnail
  * $img->showThumbnail();
  *
- * # show image
+ * // show image
  * $img->show();
  * </code>
  *
@@ -191,6 +191,7 @@ class WsImage
      * @param integer $y Horizontal offset for text
      * @param string $font Full path, relative to server root, of font file
      * @param integer $size Font size
+     *
      */
     public function addWatermark(
         $text, $x = 8, $y = 8 , $font = null, $size = 11

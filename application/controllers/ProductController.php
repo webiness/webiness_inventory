@@ -110,9 +110,9 @@ class ProductController extends WsController
                 FILTER_SANITIZE_NUMBER_FLOAT);
             $uom = filter_input(INPUT_POST, 'uom', FILTER_SANITIZE_STRING);
             $purchase_price = filter_input(INPUT_POST, 'purchase_price',
-                FILTER_SANITIZE_NUMBER_FLOAT);
+                FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $trading_margin = filter_input(INPUT_POST, 'trading_margin',
-                FILTER_SANITIZE_NUMBER_FLOAT);
+                FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
             // save item
             $product_model->id = $id;
@@ -300,7 +300,7 @@ class ProductController extends WsController
                     AND d.d_type = \'dismission\'
                     AND d.d_status = \'approved\'
                 GROUP BY dp.product_id
-            ) dismission ON dismission.id = product.id            
+            ) dismission ON dismission.id = product.id
             GROUP BY barcode, name,
                 pos, min_qnty, uom, sale.sale, dismission.dismission
             ORDER BY pos, name, min_qnty, uom
@@ -464,7 +464,7 @@ class ProductController extends WsController
             );
         }
         unset($res);
-        
+
         $sql = '
             SELECT
             	d.id AS document_id,

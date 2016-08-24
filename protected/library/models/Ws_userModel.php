@@ -45,6 +45,7 @@ class Ws_userModel extends WsModel
      *
      * @param integer $length Length of string.
      * @return string $string Random sting
+     *
      */
     public function randomString($length = 50)
     {
@@ -64,6 +65,7 @@ class Ws_userModel extends WsModel
      *
      * @param string $data Data to encript
      * @return string $data Encripted data
+     *
      */
     public function hashData($data)
     {
@@ -76,6 +78,7 @@ class Ws_userModel extends WsModel
      * encripted
      *
      * @return boolean
+     *
      */
     public function beforeSave()
     {
@@ -109,6 +112,7 @@ class Ws_userModel extends WsModel
      * delete administrator's account
      *
      * @return boolean
+     *
      */
     public function beforeDelete()
     {

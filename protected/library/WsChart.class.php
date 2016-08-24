@@ -14,38 +14,47 @@ class WsChart
 {
     /**
      * @var array $_labels Chart labels
+     *
      */
     protected $_labels = array();
     /**
      * @var array $_datasets Chart datasets
+     *
      */
     protected $_datasets = array();
     /**
      * @var array $_options Global Chart.js options
+     *
      */
     protected $_options = array();
     /**
      * @var array $_attributes HTML canvas attributes
+     *
      */
     protected $_attributes = array();
     /**
      * @var string $_id ID of canvas where chart will be drawn
+     *
      */
     protected $_id = '';
     /**
      * @var string $_chart Chart object
+     *
      */
     protected $_chart = '';
     /**
      * @var integer $_width Chart width
+     *
      */
     protected $_width;
     /**
      * @var integer $_height Chart height
+     *
      */
     protected $_height;
     /**
      *@var string #_type Chart type
+     *
      */
     protected $_type = 'Line';
 
@@ -115,6 +124,7 @@ class WsChart
      * add datasets to chart
      *
      * @var array $dataset Dataset to add
+     *
      */
     public function addDataset($dataset, $reset=null)
     {

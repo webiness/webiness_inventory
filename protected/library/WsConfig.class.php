@@ -7,10 +7,10 @@
  * Example usage:
  *
  * <code>
- * # get database driver name
+ * // get database driver name
  * $cs = WsConfig::get('db_driver');
  *
- * # set database host name to localhost
+ * // set database host name to localhost
  * WsConfig::set('db_host', 'localhost');
  * </code>
  * 

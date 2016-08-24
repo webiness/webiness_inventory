@@ -6,9 +6,9 @@
  * Example usage:
  *
  * <code>
- * $form = new WsForm(WsUrl::link('controller', 'form_action_script');
+ * $form = new WsForm(WsUrl::link('controller', 'form_action_script'));
  *
- * # widgets
+ * // widgets
  * $form->textInput(array('name' => 'text_input'));
  * $form->textInput(array(
  *     'name' => 'date_input',
@@ -24,26 +24,32 @@ class WsForm
 {
     /**
      * @var string $_action Url of form action
+     *
      */
     private $_action = '';
     /**
      * @var string $_id ID of form
+     *
      */
     private $_id = '';
     /**
      * @var string $_validationRules Form validation rules
+     *
      */
     private $_validationRules = '';
     /**
      * @var string $submitButtonText Text for submit button
+     *
      */
     public $submitButtonText = '';
     /**
      * @var string $_form Form body
+     *
      */
     protected $_form = '';
     /**
      * @var boolean $_formEnded Ensure that submit button is shown only once
+     *
      */
     private $_formEnded = false;
 
@@ -235,6 +241,9 @@ class WsForm
                     $maxlength = 32;
                     $type = 'number';
                     break;
+                case 'file':
+                    $class .= ' inputfile';
+                    break;
                 default:
                     $maxlength = 60;
             }
@@ -262,7 +271,7 @@ class WsForm
         }
 
         // add text input element
-        if ($label != '') {
+        if ($label !== '' and $type !== 'file') {
             $this->_form .= '<div class="row">';
             $this->_form .= '<div class="column column-12">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
@@ -271,15 +280,59 @@ class WsForm
             $this->_form .= '</div>';
             $this->_form .= '</div>';
         }
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12">';
-        $this->_form .= '<input type="'.$type.'"'
-            .' name="'.$name.'" value="'.$value.'"'
-            .' id="'.$id.'"'
-            .' class="'.$class.'"'
-            .' placeholder="'.$placeholder.'"'
-            .' maxlength='.$maxlength.' '.$ro.' '.$rq.'/>';
-        $this->_form .= '</div></div>';
+
+        // display link to file if type is file and picture thumbnail if file is
+        // picture
+        if ($type === 'file') {
+            $this->_form .= '<div class="row">';
+            $this->_form .= '<div class="column column-12">';
+            $this->_form .= '<label class="text-left">';
+            $this->_form .= $label;
+            $this->_form .= '</label>';
+            $this->_form .= '</div>';
+            $this->_form .= '</div>';
+            $this->_form .= '<div class="row">';
+            $this->_form .= '<div class="column column-6">';
+            if (get_called_class() === 'WsModelForm') {
+                $file = 'runtime/'.$this->getModelName().'/'.$value;
+                $file_url = WsSERVER_ROOT.'/runtime/'.$this->getModelName().'/'.$value;
+                if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
+                    // if file is image then show it
+                    $img = new WsImage();
+                    if ($img->read($file)) {
+                        $this->_form .= '<img width=100 height=100 '
+                            .'src="'.$file_url.'" />';
+                    } else {
+                        $this->_form .= '<a href="'
+                            .WsUrl::link(WsSERVER_ROOT.'/'.$file_url).'">';
+                        $this->_form .= $value;
+                        $this->_form .= '</a>';
+                    }
+                    unset ($img, $file, $file_url);
+                } else {
+                    $this->_form .= WsLocalize::msg('no file selected ');
+                }
+            }
+            $this->_form .= '<input type="file"'
+                .' name="'.$name.'" '
+                .' id="'.$id.'"'
+                .' class="'.$class.'"'
+                .' placeholder="'.$placeholder.'"'
+                .' '.$ro.' '.$rq.'/>';
+            $this->_form .= '<label for="'.$id.'">'
+                .WsLocalize::msg('Choose a file').'</label>';
+            $this->_form .= '</div></div>';
+        } else {
+            $this->_form .= '<div class="row">';
+            $this->_form .= '<div class="column column-12">';
+            $this->_form .= '<input type="'.$type.'"'
+                .' name="'.$name.'" value="'.$value.'"'
+                .' id="'.$id.'"'
+                .' class="'.$class.'"'
+                .' placeholder="'.$placeholder.'"'
+                .' maxlength='.$maxlength.' '.$ro.' '.$rq.'/>';
+            $this->_form .= '</div></div>';
+        }
     }
 
 
@@ -375,6 +428,7 @@ class WsForm
      * Add checkbox to the form
      *
      * @param array $params HTML parameters for <input type="checkbox">
+     *
      */
     public function booleanInput($params = array())
     {

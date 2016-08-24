@@ -1,6 +1,5 @@
 <?php
-$lang = substr(filter_input(
-    INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING), 0,2);
+$lang = WsLocalize::getLang();
 setlocale(LC_ALL, $lang,
     $lang.'_'.strtoupper($lang),
     $lang.'_'.strtoupper($lang).'.utf8'

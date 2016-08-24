@@ -17,6 +17,7 @@ do
     
     echo "}" >> lang/template.txt
 done
-    cat lang/template.txt | sed "s/'/\"/g" > lang/temp.txt 
-    rm lang/template.txt
+    cat lang/template.txt | sed "s/'/\"/g" > lang/temp.txt
+    awk '!a[$0]++' lang/temp.txt > lang/template.txt
+    rm lang/temp.txt
     rm ws_list.txt

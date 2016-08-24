@@ -6,16 +6,16 @@
  * Example usage:
  *
  * <code>
- * # returns '/server_address/site/index/'
- * # returns '/server_address/index.php?request=site/index'
- * # servers.
+ * // returns '/server_address/site/index/'
+ * // returns '/server_address/index.php?request=site/index'
+ * // servers.
  * $url = WsUrl::link('site', 'index');
  *
- * # returns '/server_address/site/edit_item/id=2/'
- * # returns '/server_address/index.php?request=site/index&id=2'
+ * // returns '/server_address/site/edit_item/id=2/'
+ * // returns '/server_address/index.php?request=site/index&id=2'
  * $url = WsUrl::link('site', 'index', array('id'=>2));
  *
- * # points to file '/server_name/public/js/jquery.min.js'
+ * // points to file '/server_name/public/js/jquery.min.js'
  * $asset = WsUrl::asset('js/jquery.min.js');
  * </code>
  * 

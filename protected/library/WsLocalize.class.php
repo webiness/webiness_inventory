@@ -14,7 +14,7 @@
  * Example usage:
  *
  * <code>
- * # this will display "prva poruka" if browser language is set to croatian
+ * // this will display "prva poruka" if browser language is set to croatian
  * echo WsLocalize::msg('message string');
  * </code>
  *
@@ -51,7 +51,7 @@ class WsLocalize
             $lang_file_content = file_get_contents($lang_file);
             $translations = json_decode($lang_file_content, true);
         }
-
+        
         if (!empty($translations[$str])) {
             return $translations[$str];
         } else {

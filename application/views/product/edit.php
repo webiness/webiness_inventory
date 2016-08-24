@@ -61,19 +61,38 @@
 
             <div class="row">
                 <div class="column column-6">
-                    <label for="picture">
+                    <label class="text-left">
                         <?php echo WsLocalize::msg('product image'); ?>
                     </label>
-                    <input type="file" name="picture" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="column column-6">
                     <?php
-                    if (file_exists(WsROOT.'/runtime/ItemModel/'.$picture)) {
+                        $file = 'runtime/ProductModel/'.$picture;
+                        $file_url = WsSERVER_ROOT.'/runtime/ProductModel/'.$picture;
+                        if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
+                            // if file is image then show it
+                            $img = new WsImage();
+                            if ($img->read($file)) {
+                                echo '<img width=100 height=100 src="'
+                                    .$file_url.'" />';
+                            } else {
+                                echo '<a href="';
+                                echo WsUrl::link(WsSERVER_ROOT.'/'.$file_url);
+                                echo '">';
+                                echo $value;
+                                echo '</a>';
+                            }
+                            unset ($img, $file, $file_url);
+                        } else {
+                            echo WsLocalize::msg('no file selected ');
+                        }
                     ?>
-                    <img
-                        src="<?php echo WsSERVER_ROOT.'/runtime/ItemModel/'.$picture ?>"
-                        width=150 height=150 />
-                    <?php
-                    }
-                    ?>
+                    <input type="file" class="inputfile" id="picture" name="picture"/>
+                    <label for="picture">
+                        <?php echo WsLocalize::msg('select'); ?>
+                    </label>
                 </div>
             </div>
 

@@ -62,7 +62,7 @@ class DocumentController extends WsController
             $d_partner = filter_input(INPUT_POST, 'd_partner',
                 FILTER_SANITIZE_NUMBER_INT);
             $discount = filter_input(INPUT_POST, 'discount',
-                FILTER_SANITIZE_NUMBER_FLOAT);
+                FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $DP_product = $_POST['DP_product'];
             $DP_qnty = $_POST['DP_qnty'];
 
@@ -224,7 +224,7 @@ class DocumentController extends WsController
             $d_partner = filter_input(INPUT_POST, 'd_partner',
                 FILTER_SANITIZE_NUMBER_INT);
             $discount = filter_input(INPUT_POST, 'discount',
-                FILTER_SANITIZE_NUMBER_FLOAT);
+                FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $DP_product = $_POST['DP_product'];
             $DP_qnty = $_POST['DP_qnty'];
 
@@ -289,11 +289,88 @@ class DocumentController extends WsController
             // delete document
             $sql = 'DELETE FROM document WHERE id=:id';
             $db->execute($sql, array('id' => $id));
+            // success
+            $this->sendResponse($_POST, 200);
         }  else {
             // no data provided
             $this->sendResponse(array(
                 'error' => WsLocalize::msg('no document data provided')
             ), 204);
         }
+    }
+
+
+    public function view($id)
+    {
+        $this->title = WsLocalize::msg('Webiness Inventory - Document ').$id;
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('documents') => array(
+                'document',
+                'index'
+            ),
+            WsLocalize::msg($id) => array(
+                'document',
+                'view'
+            ),
+        );
+        
+        $error = '';
+
+        $document_model = new DocumentModel();
+
+        if (!$document_model->idExists($id)) {
+            $error = WsLocalize::msg('document: ').$id
+                .WsLocalize::msg(' does not exist or it is not saved yet!');
+        } else {
+            $company_model = new CompanyModel();
+            $partner_model = new PartnerModel();
+
+            // get document informatiions
+            $document_model->foreignKeys['d_partner']['display'] = 'id';
+            $document_model->getOne($id);
+
+            // get partner informations
+            $partner_model->getOne($document_model->d_partner);
+
+            // get our company informations
+            $company_model->getOne(1);
+        }
+        
+        // get document items
+        $sql = '
+            SELECT
+                p.product_name AS product,
+                dp.quantity AS quantity,
+                p.uom AS uom,
+                p.purchase_price AS price,
+                p.trading_margin AS margin,
+                pc.vat AS vat,
+                pc.consumption_tax AS consumption_tax,
+                pc.sales_tax AS sales_tax
+            FROM
+                document_product dp,
+                product p,
+                product_category pc
+            WHERE dp.document_id = '.$document_model->id.'
+                AND dp.product_id = p.id
+                AND p.category_id = pc.id
+        ';
+        $db = new WsDatabase();
+        $products = $db->query($sql);
+        unset($db);
+        
+        $this->render('view', array(
+            'error' => $error,
+            'id' => $id,
+            'document_model' => $document_model,
+            'company_model' => $company_model,
+            'partner_model' => $partner_model,
+            'products' => $products,
+        ));
     }
 }

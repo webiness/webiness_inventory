@@ -10,14 +10,14 @@
  * <code>
  * $db = new WsDatabase()
  *
- * # query database
+ * // query database
  * $res = $db->query('SELECT name FROM mytable WHERE id<=:id', array(
  *      ':id' => 3
  * ));
- * # number of results
+ * // number of results
  * $number_of_results = $db->nRows;
  *
- * # update record in database
+ * // update record in database
  * $db->execute('UPDATE mytable SET name=:name WHERE id=:id',
  *     array(':name' => 'new', ':id' => 3));
  * </code>

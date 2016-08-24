@@ -198,7 +198,7 @@ if ($m->nRows < 1) {
                     if (file_exists($url)) {
                         $table .= '<a href="'.$link.'" target="_blank">';
                         if(@is_array(getimagesize($url))) {
-                            $table .= '<img src="'.$link.'" width=40 height=40/>';
+                            $table.='<img src="'.$link.'" width=40 height=40/>';
                         } else {
                             $table .= $value;
                         }

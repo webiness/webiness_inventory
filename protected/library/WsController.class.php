@@ -10,14 +10,14 @@
  * <code>
  * class SiteController extends WsController
  * {
- *     # this function handles request to 'http://server_name/site/index'
+ *     // this function handles request to 'http://server_name/site/index'
  *     public function index()
  *     {
- *         # use variable $m in view file
+ *         // use variable $m in view file
  *         $m = 'this is test';
  *
- *         # view file 'index.php' is placed in directory
- *         # '/application/views/site'
+ *         // view file 'index.php' is placed in directory
+ *         // '/application/views/site'
  *         $this->render('index', array('m' => $m));
  *     }
  * }
@@ -43,10 +43,12 @@ class WsController
     public $breadcrumbs;
     /**
      * @var string $_action Name of controller action
+     *
      */
     private $_action;
     /**
      * @var array $_params List of parameters that would be passed to the action
+     *
      */
     private $_params = array();
 
@@ -225,6 +227,7 @@ class WsController
      * @param string $controller Controller name
      * @param string $action Action name
      * @param array $params Optional parameters
+     *
      */
     public function redirect($controller, $action = 'index', $params = array())
     {
@@ -239,6 +242,7 @@ class WsController
      * check if call is ajax request
      *
      * @return boolean isAjax
+     *
      */
     public function isAjax()
     {

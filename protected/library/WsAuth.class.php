@@ -8,14 +8,14 @@
  * <code>
  * $auth = new WsAuth();
  *
- * # check if any user is logged in
+ * //check if any user is logged in
  * if ($auth->checkSessioun()) {
  * .
  * .
  * .
  * }
  *
- * # check if logged in user has specific permission
+ * // check if logged in user has specific permission
  * if ($auth->hasPermission('perm_name')) {
  * .
  * .
@@ -274,6 +274,7 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
      * @param string $email User email
      * @param string $password User password
      * @return boolean
+     *
      */
     public function createUser($email, $password)
     {

@@ -12,11 +12,11 @@
  * Example usage:
  *
  * <code>
- * # class MyModel inherits from WsModel class
+ * // class MyModel inherits from WsModel class
  * $model = new MyModel();
  * $grid = new WsModelGridView($model);
  *
- * # show grid
+ * // show grid
  * $grid->show();
  * </code>
  *
@@ -40,36 +40,44 @@ class WsModelGridView
     public $showEdit = true;
     /**
      * @var string $_id ID of grid view
+     *
      */
     private $_id = '';
     /**
      * @var string $_modelName Name of model
+     *
      */
     private $_modelName = '';
     /**
      * @var string $_tableName Table name
+     *
      */
     private $_tableName;
     /**
      * @var string $_order Sorting order for items
+     *
      */
     private $_order = '';
     /**
      * @var string $_action AJAX action for grid population
+     *
      */
     private $_action = '';
     /**
      * @var string $_edit_action AJAX url for editing gridview item
+     *
      */
     private $_edit_action = '';
     /**
      * @var string $_delete_action AJAX url for removing gridview item
+     *
      */
     private $_delete_action = '';
     /**
      * ID of element that will show edit dialog
      *
      * @var string $_formId ID of CRUD form
+     *
      */
     private $_formId = '';
     private $_model;

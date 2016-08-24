@@ -8,11 +8,7 @@
     $quantitymin = floatval($product_model->quantitymin);
 
     // set locale for date and time representation
-    $lang = substr(
-        filter_input(
-            INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'
-        ), 0,2
-    );
+    $lang = WsLocalize::getLang();
     setlocale(LC_ALL, $lang,
         $lang.'_'.strtoupper($lang),
         $lang.'_'.strtoupper($lang).'.utf8'
