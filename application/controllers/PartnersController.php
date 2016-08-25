@@ -4,6 +4,13 @@ class PartnersController extends WsController
 {
     public function index()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $this->title = WsLocalize::msg(' - Manage Partners');
 
         $PartnerModel = new PartnerModel();

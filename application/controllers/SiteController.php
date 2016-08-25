@@ -13,6 +13,7 @@ class SiteController extends WsController {
         if (!$auth->checkSession()) {
             $this->redirect('wsauth', 'login');
         }
+        unset ($auth);
 
         $this->title = WsLocalize::msg(' - dashboard');
         $this->render('index');
@@ -21,6 +22,13 @@ class SiteController extends WsController {
 
     public function company()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+        
         $company_model = new CompanyModel();
 
         if($company_model->idExists(1)) {

@@ -4,6 +4,13 @@ class DocumentController extends WsController
 {
     public function index()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+        
         $this->title = WsLocalize::msg('Webiness Inventory - Documents');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -27,6 +34,13 @@ class DocumentController extends WsController
 
     public function edit($id = 0)
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $db = new WsDatabase();
         $auth = new WsAuth();
 
@@ -302,6 +316,13 @@ class DocumentController extends WsController
 
     public function view($id)
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $this->title = WsLocalize::msg('Webiness Inventory - Document ').$id;
         // breadcrumbs
         $this->breadcrumbs = array(

@@ -4,6 +4,13 @@ class ProductController extends WsController
 {
     public function categories()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $this->title = WsLocalize::msg('Webiness Inventory - Product categories');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -27,6 +34,13 @@ class ProductController extends WsController
 
     public function products()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $this->title = WsLocalize::msg('Webiness Inventory - Products');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -50,6 +64,13 @@ class ProductController extends WsController
 
     public function edit($id = 0)
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $db = new WsDatabase();
         $product_model = new ProductModel();
 
@@ -251,6 +272,13 @@ class ProductController extends WsController
 
     public function inventory_list()
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         $db = new WsDatabase();
 
         $sql = '
@@ -332,6 +360,13 @@ class ProductController extends WsController
 
     public function card($id=0)
     {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+            
         if (isset($_POST['id']) && !empty($_POST['id'])) {
             $id = filter_input(INPUT_POST, 'id',
                 FILTER_SANITIZE_NUMBER_INT);
