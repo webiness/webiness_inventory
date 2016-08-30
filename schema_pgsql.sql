@@ -59,9 +59,17 @@ CREATE TABLE IF NOT EXISTS partner (
     phone_number VARCHAR(20)
 );
 
+--create types
+DO $$
+BEGIN
+    IF (SELECT 1 FROM pg_type WHERE typname = 'DOCUMENT_TYPE') = 1 THEN
+        CREATE TYPE DOCUMENT_TYPE AS ENUM ('purchase', 'sale', 'dismission');
+    END IF;
+     IF (SELECT 1 FROM pg_type WHERE typname = 'DOCUMENT_STATUS') = 1 THEN
+        CREATE TYPE DOCUMENT_STATUS AS ENUM ('draft', 'approved');
+    END IF;
+END$$;
 
-CREATE TYPE DOCUMENT_TYPE AS ENUM ('purchase', 'sale', 'dismission');
-CREATE TYPE DOCUMENT_STATUS AS ENUM ('draft', 'approved');
 CREATE TABLE IF NOT EXISTS document (
     id SERIAL PRIMARY KEY,
     d_date DATE NOT NULL DEFAULT NOW(),

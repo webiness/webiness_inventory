@@ -10,7 +10,7 @@ class DocumentController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-        
+
         $this->title = WsLocalize::msg('Webiness Inventory - Documents');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -40,7 +40,7 @@ class DocumentController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         $db = new WsDatabase();
         $auth = new WsAuth();
 
@@ -314,7 +314,7 @@ class DocumentController extends WsController
     }
 
 
-    public function view($id)
+    public function view($id=0)
     {
         $auth = new WsAuth();
         // redirect to login page if no user is loged in
@@ -322,7 +322,15 @@ class DocumentController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
+        if ((isset($_GET['id']) && !empty($_GET['id']))) {
+            $id = filter_input(INPUT_GET, 'id',
+                FILTER_SANITIZE_NUMBER_INT);
+        } else if ((isset($_POST['id']) && !empty($_POST['id']))) {
+            $id = filter_input(INPUT_POST, 'id',
+                FILTER_SANITIZE_NUMBER_INT);
+        }
+
         $this->title = WsLocalize::msg('Webiness Inventory - Document ').$id;
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -339,7 +347,7 @@ class DocumentController extends WsController
                 'view'
             ),
         );
-        
+
         $error = '';
 
         $document_model = new DocumentModel();
@@ -361,7 +369,7 @@ class DocumentController extends WsController
             // get our company informations
             $company_model->getOne(1);
         }
-        
+
         // get document items
         $sql = '
             SELECT
@@ -384,7 +392,7 @@ class DocumentController extends WsController
         $db = new WsDatabase();
         $products = $db->query($sql);
         unset($db);
-        
+
         $this->render('view', array(
             'error' => $error,
             'id' => $id,

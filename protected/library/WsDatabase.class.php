@@ -128,7 +128,8 @@ class WsDatabase
             $sth->execute();
         } catch(PDOException $ex) {
             header('HTTP/1.1 500 Internal Server Error');
-            trigger_error($sql, E_USER_ERROR);
+            trigger_error('WsDatabase: <code>'.$ex->getMessage().'</code>',
+                E_USER_ERROR);
             return false;
         }
 
@@ -199,6 +200,34 @@ class WsDatabase
         unset($sth);
         return true;
     }
+
+
+/**
+ * Execute multiple custom SQL commands without parameters
+ *
+ * @param string $sql Custom SQL query
+ *
+ */
+public function execute_batch($sql)
+{
+    if (!$this->isConnected) {
+        return false;
+    }
+
+    // execute query
+    $this->_dbh->beginTransaction();
+    $count = $this->_dbh->exec($sql);
+    if ($count === false ) {
+        $this->_dbh->rollBack();
+        $this->nRows = 0;
+        return false;
+    } else {
+        $this->_dbh->commit();
+        $this->nRows = $count;
+    }
+
+    return true;
+}
 
 
     /**

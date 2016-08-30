@@ -273,5 +273,22 @@ foreach ($files as $file) {
 }
 unset($now, $files);
 
+// create database tables if they are not exists
+if (WsConfig::get('db_driver') == 'pgsql') {
+    $db_file = WsROOT.'/schema_pgsql.sql';
+} else {
+    $db_file = WsROOT.'/schema_mysql.sql';
+}
+if (file_exists($db_file)) {
+    $auth = new WsAuth();
+    $sql = file_get_contents($db_file);
+    $db = new WsDatabase();
+    $db->execute_batch($sql);
+    $db->close();
+    unset ($db, $auth, $sql, $db_file);
+} else {
+    unset ($db_file);
+}
+
 // call controller/action
 callHook();

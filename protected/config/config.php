@@ -25,7 +25,7 @@ WsConfig::set('html_layout', 'inventory.php');
 // site administrators email address - needed for WsAuth
 WsConfig::set('auth_admin', 'bojan.kajfes@gmail.com');
 // enable semantic (pretty) URLs
-WsConfig::set('pretty_urls', 'yes');
+WsConfig::set('pretty_urls', 'no');
 // END OF FRAMEWORK CONFIG VARIABLES
 
 // CUSTOM CONFIG VARIABLES

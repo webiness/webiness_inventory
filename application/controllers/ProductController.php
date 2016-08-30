@@ -10,7 +10,7 @@ class ProductController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         $this->title = WsLocalize::msg('Webiness Inventory - Product categories');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -40,7 +40,7 @@ class ProductController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         $this->title = WsLocalize::msg('Webiness Inventory - Products');
         // breadcrumbs
         $this->breadcrumbs = array(
@@ -70,7 +70,7 @@ class ProductController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         $db = new WsDatabase();
         $product_model = new ProductModel();
 
@@ -278,7 +278,7 @@ class ProductController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         $db = new WsDatabase();
 
         $sql = '
@@ -366,11 +366,14 @@ class ProductController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
+
         if (isset($_POST['id']) && !empty($_POST['id'])) {
             $id = filter_input(INPUT_POST, 'id',
                 FILTER_SANITIZE_NUMBER_INT);
-        }
+        } else if (isset($_GET['id']) && !empty($_GET['id'])) {
+            $id = filter_input(INPUT_GET, 'id',
+                FILTER_SANITIZE_NUMBER_INT);
+         }
 
         $db = new WsDatabase();
         $product_model = new ProductModel();

@@ -122,12 +122,8 @@
             </tr>
         </table>
 
-        <?php
-        }
-        ?>
-        
         <br/>
-        
+
         <table class="grid">
             <thead>
                 <tr class="ws_tr">
@@ -333,5 +329,9 @@
                 </td>
             </tr>
         </table>
+
+        <?php
+        }
+        ?>
     </div>
 </div>
