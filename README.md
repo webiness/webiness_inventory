@@ -20,12 +20,12 @@ ___
 
 ### __Installation__
 
-1. clone git repository into root directory of your web server
+* clone git repository into root directory of your web server
 ```bash
 git clone https://github.com/webiness/webiness_inventory
 ```
-2. create database in your MySQL/MariaDB or PostgreSQL database server (SQLite support is planned in the future)
-3. edit __webiness_inventory/protected/config/config.php__ file and change configuration to match your settings:
+* create database in your MySQL/MariaDB or PostgreSQL database server (SQLite support is planned in the future)
+* edit __webiness_inventory/protected/config/config.php__ file and change configuration to match your settings:
 ```php
 WsConfig::set('db_driver', 'pgsql'); // or mysql for MySQL server
 WsConfig::set('db_host', 'your_db_hostname');
@@ -33,12 +33,13 @@ WsConfig::set('db_name', 'database_name');
 WsConfig::set('db_user', 'database_user_name');
 WsConfig::set('db_password', 'database_user_password');
 ```
-4. in the same file find line:
+* in the same file find line:
 ```php
 WsConfig::set('auth_admin', 'bojan.kajfes@gmail.com');
 ```
-and replace given email address to the one that will be used for addministration access. Default password will be automaticaly set to: __admin__
-5. point your web browser to installed application and login with he user data described above
+and replace given email address to the one that will be used for addministration access.
+Default password will be automaticaly set to: __admin__
+* point your web browser to installed application and login with he user data described above
 
 ### __Requirements__
 
