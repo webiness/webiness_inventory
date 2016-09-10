@@ -113,7 +113,7 @@ class DocumentController extends WsController
             }
         }
 
-        if (isset($id) and $id == 0) {
+        if ($this->isAjax()) {
             $this->layout = 'nonexisting_layout';
         }
 
@@ -348,17 +348,17 @@ class DocumentController extends WsController
             ),
         );
 
+        // initialize variables
         $error = '';
-
+        $products = array();
         $document_model = new DocumentModel();
+        $company_model = new CompanyModel();
+        $partner_model = new PartnerModel();
 
         if (!$document_model->idExists($id)) {
             $error = WsLocalize::msg('document: ').$id
                 .WsLocalize::msg(' does not exist or it is not saved yet!');
         } else {
-            $company_model = new CompanyModel();
-            $partner_model = new PartnerModel();
-
             // get document informatiions
             $document_model->foreignKeys['d_partner']['display'] = 'id';
             $document_model->getOne($id);
@@ -368,30 +368,30 @@ class DocumentController extends WsController
 
             // get our company informations
             $company_model->getOne(1);
-        }
 
-        // get document items
-        $sql = '
-            SELECT
-                p.product_name AS product,
-                dp.quantity AS quantity,
-                p.uom AS uom,
-                p.purchase_price AS price,
-                p.trading_margin AS margin,
-                pc.vat AS vat,
-                pc.consumption_tax AS consumption_tax,
-                pc.sales_tax AS sales_tax
-            FROM
-                document_product dp,
-                product p,
-                product_category pc
-            WHERE dp.document_id = '.$document_model->id.'
-                AND dp.product_id = p.id
-                AND p.category_id = pc.id
-        ';
-        $db = new WsDatabase();
-        $products = $db->query($sql);
-        unset($db);
+            // get document items
+            $sql = '
+                SELECT
+                    p.product_name AS product,
+                    dp.quantity AS quantity,
+                    p.uom AS uom,
+                    p.purchase_price AS price,
+                    p.trading_margin AS margin,
+                    pc.vat AS vat,
+                    pc.consumption_tax AS consumption_tax,
+                    pc.sales_tax AS sales_tax
+                FROM
+                    document_product dp,
+                    product p,
+                    product_category pc
+                WHERE dp.document_id = '.$document_model->id.'
+                    AND dp.product_id = p.id
+                    AND p.category_id = pc.id
+            ';
+            $db = new WsDatabase();
+            $products = $db->query($sql);
+            unset($db);
+        }
 
         $this->render('view', array(
             'error' => $error,
