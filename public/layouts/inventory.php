@@ -41,13 +41,13 @@
     ?>
     <!-- TITLE -->
     <div class="row no-print">
-        <div class="column column-12 site-title">
+        <div class="column column-10 column-offset-1 site-title">
             <div style="display: table;" class="column column-10 column-offset-1">
                 <img
                     width=80
                     height=80
                     style="vertical-align: middle; display: table-cell; margin: 15px;"
-                    src="<?php echo WsUrl::asset('img/webiness.png'); ?>"/>
+                    src="<?php echo WsUrl::asset('img/webiness-box.png'); ?>"/>
                 <div
                     style="vertical-align: middle; display: table-cell;">
                     <h1>
@@ -56,6 +56,22 @@
                     <h3>
                         <?php echo WsLocalize::msg('- easely manage stock inventory -'); ?>
                     </h3>
+                </div>
+                <div
+                    style="vertical-align: top; display: table-cell;
+                        text-align: right;">
+                    <?php
+                    if ($auth->checkSession()) {
+                    ?>
+                    <a href="<?php echo WsUrl::link('wsauth','edit') ?>">
+                        <?php echo $auth->currentUser() ?>
+                    </a>
+                    (<a href="<?php echo WsUrl::link('wsauth','logout') ?>">
+                        <?php echo WsLocalize::msg('logout') ?>
+                    </a>)
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -68,11 +84,27 @@
             </label>
             <input type="checkbox" id="show-menu" role="button">
             <ul>
-                <li>
+                <li id="hidden-menu-item" style="display: none">
+                    <a href="<?php echo WsUrl::link('site', 'index'); ?>">
+                        <img
+                            width=19
+                            height=19
+                            style="vertical-align: middle; margin: auto; display: block;"
+                            src="<?php echo WsUrl::asset('img/webiness-box.png'); ?>"
+                            alt="<?php echo WsLocalize::msg('Webiness Inventory'); ?>"/>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <img
+                        width=48
+                        height=48
+                        class='menu-icon'
+                        style="vertical-align: middle; margin: auto; display: block;"
+                        src="<?php echo WsUrl::asset('img/document.png'); ?>"/>
                     <a href="<?php echo WsUrl::link('document', 'index'); ?>">
                         <?php echo WsLocalize::msg('Documents'); ?>
                     </a>
-                    <ul>
+                    <ul style="width: inherit;">
                         <li>
                             <a href="<?php echo WsUrl::link('document', 'edit', array('id' => -1)); ?>">
                                 <?php echo WsLocalize::msg('New document'); ?>
@@ -82,11 +114,17 @@
                 </li>
             </ul>
             <ul>
-                <li>
+                <li class="menu-item">
+                    <img
+                        width=48
+                        height=48
+                        class='menu-icon'
+                        style="vertical-align: middle; margin: auto; display: block;"
+                        src="<?php echo WsUrl::asset('img/warehouse.png'); ?>"/>
                     <a href="#">
                         <?php echo WsLocalize::msg('Inventory'); ?>
                     </a>
-                    <ul>
+                    <ul style="width: inherit;">
                         <li>
                             <a href="<?php echo WsUrl::link('product', 'categories'); ?>">
                                 <?php echo WsLocalize::msg('Product categories'); ?>
@@ -106,21 +144,33 @@
                 </li>
             </ul>
             <ul>
-                <li>
+                <li class="menu-item">
+                    <img
+                        width=48
+                        height=48
+                        class='menu-icon'
+                        style="vertical-align: middle; margin: auto; display: block;"
+                        src="<?php echo WsUrl::asset('img/partners.png'); ?>"/>
                     <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
                         <?php echo WsLocalize::msg('Partners'); ?>
                     </a>
                 </li>
             </ul>
             <ul>
-                <li>
+                <li class="menu-item">
+                    <img
+                        width=48
+                        height=48
+                        class='menu-icon'
+                        style="vertical-align: middle; margin: auto; display: block;"
+                        src="<?php echo WsUrl::asset('img/company.png'); ?>"/>
                     <a href="<?php echo WsUrl::link('site', 'company'); ?>">
                         <?php echo WsLocalize::msg('My Company'); ?>
                     </a>
                 </li>
             </ul>
-            <ul class="right">
-            <?php
+            <ul class="right" id="right-menu" style="display: none">
+                <?php
                 if ($auth->checkSession()) {
                 ?>
                 <li class="right">
@@ -247,11 +297,32 @@
             );
 
             var nav = $('.ws-header');
-            var top = nav.position().top;
+            var menu_item = $('.menu-item');
+            var menu_icon = $('.menu-icon');
+            var hmi = $('#hidden-menu-item');
+            var rm = $('#right-menu');
+            var top = nav.position().top + 75;
             var orig_width = nav.width();
             var orig_offset = nav.css("margin-left");
+
+            menu_item.css({
+                'width': '25%',
+            });
+
             $(window).scroll(function () {
                 if ($(this).scrollTop() > top) {
+                    menu_item.css({
+                        'width': 'auto',
+                    });
+                    rm.css({
+                        display: 'block',
+                    });
+                    hmi.css({
+                        display: 'block',
+                    });
+                    menu_icon.css({
+                        display: 'none',
+                    });
                     nav.css({
                         top: 0,
                         left: 0,
@@ -266,6 +337,18 @@
                         'opacity': '.90'
                     });
                 } else {
+                    menu_item.css({
+                        'width': '25%',
+                    });
+                    rm.css({
+                        display: 'none',
+                    });
+                    hmi.css({
+                        display: 'none',
+                    });
+                    menu_icon.css({
+                        display: 'block',
+                    });
                     nav.css({
                         top: '',
                         left: '',
