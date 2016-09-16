@@ -65,4 +65,16 @@ class WsConfig
 
         return false;
     }
+
+
+    /**
+     * Get all defined config variables
+     *
+     * @return array Array of defined config variables
+     *
+     */
+    public static function currentConfig()
+    {
+        return var_export(self::$vars, true);
+    }
 }

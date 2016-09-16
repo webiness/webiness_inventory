@@ -95,16 +95,21 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <img
-                        width=48
-                        height=48
-                        class='menu-icon'
-                        style="vertical-align: middle; margin: auto; display: block;"
-                        src="<?php echo WsUrl::asset('img/document.png'); ?>"/>
-                    <a href="<?php echo WsUrl::link('document', 'index'); ?>">
+                    <a href="#">
+                        <img
+                            width=48
+                            height=48
+                            class='menu-icon'
+                            style="vertical-align: middle; margin: auto; display: block;"
+                            src="<?php echo WsUrl::asset('img/document.png'); ?>"/>
                         <?php echo WsLocalize::msg('Documents'); ?>
                     </a>
                     <ul style="width: inherit;">
+                        <li>
+                            <a href="<?php echo WsUrl::link('document', 'index'); ?>">
+                                <?php echo WsLocalize::msg('Manage documents'); ?>
+                            </a>
+                        </li>
                         <li>
                             <a href="<?php echo WsUrl::link('document', 'edit', array('id' => -1)); ?>">
                                 <?php echo WsLocalize::msg('New document'); ?>
@@ -115,13 +120,13 @@
             </ul>
             <ul>
                 <li class="menu-item">
-                    <img
-                        width=48
-                        height=48
-                        class='menu-icon'
-                        style="vertical-align: middle; margin: auto; display: block;"
-                        src="<?php echo WsUrl::asset('img/warehouse.png'); ?>"/>
                     <a href="#">
+                        <img
+                            width=48
+                            height=48
+                            class='menu-icon'
+                            style="vertical-align: middle; margin: auto; display: block;"
+                            src="<?php echo WsUrl::asset('img/warehouse.png'); ?>"/>
                         <?php echo WsLocalize::msg('Inventory'); ?>
                     </a>
                     <ul style="width: inherit;">
@@ -145,28 +150,42 @@
             </ul>
             <ul>
                 <li class="menu-item">
-                    <img
-                        width=48
-                        height=48
-                        class='menu-icon'
-                        style="vertical-align: middle; margin: auto; display: block;"
-                        src="<?php echo WsUrl::asset('img/partners.png'); ?>"/>
-                    <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
+                    <a href="#">
+                        <img
+                            width=48
+                            height=48
+                            class='menu-icon'
+                            style="vertical-align: middle; margin: auto; display: block;"
+                            src="<?php echo WsUrl::asset('img/partners.png'); ?>"/>
                         <?php echo WsLocalize::msg('Partners'); ?>
                     </a>
+                    <ul style="width: inherit;">
+                        <li>
+                            <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
+                                <?php echo WsLocalize::msg('Manage partners'); ?>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <ul>
                 <li class="menu-item">
-                    <img
-                        width=48
-                        height=48
-                        class='menu-icon'
-                        style="vertical-align: middle; margin: auto; display: block;"
-                        src="<?php echo WsUrl::asset('img/company.png'); ?>"/>
-                    <a href="<?php echo WsUrl::link('site', 'company'); ?>">
+                    <a href="#">
+                        <img
+                            width=48
+                            height=48
+                            class='menu-icon'
+                            style="vertical-align: middle; margin: auto; display: block;"
+                            src="<?php echo WsUrl::asset('img/company.png'); ?>"/>
                         <?php echo WsLocalize::msg('My Company'); ?>
                     </a>
+                    <ul style="width: inherit;">
+                        <li>
+                            <a href="<?php echo WsUrl::link('site', 'company'); ?>">
+                                <?php echo WsLocalize::msg('Edit company details'); ?>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <ul class="right" id="right-menu" style="display: none">
@@ -187,8 +206,13 @@
                         if ($auth->hasPermission('admin')) {
                         ?>
                         <li>
+                            <a href="<?php echo WsUrl::link('wsauth','register') ?>">
+                                <?php echo WsLocalize::msg('add new user') ?>
+                            </a>
+                        </li>
+                        <li>
                             <a href="<?php echo WsUrl::link('wsauth','admin') ?>">
-                                <?php echo WsLocalize::msg('User Accounts') ?>
+                                <?php echo WsLocalize::msg('manage users') ?>
                             </a>
                         </li>
                         <?php

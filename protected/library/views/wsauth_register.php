@@ -65,29 +65,25 @@
     </div>
 </div>
 
-<div class="row">
 <?php
     if ($error_message != '') {
 ?>
+        <div class="row"
             <div class="callout error">
             <?php
-            header('HTTP/1.1 500 Internal Server Error');
-            echo $error_message;
-            ?>
-            </div>
-<?php
+                header('HTTP/1.1 500 Internal Server Error');
+                echo $error_message;
     } else {
 ?>
             <div class="callout success">
-			<?php
-		    // check if we have input data
-		    if (isset($_POST['email']) and isset($_POST['password'])) {
-		        echo WsLocalize::msg('User account succesfuly creted.');
-		        echo WsLocalize::msg('Check your email to activate account.');
-		    }
-			?>
-			</div>
 <?php
+        // check if we have input data
+        if (isset($_POST['email']) and isset($_POST['password'])) {
+            echo WsLocalize::msg('User account succesfuly creted.');
+            echo WsLocalize::msg('Check your email to activate account.');
+        }
     }
 ?>
-</div>
+        </div>
+    </div>
+</section>

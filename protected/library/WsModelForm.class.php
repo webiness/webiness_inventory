@@ -202,6 +202,8 @@ class WsModelForm extends WsForm
                 $this->selectInput($result, $params);
 
                 unset($query, $result, $db);
+            } else if (in_array($column, $this->_model->hiddenColumns)) {
+                $this->hiddenInput($params);
             } else {
                 switch ($this->_model->columnType[$column]) {
                     case 'bool_type':

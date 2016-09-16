@@ -15,7 +15,7 @@ WsConfig::set('db_password', 'wsinventory');
 // application name
 WsConfig::set('app_name', 'Webiness Inventory Managment');
 // application development stage (development | production)
-WsConfig::set('app_stage', 'development');
+WsConfig::set('app_stage', 'production');
 // default timezone
 WsConfig::set('app_tz', 'Europe/Zagreb');
 // default character encoding

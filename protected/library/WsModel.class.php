@@ -140,6 +140,23 @@ class WsModel extends WsDatabase
 
         // at beginning metaName is same as tableName
         $this->metaName = $name;
+
+        // check connection
+        if (!$this->isConnected) {
+            header('HTTP/1.1 500 Internal Server Error');
+            $err = '<strong>';
+            $err .= WsLocalize::msg('Database server not available!');
+            $err .= '<br/>';
+            $err .= '"'.WsConfig::get('app_name').'" ';
+            $err .= WsLocalize::msg('requests the database server to function.');
+            $err .= '</strong><br/><br/>';
+            $err .= 'edit <i>\'protected/config/config.php\'</i> file to ';
+            $err .= 'setup your connection settings. Current settings are:';
+            $err .= '<br/><br/><pre>'.WsConfig::currentConfig();
+            $err .= '</pre>';
+            trigger_error($err, E_USER_ERROR);
+            die;
+        }
     }
 
 
@@ -157,6 +174,10 @@ class WsModel extends WsDatabase
      */
     public function setTableName($name)
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         $this->tableName = $name;
 
         // get foreign keys from table in PostgreSQL
@@ -313,6 +334,10 @@ WHERE table_name= :table_name';
      */
     public function idExists($id)
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         /*
          * fetch only record with specific ID
          */
@@ -359,6 +384,10 @@ WHERE table_name= :table_name';
      */
     public function beforeDelete()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         return true;
     }
 
@@ -371,6 +400,10 @@ WHERE table_name= :table_name';
      */
     public function delete()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+        
         /*
          * delete only record with specific ID
          */
@@ -421,6 +454,10 @@ WHERE table_name= :table_name';
      */
     public function beforeSave()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         return true;
     }
 
@@ -435,6 +472,10 @@ WHERE table_name= :table_name';
      */
     public function save()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         $query = '';
         $values = array(); // values for fields
         $fields = '';
@@ -523,6 +564,10 @@ WHERE table_name= :table_name';
      */
     public function getOne()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         /*
          * fetch only record with specific ID
          */
@@ -616,6 +661,10 @@ WHERE table_name= :table_name';
      */
     public function getAll($order='', $limit=0, $offset=0)
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         // construct query string
         $query = 'SELECT ';
         $from = $this->tableName.', ';
@@ -707,6 +756,10 @@ WHERE table_name= :table_name';
      */
     public function search($condition='', $order='', $limit=0, $offset=0)
     {
+        if (!$this->isConnected) {
+            return false;
+        }
+
         $query = 'SELECT ';
         $from = $this->tableName.', ';
         $where = '';
@@ -806,6 +859,9 @@ WHERE table_name= :table_name';
      */
     public function getNextId()
     {
+        if (!$this->isConnected) {
+            return false;
+        }
 
         $query = 'SELECT COALESCE(MAX('.$this->primary_key
             .'), 0) + 1 AS next_id FROM '.$this->tableName;

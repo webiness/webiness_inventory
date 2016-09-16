@@ -71,8 +71,9 @@ class WsDatabase
             }
         } catch(PDOException $ex) {
             $this->isConnected = false;
+            unset($cs);
             header('HTTP/1.1 500 Internal Server Error');
-            trigger_error($ex->getMessage(), E_USER_ERROR);
+            return false;
         }
 
         unset($cs);
