@@ -63,11 +63,10 @@ class WsModelForm extends WsForm
         $this->submitButtonText = WsLocalize::msg('Save');
 
         $this->_form = '<div class="row">'
-            .'<div class="column column-12 text-left">';
+            .'<div class="col-sm-12">';
         $this->_form .= '<form id="'.$this->_id.'" '
             .'class="ws_form" '
-            .'method="POST" enctype="multipart/form-data">'
-            .'<fieldset>';
+            .'method="POST" enctype="multipart/form-data">';
 
         // model name
         $this->_form .= '<input type="hidden" name="model_name" value="'
@@ -262,15 +261,9 @@ class WsModelForm extends WsForm
             $params = array();
         }
 
-        $this->_form .= '<br/>';
-        $this->_form .= '<br/>';
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12 text-center">';
-        $this->_form .= '<input type="submit" class="button success"'
-            .' value="'.$this->submitButtonText.'"/>';
-        $this->_form .= '</div></div>';
-        $this->_form .= '<div class="row" id="form_status"></div>';
-        $this->_form .= '</fieldset>';
+        $this->_form .= '<button type="submit" class="btn btn-success">';
+        $this->_form .= $this->submitButtonText;
+        $this->_form .= '</button>';
         $this->_form .= '</form>';
 
         $this->_form .= '</div>';

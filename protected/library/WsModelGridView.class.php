@@ -182,26 +182,20 @@ class WsModelGridView
             $table .= '<div id="'.$this->_formId.'"></div>';
         }
 
-        // grid
-        $table .= '<div class="row grid-header">';
         // title
         $table .= '<div class="row">';
-        $table .= '<div class="column column-6 text-left text-error">';
-        $table .= '<div class="grid-title">';
-        $table .= $this->_model->metaName;
+        $table .= '<div class="col-sm-12">';
+        $table .= '<h1>'.$this->_model->metaName.'</h1>';
         $table .= '</div>';
-        $table .= '</div>';
-        $table .= '</div>';
-        // end of grid header
         $table .= '</div>';
 
         // control row
         $table .= '<div class="row">';
-        $table .= '<div class="column column-6 text-left">';
-        $table .= '<form class="search-form">';
+        $table .= '<div class="col-sm-12 col-md-6 text-left">';
+        $table .= '<form class="form-inline">';
         // new item button
         if ($this->showEdit) {
-            $table .= '<input class="add-button"'
+            $table .= '<input class="btn btn-success"'
                 .' id="btn_create_'.$this->_id.'"'
                 .' value="+"'
                 .' type="button" onclick="WseditModelID('
@@ -211,10 +205,10 @@ class WsModelGridView
                 .$this->_model->metaName.'\')"/>';
         }
         // search control
-        $table .= '<input class="search-input"';
+        $table .= '<input class="form-control"';
         $table .= ' type="text" id="search_'.$this->_id.'"';
         $table .= '/>';
-        $table .= '<input class="search-button"'
+        $table .= '<input class="btn btn-default"'
             .' value="&#8981"'
             .' id="btn_search_'.$this->_id
             .'" type="button" onclick="WschangeModelPagination('
@@ -236,24 +230,24 @@ class WsModelGridView
 
         // Grid View table
         $table .= '<div class="row">';
-        $table .= '<div class="column column-12" ';
-        $table .= ' style="overflow: auto;">';
-        $table .= '<table class="grid">';
+        $table .= '<div class="col-sm-12">';
+        $table .= '<div class="table-responsive">';
+        $table .= '<table class="table table-hover table-condensed">';
         $table .= '<thead>';
-        $table .= '<tr class="ws_tr">';
+        $table .= '<tr>';
         foreach ($this->_model->columns as $column) {
             if (!in_array($column, $this->_model->hiddenColumns)) {
                 if (isset($this->_model->columnHeaders[$column])) {
-                    $table .= '<th class="ws_th">'
+                    $table .= '<th>'
                         .$this->_model->columnHeaders[$column];
                     $table .= '</th>';
                 } else {
-                    $table .= '<th class="ws_th">'.$column.'</th>';
+                    $table .= '<th>'.$column.'</th>';
                 }
             }
         }
         if ($this->showEdit) {
-            $table .= '<th class="ws_th"></th>';
+            $table .= '<th></th>';
         }
         $table .= '</tr>';
         $table .= '</thead>';
@@ -262,7 +256,7 @@ class WsModelGridView
         $table .= '<tbody id="'.$this->_id.'"></tbody>';
 
         // end of grid table
-        $table .= '</table>';
+        $table .= '</table></div>';
         $table .= '</div>';
         $table .= '</div>';
 

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="column column-12">
+    <div class="col-sm-12 col-md-6 col-md-offset-3">
         <h3 class="text-center">
             <?php echo WsConfig::get('app_name'); ?>
             -
@@ -51,7 +51,7 @@
         $login_form->submitButtonText = WsLocalize::msg('login');
 ?>
     <div class="row">
-        <div class="column column-6 column-offset-3">
+        <div class="col-sm-12 col-md-6 col-md-offset-3">
 <?php
         // email field
         $login_form->textInput(array(
@@ -78,7 +78,7 @@
     </div>
 
 <div class="row">
-    <div class="column column-12 callout callout error">
+    <div class="col-sm-12 col-md-6 col-md-offset-3 alert alert-error">
         <?php
             header('HTTP/1.1 401 Unauthorized');
             echo $error_message;

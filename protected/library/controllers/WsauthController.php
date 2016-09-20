@@ -144,11 +144,18 @@ class WsauthController
                 'site',
                 'index'
             ),
+            WsLocalize::msg('users, roles and permissions') => array(
+                'wsauth',
+                'admin'
+            ),
             WsLocalize::msg('register') => array(
                 'wsauth',
                 'register'
             ),
         );
+        
+        // title
+        $this->title = WsConfig::get('app_name').' - User registration';
 
         $this->render('wsauth_register');
     }
@@ -175,7 +182,10 @@ class WsauthController
                 'login'
             ),
         );
-
+        
+        // title
+        $this->title = WsConfig::get('app_name').' - Login';
+        
         $this->render('wsauth_login');
     }
 
@@ -216,7 +226,10 @@ class WsauthController
                 'admin'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .' - Users, roles and permissions';
+        
         $user_model = new Ws_userModel();
         $roles_model = new Ws_rolesModel();
         $perms_model = new Ws_permissionsModel();
@@ -239,6 +252,25 @@ class WsauthController
             trigger_error('Access denied', E_USER_ERROR);
             return;
         }
+        
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('users, roles and permissions') => array(
+                'wsauth',
+                'admin'
+            ),
+            WsLocalize::msg('role permissions') => array(
+                'wsauth',
+                'role permissions'
+            ),
+        );
+        
+        // title
+        $this->title = WsConfig::get('app_name').' - Role permissions';
 
         $this->render('wsauth_rolePerms');
     }
@@ -254,6 +286,25 @@ class WsauthController
             trigger_error('Access denied', E_USER_ERROR);
             return;
         }
+        
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('users, roles and permissions') => array(
+                'wsauth',
+                'admin'
+            ),
+            WsLocalize::msg('user roles') => array(
+                'wsauth',
+                'user roles'
+            ),
+        );
+        
+        // title
+        $this->title = WsConfig::get('app_name').' - User roles';
 
         $this->render('wsauth_userRoles');
     }
@@ -277,7 +328,26 @@ class WsauthController
                 $user_model = null;
             }
         }
-
+        
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('users, roles and permissions') => array(
+                'wsauth',
+                'admin'
+            ),
+            $_SESSION['ws_auth_user_email'] => array(
+                'wsauth',
+                $_SESSION['ws_auth_user_email']
+            ),
+        );
+        
+        // title
+        $this->title = WsConfig::get('app_name').' - Edit user account';
+        
         $this->render('wsauth_edit', array(
             'user_model' => $user_model,
             'user_email' => $_SESSION['ws_auth_user_email']

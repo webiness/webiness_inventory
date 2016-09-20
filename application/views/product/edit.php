@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="column column-10 column-offset-1">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
         <h3 class="text-center">
             <?php
             echo Wslocalize::msg('Item no: ').$id;
@@ -7,67 +7,71 @@
         </h3>
 
         <div class="row">
-            <div class="column column-2 column-offset-10 link-button success">
-                <a class="text-warning" target="_blank"
+            <div class="col-sm-12 col-md-2 col-md-offset-10">
+                <a class="btn btn-info" target="_blank"
                     href="<?php echo WsUrl::link('product', 'card', array(
                         'id' => $id)); ?>">
                     <?php echo WsLocalize::msg('Product Card'); ?>
                 </a>
             </div>
         </div>
-
+        
+        <br/>
+        
         <form id="item_form"
-            class="ws_form"
+            class="form-horizontal"
             action="<?php echo WsUrl::link('product', 'edit'); ?>"
             enctype="multipart/form-data"
             method="post">
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="item_name">
-                        <?php echo WsLocalize::msg('product name'); ?>
-                    </label>
-                    <input type="hidden" name="csrf"
-                        value="<? echo $_SESSION['ws_auth_token']; ?>"/>
-                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                    <input type="text" name="product_name"
+            <div class="form-group">
+                <label for="item_name" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('product name'); ?>
+                </label>
+                <input type="hidden" name="csrf"
+                    value="<? echo $_SESSION['ws_auth_token']; ?>"/>
+                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                <div class="col-sm-4">
+                    <input type="text" name="product_name" class="form-control"
                         value="<?php echo $product_name; ?>"/>
                 </div>
 
-                <div class="column column-6">
-                    <label for="barcode">
-                        <?php echo WsLocalize::msg('barcode'); ?>
-                    </label>
-                    <input type="text" name="barcode"
+                <label for="barcode" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('barcode'); ?>
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" name="barcode" class="form-control"
                         value="<?php echo $barcode; ?>"/>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="column column-6">
-                    <label for="description">
-                        <?php echo WsLocalize::msg('description'); ?>
-                    </label>
-                    <textarea name="description"><?php echo $description; ?></textarea>
+            
+            <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('description'); ?>
+                </label>
+                <input type="hidden" name="csrf"
+                    value="<? echo $_SESSION['ws_auth_token']; ?>"/>
+                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                <div class="col-sm-4">
+                    <textarea class="form-control" name="description"><?php echo $description; ?></textarea>
                 </div>
 
-                <div class="column column-6">
-                    <label for="declaration">
-                        <?php echo WsLocalize::msg('declaration'); ?>
-                    </label>
-                    <textarea name="declaration"><?php echo $declaration; ?></textarea>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="column column-6">
-                    <label class="text-left">
-                        <?php echo WsLocalize::msg('product image'); ?>
-                    </label>
+                <label for="declaration" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('declaration'); ?>
+                </label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" name="declaration"><?php echo $declaration; ?></textarea>
                 </div>
             </div>
-            <div class="row">
-                <div class="column column-6">
+
+            <div class="form-group">
+                <label for="picture" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('product image'); ?>
+                </label>
+                <div class="col-sm-4">
+                    <input type="file" id="picture" name="picture"/>
+                </div>
+                <div class="col-sm-4">
                     <?php
                         $file = 'runtime/ProductModel/'.$picture;
                         $file_url = WsSERVER_ROOT.'/runtime/ProductModel/'.$picture;
@@ -85,32 +89,24 @@
                                 echo '</a>';
                             }
                             unset ($img, $file, $file_url);
-                        } else {
-                            echo WsLocalize::msg('no file selected ');
                         }
                     ?>
-                    <input type="file" class="inputfile" id="picture" name="picture"/>
-                    <label for="picture">
-                        <?php echo WsLocalize::msg('select'); ?>
-                    </label>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="position">
-                        <?php echo WsLocalize::msg('position'); ?>
-                    </label>
-                    <input type="text" name="pos"
+            <div class="form-group">
+                <label for="position" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('position'); ?>
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" name="pos" class="form-control"
                         value="<?php echo $pos; ?>"/>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="column column-6">
-                    <label for="category_id">
-                        <?php echo WsLocalize::msg('item category'); ?>
-                    </label>
+                
+                <label for="category_id" class="col-sm-2 control-label" >
+                    <?php echo WsLocalize::msg('item category'); ?>
+                </label>
+                <div class="col-sm-4">
                     <select name="category_id" class="webiness_select"
                         id="category_id"
                         style="width: 100%">
@@ -130,105 +126,101 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="quantitymin">
-                        <?php echo WsLocalize::msg('minimum quantity'); ?>
-                    </label>
+            <div class="form-group">
+                <label for="quantitymin" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('minimum quantity'); ?>
+                </label>
+                <div class="col-sm-4">
                     <input type="text" name="quantitymin"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         value="<?php echo $quantitymin; ?>"/>
                 </div>
 
-                <div class="column column-6">
-                    <label for="uom">
-                        <?php echo WsLocalize::msg('unit of measurement'); ?>
-                    </label>
-                    <input type="text" name="uom"
+                <label for="uom" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('unit of measurement'); ?>
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" name="uom" class="form-control"
                         value="<?php echo $uom; ?>"/>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="purchase_price">
-                        <?php echo WsLocalize::msg('purchase price'); ?>
-                    </label>
+            <div class="form-group">
+                <label for="purchase_price" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('purchase price'); ?>
+                </label>
+                <div class="col-sm-4">
                     <input type="text" name="purchase_price" id="purchase_price"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         value="<?php echo $purchase_price; ?>"/>
                 </div>
 
-                <div class="column column-6">
-                    <label for="trading_margin">
-                        <?php echo WsLocalize::msg('trading margin (%)'); ?>
-                    </label>
+                <label for="trading_margin" class="col-sm-2 control-label">
+                    <?php echo WsLocalize::msg('trading margin (%)'); ?>
+                </label>
+                <div class="col-sm-4">
                     <input type="text" name="trading_margin" id="trading_margin"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         value="<?php echo $trading_margin; ?>"/>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label class="text-primary" for="tax_base">
-                        <?php echo WsLocalize::msg('tax base'); ?>
-                    </label>
+            <div class="form-group">
+                <label class="text-primary col-sm-2 control-label"
+                    for="tax_base">
+                    <?php echo WsLocalize::msg('tax base'); ?>
+                </label>
+                <div class="col-sm-4">
                     <input type="text" name="tax_base" id="tax_base"
-                        class="webiness_numericinput" readonly />
+                        class="webiness_numericinput form-control" readonly />
                 </div>
             </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="vat">
-                        <?php echo WsLocalize::msg('vat rate (%)'); ?>
-                    </label>
+            <div class="form-group">
+                <label for="vat" class="col-sm-3 control-label">
+                    <?php echo WsLocalize::msg('vat rate (%)'); ?>
+                </label>
+                <div class="col-sm-1">
                     <input type="text" name="vat" id="vat"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         readonly />
                 </div>
 
-                <div class="column column-6">
-                    <label for="consumption_tax">
-                        <?php
-                            echo WsLocalize::msg('consumption tax rate (%)');
-                        ?>
-                    </label>
+                <label for="consumption_tax" class="col-sm-3 control-label">
+                    <?php
+                        echo WsLocalize::msg('consumption tax rate (%)');
+                    ?>
+                </label>
+                <div class="col-sm-1">
                     <input type="text" name="consumption_tax"
                         id="consumption_tax"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         readonly />
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="column column-6">
-                    <label for="sales_tax">
-                        <?php echo WsLocalize::msg('sales tax rate (%)'); ?>
-                    </label>
+                <label for="sales_tax" class="col-sm-3 control-label">
+                    <?php echo WsLocalize::msg('sales tax rate (%)'); ?>
+                </label>
+                <div class="col-sm-1">
                     <input type="text" name="sales_tax" id="sales_tax"
-                        class="webiness_numericinput"
+                        class="webiness_numericinput form-control"
                         readonly />
                 </div>
-
-                <div class="column column-6">
-                    <label class="text-primary" for="price">
-                        <?php echo WsLocalize::msg('sell price'); ?>
-                    </label>
+            </div>
+            
+            <div class="form-group">
+                <label class="text-primary col-sm-2 control-label" for="price">
+                    <?php echo WsLocalize::msg('sell price'); ?>
+                </label>
+                <div class="col-sm-4">    
                     <input type="text" name="price" id="price" readonly
-                        class="webiness_numericinput"/>
+                        class="webiness_numericinput form-control"/>
                 </div>
             </div>
 
-            <br/><br/>
-
-            <div class="row">
-                <div class="column column-12 text-center">
-                    <input type="submit" class="success"
-                           value="<?php echo WsLocalize::msg('Save'); ?>"/>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-success">
+                <?php echo WsLocalize::msg('Save'); ?>
+            </button>
         </form>
 
     </div>

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="column column-12">
+    <div class="col-sm-12">
         <h3 class="text-center">
             <?php echo WsConfig::get('app_name'); ?>
             -
@@ -38,7 +38,7 @@ if (filter_input(INPUT_POST, 'permission', FILTER_SANITIZE_STRING) !== NULL) {
 if ($status !== '') {
 ?>
 <div class="row">
-    <div class="callout success">
+    <div class="alert alert-success">
         <?php echo $status; ?>
     </div>
 </div>
@@ -66,11 +66,11 @@ $rp_form->submitButtonText = WsLocalize::msg('Save');
 if ($roles->nRows >= 1 and $permissions->nRows >= 1) {
     foreach ($list_of_roles as $lr) {
         echo '<div class="row">';
-        echo '<div class="column column-8 column-offset-2">';
+        echo '<div class="col-sm-12 col-md-10 col-md-offset-1">';
 
         echo '<br/>';
-        echo '<span class="label">'.$lr['name'];
-        echo ' ('.$lr['description'].')</span>';
+        echo '<h4 class="text-primary">'.$lr['name'];
+        echo ' ('.$lr['description'].')</h4>';
         echo '<input type="hidden" name="role_id" value="'.$lr['id'].'"/>';
 
         foreach ($list_of_permissions as $lp) {
@@ -84,8 +84,11 @@ if ($roles->nRows >= 1 and $permissions->nRows >= 1) {
             } else {
                 $hasPermission = false;
             }
-
-            echo '<label>';
+            
+            echo '<div class="form-group">';
+            echo '<div class="checkbox">';
+            echo '<label for="permission['
+                .$lr['id'].']['.$lp['id'].']">';
             echo '<input type="checkbox" name="permission['
                 .$lr['id'].']['.$lp['id'].']" ';
             if ($hasPermission) {
@@ -93,15 +96,16 @@ if ($roles->nRows >= 1 and $permissions->nRows >= 1) {
             } else {
                 echo '/>';
             }
-            echo '<span>'.$lp['name'].' ('.$lp['description'].')</span>';
+            echo $lp['name'].' ('.$lp['description'].')';
             echo '</label>';
+            echo '</div></div>';
         }
 
         echo '</div></div>';
     }
 
     echo '<div class="text-center">';
-    echo '<input class="button success" type="submit"'
+    echo '<input class="btn btn-success" type="submit"'
         .' value="'.WsLocalize::msg('Save').'"/>';
     echo '</div>';
 

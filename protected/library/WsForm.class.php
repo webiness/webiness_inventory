@@ -60,12 +60,11 @@ class WsForm
         $this->_id = 'WsForm_'.uniqid();
 
         $this->_form = '<div class="row">';
-        $this->_form .= '<div class="column column-12">';
+        $this->_form .= '<div class="col-sm-12">';
         $this->_form .= '<form id="'.$this->_id.'" ';
         $this->_form .= 'class="ws_form" ';
         $this->_form .= 'method="POST" enctype="multipart/form-data" ';
         $this->_form .= 'role="form" action="'.$this->_action.'">';
-        $this->_form .= '<fieldset>';
 
         // prevent CSRF attack
         if (isset($_SESSION['ws_auth_token'])) {
@@ -92,17 +91,11 @@ class WsForm
      */
     private function formEnd()
     {
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12 text-center">';
-        $this->_form .= '<input type="submit" class="button success" id="';
-        $this->_form .= $this->_id.'_submit"';
-        $this->_form .= ' value="'.$this->submitButtonText.'"/>';
-        $this->_form .= '</div></div>';
+        $this->_form .= '<button type="submit" class="btn btn-success" id="';
+        $this->_form .= $this->_id.'_submit">';
+        $this->_form .= $this->submitButtonText.'</button>';
 
-        $this->_form .= '</fieldset>';
-        $this->_form .= '</form>';
-
-        $this->_form .= '</div></div>';
+        $this->_form .= '</form></div></div>';
 
         $this->_form .= '<script>';
         // for form validation
@@ -271,31 +264,27 @@ class WsForm
         }
 
         // add text input element
-        if ($label !== '' and $type !== 'file') {
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-12">';
+        if ($label !== '') {
+            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
-            $this->_form .= '</div>';
-            $this->_form .= '</div>';
         }
 
         // display link to file if type is file and picture thumbnail if file is
         // picture
-        if ($type === 'file') {
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-12">';
-            $this->_form .= '<label class="text-left">';
-            $this->_form .= $label;
-            $this->_form .= '</label>';
-            $this->_form .= '</div>';
-            $this->_form .= '</div>';
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-6">';
+        if ($type === 'file') {            
+            $this->_form .= '<input type="file"'
+                .' name="'.$name.'" '
+                .' id="'.$id.'"'
+                .' class="'.$class.'"'
+                .' placeholder="'.$placeholder.'"'
+                .' '.$ro.' '.$rq.'/>';
+            
             if (get_called_class() === 'WsModelForm') {
                 $file = 'runtime/'.$this->getModelName().'/'.$value;
-                $file_url = WsSERVER_ROOT.'/runtime/'.$this->getModelName().'/'.$value;
+                $file_url = WsSERVER_ROOT.'/runtime/'.$this->getModelName().'/'
+                    .$value;
                 if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
                     // if file is image then show it
                     $img = new WsImage();
@@ -309,30 +298,18 @@ class WsForm
                         $this->_form .= '</a>';
                     }
                     unset ($img, $file, $file_url);
-                } else {
-                    $this->_form .= WsLocalize::msg('no file selected ');
                 }
             }
-            $this->_form .= '<input type="file"'
-                .' name="'.$name.'" '
-                .' id="'.$id.'"'
-                .' class="'.$class.'"'
-                .' placeholder="'.$placeholder.'"'
-                .' '.$ro.' '.$rq.'/>';
-            $this->_form .= '<label for="'.$id.'">'
-                .WsLocalize::msg('Choose a file').'</label>';
-            $this->_form .= '</div></div>';
+            
         } else {
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-12">';
             $this->_form .= '<input type="'.$type.'"'
                 .' name="'.$name.'" value="'.$value.'"'
                 .' id="'.$id.'"'
-                .' class="'.$class.'"'
+                .' class="form-control '.$class.'"'
                 .' placeholder="'.$placeholder.'"'
                 .' maxlength='.$maxlength.' '.$ro.' '.$rq.'/>';
-            $this->_form .= '</div></div>';
         }
+        $this->_form .= '</div>';
     }
 
 
@@ -401,26 +378,21 @@ class WsForm
 
         // add text area element
         if ($label != '') {
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-12">';
+            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
-            $this->_form .= '</div>';
-            $this->_form .= '</div>';
         }
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12">';
         $this->_form .= '
             <textarea rows=5
                 name="'.$name.'"
                 id="'.$id.'"
-                class="'.$class.'"
+                class="form-control '.$class.'"
                 placeholder="'.$placeholder.'"
                 '.$ro.' '.$rq.'>';
         $this->_form .= $value;
         $this->_form .= '</textarea>';
-        $this->_form .= '</div></div>';
+        $this->_form .= '</div>';
     }
 
 
@@ -474,8 +446,8 @@ class WsForm
         }
 
         // add boolean element
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12">';
+        $this->_form .= '<div class="form-group">';
+        $this->_form .= '<div class="checkbox">';
 
         if ($label != '') {
             $this->_form .= '<label for="'.$id.'">';
@@ -487,17 +459,16 @@ class WsForm
             id="'.$id.'"
             value="true"
             data-val="true"
-            class="ws_checkbox '.$class.'"
+            class="'.$class.'"
             '.$ro.'
             '.$ch.' />';
 
         if ($label != '') {
-            $this->_form .= '<span>'.$label.'</span>';
+            $this->_form .= ' '.$label;
             $this->_form .= '</label>';
         }
-
-        $this->_form .= '</div>';
-        $this->_form .= '</div>';
+    
+        $this->_form .= '</div></div>';
     }
 
 
@@ -553,22 +524,17 @@ class WsForm
 
         // add select element
         if ($label != '') {
-            $this->_form .= '<div class="row">';
-            $this->_form .= '<div class="column column-12">';
+            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
-            $this->_form .= '</div>';
-            $this->_form .= '</div>';
         }
-        $this->_form .= '<div class="row">';
-        $this->_form .= '<div class="column column-12">';
         $this->_form .= '
             <select
                 style="width: 100%"
                 name="'.$name.'"
                 id="'.$id.'"
-                class="'.$class.'"
+                class="form control '.$class.'"
                 '.$rq.' >';
 
         foreach ($list as $l) {
@@ -581,7 +547,6 @@ class WsForm
             }
         }
         $this->_form .= '</select>';
-        $this->_form .= '</div>';
         $this->_form .= '</div>';
     }
 

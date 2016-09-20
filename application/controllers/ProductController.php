@@ -11,10 +11,9 @@ class ProductController extends WsController
         }
         unset ($auth);
 
-        $this->title = WsLocalize::msg('Webiness Inventory - Product categories');
         // breadcrumbs
         $this->breadcrumbs = array(
-            WsLocalize::msg('inventory') => array(
+            WsLocalize::msg('home') => array(
                 'site',
                 'index'
             ),
@@ -23,7 +22,10 @@ class ProductController extends WsController
                 'categories'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Product Categories');
+            
         $PCModel = new Product_categoryModel();
 
         $this->render('categories', array(
@@ -41,10 +43,9 @@ class ProductController extends WsController
         }
         unset ($auth);
 
-        $this->title = WsLocalize::msg('Webiness Inventory - Products');
         // breadcrumbs
         $this->breadcrumbs = array(
-            WsLocalize::msg('inventory') => array(
+            WsLocalize::msg('home') => array(
                 'site',
                 'index'
             ),
@@ -53,7 +54,10 @@ class ProductController extends WsController
                 'products'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Manage Products');
+            
         $ProductModel = new ProductModel();
 
         $this->render('products', array(
@@ -205,7 +209,6 @@ class ProductController extends WsController
         $all_product_categories =
             $db->query('SELECT id, category_name FROM product_category');
 
-        $this->title = WsLocalize::msg('Webiness Inventory - Item '.$id);
         // breadcrumbs
         $this->breadcrumbs = array(
             WsLocalize::msg('inventory') => array(
@@ -221,7 +224,10 @@ class ProductController extends WsController
                 'edit'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Item ').$id;
+        
         $this->render('edit', array(
             'id' => $id,
             'barcode' => $barcode,
@@ -336,10 +342,9 @@ class ProductController extends WsController
 
         $products = $db->query($sql);
 
-        $this->title = WsLocalize::msg('Webiness Inventory - inventory summary');
         // breadcrumbs
         $this->breadcrumbs = array(
-            WsLocalize::msg('inventory') => array(
+            WsLocalize::msg('home') => array(
                 'site',
                 'index'
             ),
@@ -352,6 +357,10 @@ class ProductController extends WsController
                 'inventory_list'
             ),
         );
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Inventory Summary');
+            
         $this->render('inventory_list', array(
             'products' => $products
         ));
@@ -543,11 +552,10 @@ class ProductController extends WsController
             ORDER BY d.d_date
         ';
         $product_sale = $db->query($sql, array('id' => intval($id)));
-
-        $this->title = WsLocalize::msg('Webiness Inventory - '.$product_model->product_name);
+        
         // breadcrumbs
         $this->breadcrumbs = array(
-            WsLocalize::msg('iventory') => array(
+            WsLocalize::msg('home') => array(
                 'site',
                 'index'
             ),
@@ -560,6 +568,10 @@ class ProductController extends WsController
                 'card'
             ),
         );
+        // title
+        $this->title = WsConfig::get('app_name')
+            .' -  '.$product_model->product_name;
+            
         $this->render('card', array(
             'product_model' => $product_model,
             'totals' => $totals,

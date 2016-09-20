@@ -113,12 +113,12 @@ function WsErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
     $layoutFile = WsROOT.'/public/layouts/';
     $layoutFile .= WsConfig::get('html_layout');
 
-    $WsContent = '<div class="row"><div class="column column-12">';
+    $WsContent = '<div class="row"><div class="col-sm-12">';
 
     switch($errno) {
         case E_NOTICE:
         case E_USER_NOTICE:
-            $WsContent .= '<div class="callout">';
+            $WsContent .= '<div class="alert alert-info">';
             break;
         case E_WARNING:
         case E_USER_WARNING:
@@ -126,7 +126,7 @@ function WsErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
         case E_COMPILE_WARNING:
         case E_DEPRECATED:
         case E_USER_DEPRECATED:
-            $WsContent .= '<div class="callout warning">';
+            $WsContent .= '<div class="alwert alert-warning">';
             break;
         case E_ERROR:
         case E_PARSE:
@@ -139,7 +139,7 @@ function WsErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
                 WsConfig::get('app_name').' - Critical User Error',
                 $err
             );
-            $WsContent .= '<div class="callout error">';
+            $WsContent .= '<div class="alert alert-danger">';
     }
 
     // construc error message depending of WsAPP_STAGE

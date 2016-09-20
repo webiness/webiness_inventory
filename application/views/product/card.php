@@ -14,24 +14,20 @@
         $lang.'_'.strtoupper($lang).'.utf8'
     );
  ?>
-<br/>
-<br/>
 
 <div class="row">
-    <div class="column column-10 column-offset-1">
-        <h2 class="text-primary">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <h1 class="text-primary">
             <?php
                 echo $product_model->product_name
                     .' ('.$product_model->category_id.')';
             ?>
-        </h2>
+        </h1>
     </div>
 </div>
 
-<br/>
-
 <div class="row">
-    <div class="column column-6 column-offset-1">
+    <div class="col-sm-12 col-md-5 col-md-offset-1">
         <?php
         if (file_exists(WsROOT.'/runtime/ItemModel/'.$product_model->picture)) {
         ?>
@@ -42,47 +38,43 @@
         <?php
         }
         ?>
-        <p class="text-left">
-            <?php echo $product_model->description; ?>
-            <br/>
-            <br/>
-            <?php echo $product_model->declaration; ?>
-        </p>
+        <?php echo $product_model->description; ?>
+        <br/>
+        <br/>
+        <?php echo $product_model->declaration; ?>
     </div>
 
-    <div class="column column-4 text-right no-print">
-        <input type="button" class="error" onclick="window.close()"
+    <div class="col-sm-12 col-md-5 column-md-offset-1 text-right no-print">
+        <input type="button" class="btn btn-danger" onclick="window.close()"
             value="<?php echo WsLocalize::msg('close window'); ?>"/>
     </div>
 </div>
 
-<br/>
 
 <div class="row">
-    <div class="column column-6 column-offset-1">
+    <div class="col-sm-12 col-md-6 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Product position: '); ?></strong>
         <?php echo $product_model->pos; ?>
     </div>
 </div>
 
-<br/>
 
 <div class="row">
-    <div class="column column-3 column-offset-1">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Minimum quantity: '); ?></strong>
         <?php echo $product_model->quantitymin.' '.$product_model->uom; ?>
     </div>
 
-    <div class="column column-3">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Current quantity: '); ?></strong>
         <?php
             $total = $purchase - $sale - $dismission;
             if ($total > $quantitymin) {
                 $class = 'text-success';
             } else if ($total == $quantitymin) {
-                $class = 'text-primary';
+                $class = 'text-warning';
             } else {
-                $class = 'text-error';
+                $class = 'text-danger';
             }
         ?>
         <span class="<?php echo $class; ?>">
@@ -91,9 +83,8 @@
     </div>
 </div>
 
-<br/>
 <div class="row">
-    <div class="column column-3 column-offset-1">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Purchased: '); ?></strong>
         <?php
             if ($purchase == intval($purchase)) {
@@ -105,7 +96,7 @@
         ?>
     </div>
 
-    <div class="column column-3">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Sold: '); ?></strong>
         <?php
             if ($sale == intval($sale)) {
@@ -117,7 +108,7 @@
         ?>
     </div>
 
-    <div class="column column-3">
+    <div class="col-sm-12 col-md-3">
         <strong><?php echo WsLocalize::msg('Dismission: '); ?></strong>
         <?php
             if ($dismission == intval($dismission)) {
@@ -130,9 +121,8 @@
     </div>
 </div>
 
-<br/>
 <div class="row">
-    <div class="column column-3 column-offset-1">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Ordered: '); ?></strong>
         <?php
             if ($purchase_draft == intval($purchase_draft)) {
@@ -144,7 +134,7 @@
         ?>
     </div>
 
-    <div class="column column-3">
+    <div class="col-sm-12 col-md-3 col-md-offset-1">
         <strong><?php echo WsLocalize::msg('Proposed for sale: '); ?></strong>
         <?php
             if ($sale_draft == intval($sale_draft)) {
@@ -156,7 +146,7 @@
         ?>
     </div>
 
-    <div class="column column-3">
+    <div class="col-sm-12 col-md-3">
         <strong><?php echo WsLocalize::msg('Proposed for dismission: '); ?></strong>
         <?php
             if ($dismission_draft == intval($dismission_draft)) {
@@ -169,39 +159,31 @@
     </div>
 </div>
 
-<br/>
 <br class="page-break"/>
 <div class="row">
-    <div class="column column-10 column-offset-1">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <h3>
+            <?php
+                echo WsLocalize::msg('Purchases')
+            ?>
+        </h3>
 
-        <div class="row grid-header">
-            <div class="row">
-                <div class="column column-6 text-left text-error">
-                    <div class="grid-title">
-                        <?php
-                            echo WsLocalize::msg('Purchases')
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <table class="grid">
+        <table class="table table-bordered table-hover table-condensed table-responsive">
             <thead>
-                <tr class="ws_tr">
-                    <th class="ws_th">
+                <tr>
+                    <th>
                         <?php echo WsLocalize::msg('document'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('date'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('partner'); ?>
                     </th>
-                    <th class="ws_th text-right">
+                    <th class="text-right">
                         <?php echo WsLocalize::msg('discount'); ?>
                     </th>
-                    <th class="ws_th text-right">
+                    <th class="text-right">
                         <?php echo WsLocalize::msg('quantity'); ?>
                     </th>
             </thead>
@@ -212,24 +194,24 @@
                     $quantity = floatval($i['quantity']);
                     $date = strftime('%x', strtotime($i['document_date']));
 
-                    echo '<tr class="ws_tr">';
-                    echo '<td class="ws_td">'.$i['document_id'].'</td>';
-                    echo '<td class="ws_td">'.$date.'</td>';
-                    echo '<td class="ws_td">'.$i['partner_name'].'</td>';
+                    echo '<tr>';
+                    echo '<td>'.$i['document_id'].'</td>';
+                    echo '<td>'.$date.'</td>';
+                    echo '<td>'.$i['partner_name'].'</td>';
 
                     if ($discount == intval($discount)) {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($discount, 0, ',', '.').'</td>';
                     } else {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($discount, 3, ',', '.').'</td>';
                     }
 
                     if ($quantity == intval($quantity)) {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($quantity, 0, ',', '.').'</td>';
                     } else {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($quantity, 3, ',', '.').'</td>';
                     }
 
@@ -243,36 +225,29 @@
 
 <br class="page-break"/>
 <div class="row">
-    <div class="column column-10 column-offset-1">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <h3>
+            <?php
+                echo WsLocalize::msg('Sales')
+            ?>
+        </h3>
 
-        <div class="row grid-header">
-            <div class="row">
-                <div class="column column-6 text-left text-error">
-                    <div class="grid-title">
-                        <?php
-                            echo WsLocalize::msg('Sales')
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <table class="grid">
+        <table class="table table-bordered table-hover table-condensed table-responsive">
             <thead>
-                <tr class="ws_tr">
-                    <th class="ws_th">
+                <tr>
+                    <th>
                         <?php echo WsLocalize::msg('document'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('date'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('partner'); ?>
                     </th>
-                    <th class="ws_th text-right">
+                    <th class="text-right">
                         <?php echo WsLocalize::msg('discount'); ?>
                     </th>
-                    <th class="ws_th text-right">
+                    <th class="text-right">
                         <?php echo WsLocalize::msg('quantity'); ?>
                     </th>
             </thead>
@@ -283,24 +258,24 @@
                     $quantity = floatval($i['quantity']);
                     $date = strftime('%x', strtotime($i['document_date']));
 
-                    echo '<tr class="ws_tr">';
-                    echo '<td class="ws_td">'.$i['document_id'].'</td>';
-                    echo '<td class="ws_td">'.$date.'</td>';
-                    echo '<td class="ws_td">'.$i['partner_name'].'</td>';
+                    echo '<tr>';
+                    echo '<td>'.$i['document_id'].'</td>';
+                    echo '<td>'.$date.'</td>';
+                    echo '<td>'.$i['partner_name'].'</td>';
 
                     if ($discount == intval($discount)) {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($discount, 0, ',', '.').'</td>';
                     } else {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($discount, 3, ',', '.').'</td>';
                     }
 
                     if ($quantity == intval($quantity)) {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($quantity, 0, ',', '.').'</td>';
                     } else {
-                        echo '<td class="ws_td text-right">'
+                        echo '<td class="text-right">'
                             .number_format($quantity, 3, ',', '.').'</td>';
                     }
 

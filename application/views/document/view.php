@@ -8,24 +8,21 @@
 </style>
 
 <div class="row">
-    <div class="column column-10 column-offset-1">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
         <?php
             if ($error !== '') {
-                echo '<div class="callout error">';
+                echo '<div class="alert alert-danger">';
                 echo $error;
                 echo '</div>';
             } else {
         ?>
-        <table>
+        <div class="table-responsive">
+        <table class="table table-condensed">
             <tr class="no-print">
                 <td colspan=2 style="text-align: right;">
-                    <input type="button" class="error" onclick="window.close()"
+                    <input type="button" class="btn btn-danger"
+                        onclick="window.close()"
                         value="<?php echo WsLocalize::msg('close window'); ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan=2>
-                    <hr/>
                 </td>
             </tr>
             <tr>
@@ -121,41 +118,43 @@
                 </td>
             </tr>
         </table>
-
+        </div>
+        
         <br/>
-
-        <table class="grid">
+        
+        <div class="table-responsive">
+        <table class="table table-bordered table-condensed">
             <thead>
-                <tr class="ws_tr">
-                    <th class="ws_th">#</th>
-                    <th class="ws_th">
+                <tr>
+                    <th>#</th>
+                    <th>
                         <?php echo WsLocalize::msg('product name'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('price'); ?>
                     </th>
                     <?php
                     if ($document_model->d_type === 'sale') {
                     ?>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('vat'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('consumption tax'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('sales tax'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('sale price'); ?>
                     </th>
                     <?php
                     }
                     ?>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('quantity'); ?>
                     </th>
-                    <th class="ws_th">
+                    <th>
                         <?php echo WsLocalize::msg('total'); ?>
                     </th>
                 </tr>
@@ -170,9 +169,9 @@
                 $total_total = 0;
                 
                 foreach ($products as $product) {
-                    echo '<tr class="ws_tr">';
-                    echo '<td class="ws_td">'.$product_no.'</td>';
-                    echo '<td class="ws_td">'.$product['product'].'</td>';
+                    echo '<tr>';
+                    echo '<td>'.$product_no.'</td>';
+                    echo '<td>'.$product['product'].'</td>';
                     // single price
                     if ($document_model->d_type === 'sale') {
                         $margin = ($product['price'] * $product['margin'])/100;
@@ -180,7 +179,7 @@
                     } else {
                         $price = round($product['price'], 2);
                     }
-                    echo '<td class="ws_td">';
+                    echo '<td>';
                     echo number_format($price, 2, ',', '.');
                     echo '</td>';
                     $total_price += ($price * $product['quantity']);
@@ -189,27 +188,27 @@
                         // vat
                         $vat = round(($price * $product['vat']) / 100, 2);
                         $total_vat += $vat * $product['quantity'];
-                        echo '<td class="ws_td">';
+                        echo '<td>';
                         echo number_format($vat, 2, ',', '.');
                         echo '</td>';
                         // consumption tax
                         $cons_tax =round(
                             ($price * $product['consumption_tax']) / 100, 2);
                         $total_consumption_tax+=$cons_tax*$product['quantity'];
-                        echo '<td class="ws_td">';
+                        echo '<td>';
                         echo number_format($cons_tax, 2, ',', '.');
                         echo '</td>';
                         // sales tax
                         $sales_tax =round(
                             ($price * $product['sales_tax']) / 100, 2);
                         $total_sales_tax += $sales_tax * $product['quantity'];
-                        echo '<td class="ws_td">';
+                        echo '<td>';
                         echo number_format($sales_tax, 2, ',', '.');
                         echo '</td>';
                         
                         $sale_price = ($price+$vat+$cons_tax+$sales_tax);
                         // sale price
-                        echo '<td class="ws_td">';
+                        echo '<td>';
                         echo number_format($sale_price, 2, ',', '.');
                         echo '</td>';
                     } else {
@@ -220,12 +219,12 @@
                     $total_total += $total;
                     
                     // quantity
-                    echo '<td class="ws_td">';
+                    echo '<td>';
                     echo number_format($product['quantity'], 2, ',', '.');
                     echo ' '.$product['uom'].'</td>';
                     echo '</td>';
                     // total price
-                    echo '<td class="ws_td">';
+                    echo '<td>';
                     echo number_format($total, 2, ',', '.');
                     echo '</td>';
                     echo '</tr>';
@@ -235,10 +234,12 @@
                 ?>
             </tbody>
         </table>
+        </div>
         
         <br/>
         
-        <table class="text-right">
+        <div class="table-responsive">
+        <table class="table table-condensed">
         <?php
         if ($document_model->d_type === 'sale') {
         ?>
@@ -312,9 +313,6 @@
                 </td>
             </tr>
             <tr>
-                <td colspan=3><hr/></td>
-            </tr>
-            <tr>
                 <td style="width: 100%"></td>
                 <td style="white-space: nowrap; font-weight: bold;">
                     <?php
@@ -329,7 +327,8 @@
                 </td>
             </tr>
         </table>
-
+        </div>
+        
         <?php
         }
         ?>

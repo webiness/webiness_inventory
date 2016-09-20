@@ -11,7 +11,6 @@ class DocumentController extends WsController
         }
         unset ($auth);
 
-        $this->title = WsLocalize::msg('Webiness Inventory - Documents');
         // breadcrumbs
         $this->breadcrumbs = array(
             WsLocalize::msg('home') => array(
@@ -23,7 +22,10 @@ class DocumentController extends WsController
                 'index'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Manage Documents');
+        
         $document_model = new DocumentModel();
 
         $this->render('index', array(
@@ -331,7 +333,6 @@ class DocumentController extends WsController
                 FILTER_SANITIZE_NUMBER_INT);
         }
 
-        $this->title = WsLocalize::msg('Webiness Inventory - Document ').$id;
         // breadcrumbs
         $this->breadcrumbs = array(
             WsLocalize::msg('home') => array(
@@ -347,7 +348,10 @@ class DocumentController extends WsController
                 'view'
             ),
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Document ').$id;
+        
         // initialize variables
         $error = '';
         $products = array();
@@ -403,3 +407,4 @@ class DocumentController extends WsController
         ));
     }
 }
+

@@ -152,7 +152,7 @@ if ($searchStr == '') {
 
 // table (grid)
 if ($m->nRows < 1) {
-    $table = '<tr class="ws_tr"><td class="ws_td">'.$noDataText.'</td></tr>';
+    $table = '<tr><td>'.$noDataText.'</td></tr>';
 } else {
     // set locale for date and time representation
     $lang = substr(
@@ -166,11 +166,11 @@ if ($m->nRows < 1) {
     );
     $table = '';
     foreach ($results as $row) {
-        $table .= '<tr class="ws_tr">';
+        $table .= '<tr>';
         foreach ($row as $key => $value) {
             $value = htmlspecialchars($value);
             if (!in_array($key, $m->hiddenColumns)) {
-                $table .= '<td class="ws_td">';
+                $table .= '<td>';
                 if ($m->columnType[$key] == 'timestamp_type') {
                     $table .= strftime('%x %X', strtotime($value));
                 } else if ($m->columnType[$key] == 'date_type') {
@@ -215,8 +215,8 @@ if ($m->nRows < 1) {
         }
         if ($showEdit) {
             $id = $row['id'];
-            $table .= '<td class="ws_td">';
-            $table .= '<input class="action-button error" id="delete_'
+            $table .= '<td>';
+            $table .= '<input class="btn btn-danger" id="delete_'
                 .$gridId.'_'.$id.'" type="button" value="&#x2718;"'
                 .' onclick="WsdeleteModelID('
                 .'\''.$formId.'\', '
@@ -226,7 +226,7 @@ if ($m->nRows < 1) {
                 .', \''.WsLocalize::msg('Yes').'\''
                 .', \''.WsLocalize::msg('No').'\''
                 .')"/>';
-            $table .= '<input class="action-button primary" id="edit_'
+            $table .= '<input class="btn btn-primary" id="edit_'
                 .$gridId
                 .'_'.$id.'" type="button" value="&#x270e;"'
                 .' onclick="WseditModelID('

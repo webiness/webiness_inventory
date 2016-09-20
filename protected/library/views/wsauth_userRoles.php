@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="column column-12">
+    <div class="col-sm-12">
         <h3 class="text-center">
             <?php echo WsConfig::get('app_name'); ?>
             -
@@ -38,7 +38,7 @@ if (filter_input(INPUT_POST, 'role') !== NULL) {
 if ($status !== '') {
 ?>
 <div class="row">
-    <div class="callout success">
+    <div class="alert alert-success">
         <?php echo $status; ?>
     </div>
 </div>
@@ -69,10 +69,10 @@ if ($users->nRows >= 1 and $roles->nRows >= 1) {
         }
 
         echo '<div class="row">';
-        echo '<div class="column column-8 column-offset-2">';
-
+        echo '<div class="col-sm-12 col-md-10 col-md-offset-1">';
+        
         echo '<br/>';
-        echo '<span class="label">'.$lu['email'].'</span>';
+        echo '<h4 class="text-primary">'.$lu['email'].'</h4>';
         echo '<input type="hidden" name="user_id" value="'.$lu['id'].'"/>';
 
         foreach ($list_of_roles as $lr) {
@@ -86,8 +86,11 @@ if ($users->nRows >= 1 and $roles->nRows >= 1) {
             } else {
                 $hasRole = false;
             }
-
-            echo '<label>';
+            
+            echo '<div class="form-group">';
+            echo '<div class="checkbox">';
+            echo '<label for="role['
+                .$lu['id'].']['.$lr['id'].']">';
             echo '<input type="checkbox" name="role['
                 .$lu['id'].']['.$lr['id'].']" ';
             if ($hasRole) {
@@ -95,15 +98,16 @@ if ($users->nRows >= 1 and $roles->nRows >= 1) {
             } else {
                 echo '/>';
             }
-            echo '<span>'.$lr['name'].' ('.$lr['description'].')</span>';
+            echo $lr['name'].' ('.$lr['description'].')';
             echo '</label>';
+            echo '</div></div>';
         }
 
         echo '</div></div>';
     }
 
     echo '<div class="text-center">';
-    echo '<input class="button success" type="submit"'
+    echo '<input class="btn btn-success" type="submit"'
         .' value="'.WsLocalize::msg('Save').'"/>';
     echo '</div>';
 

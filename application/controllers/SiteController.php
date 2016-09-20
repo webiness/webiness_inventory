@@ -14,8 +14,18 @@ class SiteController extends WsController {
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-
-        $this->title = WsLocalize::msg(' - dashboard');
+        
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+        );
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Dashboard');
+            
         $this->render('index');
     }
 
@@ -34,8 +44,22 @@ class SiteController extends WsController {
         if($company_model->idExists(1)) {
             $company_model->getOne(1);
         }
-
-        $this->title = WsLocalize::msg(' - my company');
+        
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('company settings') => array(
+                'site',
+                'company'
+            ),
+        );
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Company Settings');
+            
         $this->render('company', array(
             'company_model' => $company_model,
         ));

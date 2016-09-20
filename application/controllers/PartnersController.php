@@ -10,8 +10,6 @@ class PartnersController extends WsController
             $this->redirect('wsauth', 'login');
         }
         unset ($auth);
-            
-        $this->title = WsLocalize::msg(' - Manage Partners');
 
         $PartnerModel = new PartnerModel();
 
@@ -26,7 +24,10 @@ class PartnersController extends WsController
                 'index'
             )
         );
-
+        // title
+        $this->title = WsConfig::get('app_name')
+            .WsLocalize::msg(' - Manage Partners');
+            
         $this->render('index', array(
             'PartnerModel' => $PartnerModel,
         ));

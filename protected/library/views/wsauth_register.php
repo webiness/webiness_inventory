@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="column column-12">
+    <div class="col col-sm-12 col-md-6 col-md-offset-3">
         <h3 class="text-center">
             <?php echo WsConfig::get('app_name'); ?>
             -
@@ -37,12 +37,12 @@
 ?>
 
 <div class="row">
-    <div class="column column-8 column-offset-2">
+    <div class="col-sm-12 col-md-6 col-md-offset-3">
 <?php
     // begining of registration form
     $registration_form = new WsForm(WsUrl::link('Wsauth', 'register'));
 
-    $registration_form->submitButtonText = 'register';
+    $registration_form->submitButtonText = 'register user';
 
     // email field
     $registration_form->textInput(array(
@@ -66,16 +66,21 @@
 </div>
 
 <?php
-    if ($error_message != '') {
+    if (isset($_POST) and $error_message != '') {
 ?>
-        <div class="row"
-            <div class="callout error">
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-md-offset-3 alert alert-error">
             <?php
                 header('HTTP/1.1 500 Internal Server Error');
                 echo $error_message;
-    } else {
+    } else if (isset($_POST) and $error_message != '') {
 ?>
-            <div class="callout success">
+        <br/>
+        <br/>
+        <div class="row">   
+            <div class="col-sm-12 col-md-6 col-md-offset-3 alert alert-success">
 <?php
         // check if we have input data
         if (isset($_POST['email']) and isset($_POST['password'])) {
@@ -86,4 +91,3 @@
 ?>
         </div>
     </div>
-</section>
