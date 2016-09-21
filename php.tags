@@ -1,0 +1,414 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+CategoriesGrid	application/views/product/categories.php	/^<?php$/;"	v
+CompanyModel	application/models/CompanyModel.php	/^class CompanyModel extends WsModel$/;"	c
+DocumentController	application/controllers/DocumentController.php	/^class DocumentController extends WsController$/;"	c
+DocumentGrid	application/views/document/index.php	/^<?php$/;"	v
+DocumentModel	application/models/DocumentModel.php	/^class DocumentModel extends WsModel$/;"	c
+Document_itemModel	application/models/Document_itemModel.php	/^class Document_itemModel extends WsModel$/;"	c
+PartnerGrid	application/views/partners/index.php	/^<?php$/;"	v
+PartnerModel	application/models/PartnerModel.php	/^class PartnerModel extends WsModel$/;"	c
+PartnersController	application/controllers/PartnersController.php	/^class PartnersController extends WsController$/;"	c
+ProductController	application/controllers/ProductController.php	/^class ProductController extends WsController$/;"	c
+ProductModel	application/models/ProductModel.php	/^Class ProductModel extends WsModel$/;"	c
+Product_categoryModel	application/models/Product_categoryModel.php	/^class Product_categoryModel extends WsModel$/;"	c
+ProductsGrid	application/views/product/products.php	/^<?php$/;"	v
+SiteController	application/controllers/SiteController.php	/^class SiteController extends WsController {$/;"	c
+WS_AUTH_LOGIN_OK	protected/library/WsInit.php	/^define('WS_AUTH_LOGIN_OK', 105);$/;"	d
+WS_AUTH_NOT_ACTIVE	protected/library/WsInit.php	/^define('WS_AUTH_NOT_ACTIVE', 104);$/;"	d
+WS_AUTH_NOT_VERIFIED	protected/library/WsInit.php	/^define('WS_AUTH_NOT_VERIFIED', 102);$/;"	d
+WS_AUTH_NO_MATCH	protected/library/WsInit.php	/^define('WS_AUTH_NO_MATCH', 103);$/;"	d
+WS_AUTH_USER_EXISTS	protected/library/WsInit.php	/^define('WS_AUTH_USER_EXISTS', 101);$/;"	d
+WsAuth	protected/library/WsAuth.class.php	/^class WsAuth$/;"	c
+WsChart	protected/library/WsChart.class.php	/^class WsChart$/;"	c
+WsConfig	protected/library/WsConfig.class.php	/^class WsConfig$/;"	c
+WsController	protected/library/WsController.class.php	/^class WsController$/;"	c
+WsDatabase	protected/library/WsDatabase.class.php	/^class WsDatabase$/;"	c
+WsErrorHandler	protected/library/WsInit.php	/^function WsErrorHandler($errno, $errmsg, $filename, $linenum, $vars)$/;"	f
+WsForm	protected/library/WsForm.class.php	/^class WsForm$/;"	c
+WsImage	protected/library/WsImage.class.php	/^class WsImage$/;"	c
+WsLocalize	protected/library/WsLocalize.class.php	/^class WsLocalize$/;"	c
+WsModel	protected/library/WsModel.class.php	/^class WsModel extends WsDatabase$/;"	c
+WsModelForm	protected/library/WsModelForm.class.php	/^class WsModelForm extends WsForm$/;"	c
+WsModelGridView	protected/library/WsModelGridView.class.php	/^class WsModelGridView$/;"	c
+WsROOT	index.php	/^define('WsROOT', dirname(__FILE__));$/;"	d
+WsROOT	protected/library/ajax/WsDeleteFromModel.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	d
+WsROOT	protected/library/ajax/WsEditModel.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	d
+WsROOT	protected/library/ajax/WsModelGrid.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	d
+WsROOT	protected/library/ajax/WsSaveToModel.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	d
+WsSERVER_ROOT	index.php	/^    define('WsSERVER_ROOT', dirname(filter_input(INPUT_SERVER, 'SCRIPT_NAME')));$/;"	d
+WsSERVER_ROOT	index.php	/^    define('WsSERVER_ROOT', filter_input(INPUT_SERVER, 'SERVER_HOST'));$/;"	d
+WsSERVER_ROOT	protected/library/ajax/WsEditModel.php	/^    define('WsSERVER_ROOT', 'http:\/\/'.filter_input($/;"	d
+WsSERVER_ROOT	protected/library/ajax/WsEditModel.php	/^    define('WsSERVER_ROOT', dirname($/;"	d
+WsSERVER_ROOT	protected/library/ajax/WsModelGrid.php	/^    define('WsSERVER_ROOT', 'http:\/\/'.filter_input($/;"	d
+WsSERVER_ROOT	protected/library/ajax/WsModelGrid.php	/^    define('WsSERVER_ROOT', dirname($/;"	d
+WsSTART_MEMORY_USAGE	protected/library/WsInit.php	/^    define('WsSTART_MEMORY_USAGE',$/;"	d
+WsSTART_TIME	protected/library/WsInit.php	/^    define('WsSTART_TIME', microtime(true));$/;"	d
+WsUrl	protected/library/WsUrl.class.php	/^class WsUrl$/;"	c
+Ws_logged_inModel	protected/library/models/Ws_logged_inModel.php	/^class Ws_logged_inModel extends WsModel$/;"	c
+Ws_permissionsModel	protected/library/models/Ws_permissionsModel.php	/^class Ws_permissionsModel extends WsModel$/;"	c
+Ws_role_permModel	protected/library/models/Ws_role_permModel.php	/^class Ws_role_permModel extends WsModel$/;"	c
+Ws_rolesModel	protected/library/models/Ws_rolesModel.php	/^class Ws_rolesModel extends WsModel$/;"	c
+Ws_userModel	protected/library/models/Ws_userModel.php	/^class Ws_userModel extends WsModel$/;"	c
+Ws_user_roleModel	protected/library/models/Ws_user_roleModel.php	/^class Ws_user_roleModel extends WsModel$/;"	c
+WsauthController	protected/library/controllers/WsauthController.php	/^class WsauthController$/;"	c
+__autoload	protected/library/WsInit.php	/^function __autoload($className)$/;"	f
+__construct	application/models/CompanyModel.php	/^    public function __construct()$/;"	f	class:CompanyModel
+__construct	application/models/DocumentModel.php	/^    public function __construct()$/;"	f	class:DocumentModel
+__construct	application/models/Document_itemModel.php	/^    public function __construct()$/;"	f	class:Document_itemModel
+__construct	application/models/PartnerModel.php	/^    public function __construct()$/;"	f	class:PartnerModel
+__construct	application/models/ProductModel.php	/^    public function __construct()$/;"	f	class:ProductModel
+__construct	application/models/Product_categoryModel.php	/^    public function __construct()$/;"	f	class:Product_categoryModel
+__construct	protected/library/WsAuth.class.php	/^    public function __construct()$/;"	f	class:WsAuth
+__construct	protected/library/WsChart.class.php	/^    public function __construct($width='', $height='',$/;"	f	class:WsChart
+__construct	protected/library/WsController.class.php	/^    public function __construct()$/;"	f	class:WsController
+__construct	protected/library/WsDatabase.class.php	/^    public function __construct()$/;"	f	class:WsDatabase
+__construct	protected/library/WsForm.class.php	/^    function __construct($action = '')$/;"	f	class:WsForm
+__construct	protected/library/WsImage.class.php	/^    public function __construct()$/;"	f	class:WsImage
+__construct	protected/library/WsModel.class.php	/^    public function __construct()$/;"	f	class:WsModel
+__construct	protected/library/WsModelForm.class.php	/^    function __construct($model, $dialog)$/;"	f	class:WsModelForm
+__construct	protected/library/WsModelGridView.class.php	/^    public function __construct($model, $order='',$/;"	f	class:WsModelGridView
+__construct	protected/library/controllers/WsauthController.php	/^    public function __construct()$/;"	f	class:WsauthController
+__construct	protected/library/models/Ws_logged_inModel.php	/^    public function __construct()$/;"	f	class:Ws_logged_inModel
+__construct	protected/library/models/Ws_permissionsModel.php	/^    public function __construct()$/;"	f	class:Ws_permissionsModel
+__construct	protected/library/models/Ws_role_permModel.php	/^    public function __construct()$/;"	f	class:Ws_role_permModel
+__construct	protected/library/models/Ws_rolesModel.php	/^    public function __construct()$/;"	f	class:Ws_rolesModel
+__construct	protected/library/models/Ws_userModel.php	/^    public function __construct()$/;"	f	class:Ws_userModel
+__construct	protected/library/models/Ws_user_roleModel.php	/^    public function __construct()$/;"	f	class:Ws_user_roleModel
+__destruct	protected/library/WsDatabase.class.php	/^    public function __destruct()$/;"	f	class:WsDatabase
+__toString	protected/library/WsChart.class.php	/^    public function __toString()$/;"	f	class:WsChart
+__toString	protected/library/WsForm.class.php	/^    public function __toString()$/;"	f	class:WsForm
+__toString	protected/library/WsModelForm.class.php	/^    public function __toString()$/;"	f	class:WsModelForm
+__toString	protected/library/WsModelGridView.class.php	/^    public function __toString()$/;"	f	class:WsModelGridView
+_action	protected/library/WsController.class.php	/^    private $_action;$/;"	v	class:WsController
+_action	protected/library/WsForm.class.php	/^    private $_action = '';$/;"	v	class:WsForm
+_action	protected/library/WsModelGridView.class.php	/^    private $_action = '';$/;"	v	class:WsModelGridView
+_action	protected/library/controllers/WsauthController.php	/^    private $_action;$/;"	v	class:WsauthController
+_attributes	protected/library/WsChart.class.php	/^    protected $_attributes = array();$/;"	v	class:WsChart
+_auth	protected/library/controllers/WsauthController.php	/^    private $_auth;$/;"	v	class:WsauthController
+_chart	protected/library/WsChart.class.php	/^    protected $_chart = '';$/;"	v	class:WsChart
+_datasets	protected/library/WsChart.class.php	/^    protected $_datasets = array();$/;"	v	class:WsChart
+_db	protected/library/WsAuth.class.php	/^    private $_db;$/;"	v	class:WsAuth
+_dbh	protected/library/WsDatabase.class.php	/^    private $_dbh;$/;"	v	class:WsDatabase
+_delete_action	protected/library/WsModelGridView.class.php	/^    private $_delete_action = '';$/;"	v	class:WsModelGridView
+_dialog	protected/library/WsModelForm.class.php	/^    private $_dialog;$/;"	v	class:WsModelForm
+_edit_action	protected/library/WsModelGridView.class.php	/^    private $_edit_action = '';$/;"	v	class:WsModelGridView
+_form	protected/library/WsForm.class.php	/^    protected $_form = '';$/;"	v	class:WsForm
+_formEnded	protected/library/WsForm.class.php	/^    private $_formEnded = false;$/;"	v	class:WsForm
+_formId	protected/library/WsModelGridView.class.php	/^    private $_formId = '';$/;"	v	class:WsModelGridView
+_has_gd_extension	protected/library/WsImage.class.php	/^    private $_has_gd_extension;$/;"	v	class:WsImage
+_height	protected/library/WsChart.class.php	/^    protected $_height;$/;"	v	class:WsChart
+_id	protected/library/WsChart.class.php	/^    protected $_id = '';$/;"	v	class:WsChart
+_id	protected/library/WsForm.class.php	/^    private $_id = '';$/;"	v	class:WsForm
+_id	protected/library/WsModelForm.class.php	/^    private $_id;$/;"	v	class:WsModelForm
+_id	protected/library/WsModelGridView.class.php	/^    private $_id = '';$/;"	v	class:WsModelGridView
+_image	protected/library/WsImage.class.php	/^    private $_image;$/;"	v	class:WsImage
+_imagefile	protected/library/WsImage.class.php	/^    private $_imagefile;$/;"	v	class:WsImage
+_labels	protected/library/WsChart.class.php	/^    protected $_labels = array();$/;"	v	class:WsChart
+_model	protected/library/WsModelForm.class.php	/^    private $_model;$/;"	v	class:WsModelForm
+_model	protected/library/WsModelGridView.class.php	/^    private $_model;$/;"	v	class:WsModelGridView
+_modelName	protected/library/WsModelGridView.class.php	/^    private $_modelName = '';$/;"	v	class:WsModelGridView
+_options	protected/library/WsChart.class.php	/^    protected $_options = array();$/;"	v	class:WsChart
+_order	protected/library/WsModelGridView.class.php	/^    private $_order = '';$/;"	v	class:WsModelGridView
+_params	protected/library/WsController.class.php	/^    private $_params = array();$/;"	v	class:WsController
+_params	protected/library/controllers/WsauthController.php	/^    private $_params = array();$/;"	v	class:WsauthController
+_tableName	protected/library/WsModelGridView.class.php	/^    private $_tableName;$/;"	v	class:WsModelGridView
+_type	protected/library/WsChart.class.php	/^    protected $_type = 'Line';$/;"	v	class:WsChart
+_validationRules	protected/library/WsForm.class.php	/^    private $_validationRules = '';$/;"	v	class:WsForm
+_width	protected/library/WsChart.class.php	/^    protected $_width;$/;"	v	class:WsChart
+addDataset	protected/library/WsChart.class.php	/^    public function addDataset($dataset, $reset=null)$/;"	f	class:WsChart
+addLabels	protected/library/WsChart.class.php	/^    public function addLabels($label, $reset=false)$/;"	f	class:WsChart
+addWatermark	protected/library/WsImage.class.php	/^    public function addWatermark($/;"	f	class:WsImage
+admin	protected/library/controllers/WsauthController.php	/^    public function admin()$/;"	f	class:WsauthController
+appendHTML	protected/library/WsForm.class.php	/^    public function appendHTML($html)$/;"	f	class:WsForm
+asset	protected/library/WsUrl.class.php	/^    public static function asset($file)$/;"	f	class:WsUrl
+auth	protected/library/WsInit.php	/^if (file_exists($db_file)) {$/;"	v
+auth	protected/library/views/wsauth_login.php	/^    $password = '';$/;"	v
+auth	protected/library/views/wsauth_register.php	/^        $password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);$/;"	v
+auth	public/layouts/inventory.php	/^    <?php$/;"	v
+barcode	protected/thirdparty/barcode.php	/^function barcode( $filepath="", $text="0", $size="20", $orientation="horizontal", $code_type="code128", $print=false ) {$/;"	f
+beforeDelete	protected/library/WsModel.class.php	/^    public function beforeDelete()$/;"	f	class:WsModel
+beforeDelete	protected/library/models/Ws_userModel.php	/^    public function beforeDelete()$/;"	f	class:Ws_userModel
+beforeSave	protected/library/WsModel.class.php	/^    public function beforeSave()$/;"	f	class:WsModel
+beforeSave	protected/library/models/Ws_userModel.php	/^    public function beforeSave()$/;"	f	class:Ws_userModel
+booleanInput	protected/library/WsForm.class.php	/^    public function booleanInput($params = array())$/;"	f	class:WsForm
+breadcrumbs	protected/library/WsController.class.php	/^    public $breadcrumbs;$/;"	v	class:WsController
+breadcrumbs	protected/library/controllers/WsauthController.php	/^    public $breadcrumbs;$/;"	v	class:WsauthController
+callHook	protected/library/WsInit.php	/^function callHook()$/;"	f
+card	application/controllers/ProductController.php	/^    public function card($id=0)$/;"	f	class:ProductController
+categories	application/controllers/ProductController.php	/^    public function categories()$/;"	f	class:ProductController
+checkSession	protected/library/WsAuth.class.php	/^    public function checkSession()$/;"	f	class:WsAuth
+class	application/views/product/card.php	/^            if ($total > $quantitymin) {$/;"	v
+class	application/views/product/card.php	/^            } else if ($total == $quantitymin) {$/;"	v
+class	application/views/product/card.php	/^            } else {$/;"	v
+className	protected/library/WsModel.class.php	/^    public $className = '';$/;"	v	class:WsModel
+close	protected/library/WsDatabase.class.php	/^    public function close()$/;"	f	class:WsDatabase
+code_type	protected/thirdparty/barcode.php	/^$orientation = (isset($_GET["orientation"])?$_GET["orientation"]:"horizontal");$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^                $m->$column = 'f';$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^                $m->$column = 't';$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^                $m->$column = 0;$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^                $m->$column = 1;$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^        $m->$column = $value;$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^        $m->$column = date('Y-m-d H:i:s', strtotime($value));$/;"	v
+column	protected/library/ajax/WsSaveToModel.php	/^        $m->$column = date('Y-m-d', strtotime($value));$/;"	v
+columnCanBeNull	protected/library/WsModel.class.php	/^    public $columnCanBeNull = array();$/;"	v	class:WsModel
+columnHeaders	protected/library/WsModel.class.php	/^    public $columnHeaders = array();$/;"	v	class:WsModel
+columnType	protected/library/WsModel.class.php	/^    public $columnType = array();$/;"	v	class:WsModel
+columns	protected/library/WsModel.class.php	/^    public $columns = array();$/;"	v	class:WsModel
+company	application/controllers/SiteController.php	/^    public function company()$/;"	f	class:SiteController
+company_form	application/views/site/company.php	/^        <?php$/;"	v
+condition	protected/library/ajax/WsModelGrid.php	/^} else {$/;"	v
+condition2	protected/library/ajax/WsModelGrid.php	/^    }$/;"	v
+cons_tax	application/views/document/view.php	/^                        echo '<\/td>';$/;"	v
+constructGrid	protected/library/WsModelGridView.class.php	/^    protected function constructGrid()$/;"	f	class:WsModelGridView
+createAdminUser	protected/library/WsAuth.class.php	/^    private function createAdminUser()$/;"	f	class:WsAuth
+createUser	protected/library/WsAuth.class.php	/^    public function createUser($email, $password)$/;"	f	class:WsAuth
+cur_date	application/views/product/inventory_list.php	/^);$/;"	v
+currentUser	protected/library/WsAuth.class.php	/^    public function currentUser()$/;"	f	class:WsAuth
+currentUserID	protected/library/WsAuth.class.php	/^    public function currentUserID()$/;"	f	class:WsAuth
+date	application/views/product/card.php	/^                    $quantity = floatval($i['quantity']);$/;"	v
+db	protected/library/WsInit.php	/^    $sql = file_get_contents($db_file);$/;"	v
+db	protected/library/views/wsauth_rolePerms.php	/^<?php$/;"	v
+db	protected/library/views/wsauth_userRoles.php	/^<?php$/;"	v
+db_file	protected/library/WsInit.php	/^if (WsConfig::get('db_driver') == 'pgsql') {$/;"	v
+db_file	protected/library/WsInit.php	/^} else {$/;"	v
+delete	application/controllers/DocumentController.php	/^    public function delete($id = 0) {$/;"	f	class:DocumentController
+delete	protected/library/WsModel.class.php	/^    public function delete()$/;"	f	class:WsModel
+delete_action	protected/library/ajax/WsModelGrid.php	/^    and filter_input(INPUT_POST, 'deleteAction') !== '') {$/;"	v
+delete_action	protected/library/ajax/WsModelGrid.php	/^} else {$/;"	v
+destDir	protected/library/ajax/WsSaveToModel.php	/^    $fileTmp = $file['tmp_name'];$/;"	v
+discount	application/views/document/view.php	/^                    <?php$/;"	v
+discount	application/views/product/card.php	/^                foreach ($product_purchase as $i) {$/;"	v
+discount	application/views/product/card.php	/^                foreach ($product_sale as $i) {$/;"	v
+dismission	application/views/product/card.php	/^    $sale = $totals['sale'];$/;"	v
+dismission	application/views/product/inventory_list.php	/^                    $sale = floatval($product['sale']);$/;"	v
+dismission_draft	application/views/product/card.php	/^    $sale_draft = $totals['sale_draft'];$/;"	v
+edit	application/controllers/DocumentController.php	/^    public function edit($id = 0)$/;"	f	class:DocumentController
+edit	application/controllers/ProductController.php	/^    public function edit($id = 0)$/;"	f	class:ProductController
+edit	protected/library/controllers/WsauthController.php	/^    public function edit()$/;"	f	class:WsauthController
+edit_action	protected/library/ajax/WsModelGrid.php	/^    and filter_input(INPUT_POST, 'editAction') !== '') {$/;"	v
+edit_action	protected/library/ajax/WsModelGrid.php	/^} else {$/;"	v
+email	protected/library/views/wsauth_login.php	/^        if (isset($_POST['email']) and isset($_POST['password'])) {$/;"	v
+email	protected/library/views/wsauth_login.php	/^    $error_message = '';$/;"	v
+email	protected/library/views/wsauth_register.php	/^    $error_message = '';$/;"	v
+email	protected/library/views/wsauth_register.php	/^    if (isset($_POST['email']) and isset($_POST['password'])) {$/;"	v
+encodeCSVField	protected/library/WsController.class.php	/^    public function encodeCSVField($string)$/;"	f	class:WsController
+error_message	protected/library/views/wsauth_login.php	/^            if ($res === WS_AUTH_NO_MATCH) {$/;"	v
+error_message	protected/library/views/wsauth_login.php	/^            } else if ($res === WS_AUTH_NOT_ACTIVE) {$/;"	v
+error_message	protected/library/views/wsauth_login.php	/^            } else if ($res === WS_AUTH_NOT_VERIFIED) {$/;"	v
+error_message	protected/library/views/wsauth_login.php	/^            } else {$/;"	v
+error_message	protected/library/views/wsauth_login.php	/^    if ($auth->checkSession()) {$/;"	v
+error_message	protected/library/views/wsauth_login.php	/^<?php$/;"	v
+error_message	protected/library/views/wsauth_register.php	/^        if (!$ret) {$/;"	v
+error_message	protected/library/views/wsauth_register.php	/^        } else if ($ret === WS_AUTH_USER_EXISTS) {$/;"	v
+error_message	protected/library/views/wsauth_register.php	/^<?php$/;"	v
+execute	protected/library/WsDatabase.class.php	/^    public function execute($sql, $parameters = array())$/;"	f	class:WsDatabase
+execute_batch	protected/library/WsDatabase.class.php	/^public function execute_batch($sql)$/;"	f	class:WsDatabase
+exists	protected/library/WsConfig.class.php	/^    public static function exists($_name)$/;"	f	class:WsConfig
+field	protected/library/ajax/WsSaveToModel.php	/^    $destDir = WsROOT.'\/runtime\/'.$model;$/;"	v
+field	protected/library/ajax/WsSaveToModel.php	/^    $m->$field= $fileName;$/;"	v
+fieldLabels	protected/library/WsModelForm.class.php	/^    public $fieldLabels;$/;"	v	class:WsModelForm
+file	application/views/product/edit.php	/^                    <?php$/;"	v
+fileName	protected/library/ajax/WsSaveToModel.php	/^foreach ($_FILES as $file) {$/;"	v
+fileTmp	protected/library/ajax/WsSaveToModel.php	/^    $fileName = $file['name'];$/;"	v
+file_url	application/views/product/edit.php	/^                        $file = 'runtime\/ProductModel\/'.$picture;$/;"	v
+filepath	protected/thirdparty/barcode.php	/^<?php$/;"	v
+files	protected/library/WsInit.php	/^}$/;"	v
+foreignKeys	protected/library/WsModel.class.php	/^    public $foreignKeys = array();$/;"	v	class:WsModel
+foreign_id	protected/library/ajax/WsModelGrid.php	/^            if (isset($m->foreignKeys[$column])) {$/;"	v
+form	protected/library/ajax/WsEditModel.php	/^}$/;"	v
+form	protected/library/views/wsauth_edit.php	/^    } else {$/;"	v
+formEnd	protected/library/WsForm.class.php	/^    private function formEnd()$/;"	f	class:WsForm
+formId	protected/library/ajax/WsModelGrid.php	/^    : 'id';$/;"	v
+form_id	protected/library/ajax/WsEditModel.php	/^if (filter_input(INPUT_POST, 'form_id', FILTER_SANITIZE_STRING) !== NULL) {$/;"	v
+form_id	protected/library/ajax/WsEditModel.php	/^} else {$/;"	v
+get	protected/library/WsConfig.class.php	/^    public static function get($_name)$/;"	f	class:WsConfig
+getAll	protected/library/WsModel.class.php	/^    public function getAll($order='', $limit=0, $offset=0)$/;"	f	class:WsModel
+getHeight	protected/library/WsImage.class.php	/^    public function getHeight()$/;"	f	class:WsImage
+getLang	protected/library/WsLocalize.class.php	/^    public static function getLang()$/;"	f	class:WsLocalize
+getModelName	protected/library/WsModelForm.class.php	/^    public function getModelName()$/;"	f	class:WsModelForm
+getNextId	protected/library/WsModel.class.php	/^    public function getNextId()$/;"	f	class:WsModel
+getOne	protected/library/WsModel.class.php	/^    public function getOne()$/;"	f	class:WsModel
+getPagination	protected/library/WsModelGridView.class.php	/^    protected function getPagination($count)$/;"	f	class:WsModelGridView
+getRequestMethod	protected/library/WsController.class.php	/^    public function getRequestMethod()$/;"	f	class:WsController
+getWidth	protected/library/WsImage.class.php	/^    public function getWidth()$/;"	f	class:WsImage
+grand_total	application/views/document/view.php	/^                    <?php$/;"	v
+gridId	protected/library/ajax/WsModelGrid.php	/^$m = new $model;$/;"	v
+hasPermission	protected/library/WsAuth.class.php	/^    public function hasPermission($perm)$/;"	f	class:WsAuth
+hasPermission	protected/library/views/wsauth_rolePerms.php	/^            if ($db->nRows == 1) {$/;"	v
+hasPermission	protected/library/views/wsauth_rolePerms.php	/^            } else {$/;"	v
+hasRole	protected/library/views/wsauth_userRoles.php	/^            if ($db->nRows == 1) {$/;"	v
+hasRole	protected/library/views/wsauth_userRoles.php	/^            } else {$/;"	v
+hashData	protected/library/models/Ws_userModel.php	/^    public function hashData($data)$/;"	f	class:Ws_userModel
+hiddenColumns	protected/library/WsModel.class.php	/^    public $hiddenColumns = array();$/;"	v	class:WsModel
+hiddenInput	protected/library/WsForm.class.php	/^    public function hiddenInput($params = array())$/;"	f	class:WsForm
+id	protected/library/ajax/WsDeleteFromModel.php	/^        and filter_input(INPUT_POST, 'model') !== NULL) {$/;"	v
+id	protected/library/ajax/WsEditModel.php	/^if (filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT) !== NULL) {$/;"	v
+id	protected/library/ajax/WsModelGrid.php	/^        if ($showEdit) {$/;"	v
+idExists	protected/library/WsModel.class.php	/^    public function idExists($id)$/;"	f	class:WsModel
+img	application/views/product/edit.php	/^                        if (file_exists(WsROOT.'\/'.$file) && is_file(WsROOT.'\/'.$file)) {$/;"	v
+index	application/controllers/DocumentController.php	/^    public function index()$/;"	f	class:DocumentController
+index	application/controllers/PartnersController.php	/^    public function index()$/;"	f	class:PartnersController
+index	application/controllers/SiteController.php	/^    public function index()$/;"	f	class:SiteController
+inventory_list	application/controllers/ProductController.php	/^    public function inventory_list()$/;"	f	class:ProductController
+isAjax	protected/library/WsController.class.php	/^    public function isAjax()$/;"	f	class:WsController
+isConnected	protected/library/WsDatabase.class.php	/^    public $isConnected = false;$/;"	v	class:WsDatabase
+isUsable	protected/library/WsAuth.class.php	/^    public $isUsable;$/;"	v	class:WsAuth
+itemsPerPage	protected/library/WsModelGridView.class.php	/^    public $itemsPerPage = 10;$/;"	v	class:WsModelGridView
+itemsPerPage	protected/library/ajax/WsModelGrid.php	/^    : 1;$/;"	v
+lang	application/views/document/view.php	/^                <?php$/;"	v
+lang	application/views/product/card.php	/^    $quantitymin = floatval($product_model->quantitymin);$/;"	v
+lang	application/views/product/inventory_list.php	/^<?php$/;"	v
+lang	protected/library/ajax/WsEditModel.php	/^$form->show();$/;"	v
+lang	protected/library/ajax/WsModelGrid.php	/^} else {$/;"	v
+lang	public/layouts/inventory.php	/^    <?php$/;"	v
+layout	protected/library/WsController.class.php	/^    public $layout;$/;"	v	class:WsController
+layout	protected/library/controllers/WsauthController.php	/^    public $layout;$/;"	v	class:WsauthController
+link	protected/library/WsUrl.class.php	/^    public static function link($controller, $action, $params = array())$/;"	f	class:WsUrl
+link	protected/library/ajax/WsModelGrid.php	/^                    $url = WsROOT.'\/runtime\/'.$model.'\/'.$value;$/;"	v
+list_of_permissions	protected/library/views/wsauth_rolePerms.php	/^$permissions = new Ws_permissionsModel();$/;"	v
+list_of_roles	protected/library/views/wsauth_rolePerms.php	/^$roles = new Ws_rolesModel();$/;"	v
+list_of_roles	protected/library/views/wsauth_userRoles.php	/^$roles = new Ws_rolesModel();$/;"	v
+list_of_users	protected/library/views/wsauth_userRoles.php	/^$users = new Ws_userModel();$/;"	v
+login	protected/library/WsAuth.class.php	/^    public function login($email, $password)$/;"	f	class:WsAuth
+login	protected/library/controllers/WsauthController.php	/^    public function login($email=null, $password=null)$/;"	f	class:WsauthController
+login_form	protected/library/views/wsauth_login.php	/^        }$/;"	v
+logout	protected/library/WsAuth.class.php	/^    public function logout()$/;"	f	class:WsAuth
+logout	protected/library/controllers/WsauthController.php	/^    public function logout()$/;"	f	class:WsauthController
+m	protected/library/ajax/WsDeleteFromModel.php	/^require_once $model_file;$/;"	v
+m	protected/library/ajax/WsEditModel.php	/^}$/;"	v
+m	protected/library/ajax/WsModelGrid.php	/^require_once $model_file;$/;"	v
+m	protected/library/ajax/WsSaveToModel.php	/^require_once $model_file;$/;"	v
+margin	application/views/document/view.php	/^                    if ($document_model->d_type === 'sale') {$/;"	v
+metaName	protected/library/WsModel.class.php	/^    public $metaName = '';$/;"	v	class:WsModel
+min_qnty	application/views/product/inventory_list.php	/^                    $dismission = floatval($product['dismission']);$/;"	v
+model	protected/library/ajax/WsDeleteFromModel.php	/^    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);$/;"	v
+model	protected/library/ajax/WsEditModel.php	/^if (filter_input(INPUT_POST, 'model') !== NULL) {$/;"	v
+model	protected/library/ajax/WsModelGrid.php	/^if (filter_input(INPUT_POST, 'model') !== NULL) {$/;"	v
+model	protected/library/ajax/WsSaveToModel.php	/^if (filter_input(INPUT_POST, 'model_name', FILTER_SANITIZE_STRING) !== NULL) {$/;"	v
+model_file	protected/library/ajax/WsDeleteFromModel.php	/^if (!file_exists($model_file)) {$/;"	v
+model_file	protected/library/ajax/WsDeleteFromModel.php	/^}$/;"	v
+model_file	protected/library/ajax/WsEditModel.php	/^if (!file_exists($model_file)) {$/;"	v
+model_file	protected/library/ajax/WsEditModel.php	/^}$/;"	v
+model_file	protected/library/ajax/WsModelGrid.php	/^if (!file_exists($model_file)) {$/;"	v
+model_file	protected/library/ajax/WsModelGrid.php	/^}$/;"	v
+model_file	protected/library/ajax/WsSaveToModel.php	/^if (!file_exists($model_file)) {$/;"	v
+model_file	protected/library/ajax/WsSaveToModel.php	/^}$/;"	v
+msg	protected/library/WsLocalize.class.php	/^    public static function msg($str)$/;"	f	class:WsLocalize
+nRows	protected/library/WsDatabase.class.php	/^    public $nRows;$/;"	v	class:WsDatabase
+noDataText	protected/library/WsModelGridView.class.php	/^    public $noDataText;$/;"	v	class:WsModelGridView
+noDataText	protected/library/ajax/WsModelGrid.php	/^        : 10;$/;"	v
+now	protected/library/WsInit.php	/^$files = glob(WsROOT."\/runtime\/wsimg_*.png");$/;"	v
+offset	protected/library/ajax/WsModelGrid.php	/^        : '';$/;"	v
+order	protected/library/ajax/WsModelGrid.php	/^        : false;$/;"	v
+orientation	protected/thirdparty/barcode.php	/^$size = (isset($_GET["size"])?$_GET["size"]:"20");$/;"	v
+pageId	protected/library/ajax/WsModelGrid.php	/^    : uniqid('WsGridView_');$/;"	v
+password	protected/library/views/wsauth_login.php	/^            $email = filter_input(INPUT_POST, 'email');$/;"	v
+password	protected/library/views/wsauth_login.php	/^    $email = '';$/;"	v
+password	protected/library/views/wsauth_register.php	/^        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);$/;"	v
+password	protected/library/views/wsauth_register.php	/^    $email = '';$/;"	v
+permissions	protected/library/views/wsauth_rolePerms.php	/^$list_of_roles = $roles->getAll();$/;"	v
+permissions	protected/library/views/wsauth_rolePerms.php	/^if (filter_input(INPUT_POST, 'permission', FILTER_SANITIZE_STRING) !== NULL) {$/;"	v
+perms_grid	protected/library/views/wsauth_admin.php	/^        <?php$/;"	v
+price	application/views/document/view.php	/^                        $margin = ($product['price'] * $product['margin'])\/100;$/;"	v
+price	application/views/document/view.php	/^                    } else {$/;"	v
+primary_key	protected/library/WsModel.class.php	/^    public $primary_key = 'id';$/;"	v	class:WsModel
+print	protected/thirdparty/barcode.php	/^$code_type = (isset($_GET["codetype"])?$_GET["codetype"]:"code128");$/;"	v
+product_no	application/views/document/view.php	/^                <?php$/;"	v
+products	application/controllers/ProductController.php	/^    public function products()$/;"	f	class:ProductController
+purchase	application/views/product/card.php	/^<?php$/;"	v
+purchase	application/views/product/inventory_list.php	/^                foreach ($products as $product) {$/;"	v
+purchase_draft	application/views/product/card.php	/^    $dismission = $totals['dismission'];$/;"	v
+quantity	application/views/product/card.php	/^                    $discount = floatval($i['discount']);$/;"	v
+quantitymin	application/views/product/card.php	/^    $dismission_draft = $totals['dismission_draft'];$/;"	v
+query	protected/library/WsDatabase.class.php	/^    public function query($sql, $parameters = array())$/;"	f	class:WsDatabase
+randomString	protected/library/models/Ws_userModel.php	/^    public function randomString($length = 50)$/;"	f	class:Ws_userModel
+read	protected/library/WsImage.class.php	/^    public function read($file)$/;"	f	class:WsImage
+redirect	protected/library/WsController.class.php	/^    public function redirect($controller, $action = 'index', $params = array())$/;"	f	class:WsController
+register	protected/library/controllers/WsauthController.php	/^    public function register($email=null, $password=null)$/;"	f	class:WsauthController
+registration_form	protected/library/views/wsauth_register.php	/^<?php$/;"	v
+render	protected/library/WsController.class.php	/^    public function render($action = 'index', $params = array())$/;"	f	class:WsController
+render	protected/library/controllers/WsauthController.php	/^    private function render($action = 'admin', $params = array())$/;"	f	class:WsauthController
+renderChart	protected/library/WsChart.class.php	/^    private function renderChart()$/;"	f	class:WsChart
+renderView	protected/library/WsController.class.php	/^    private function renderView()$/;"	f	class:WsController
+renderView	protected/library/controllers/WsauthController.php	/^    private function renderView()$/;"	f	class:WsauthController
+res	protected/library/views/wsauth_login.php	/^            $password = filter_input(INPUT_POST, 'password');$/;"	v
+results	protected/library/ajax/WsModelGrid.php	/^    $condition2 .= ')';$/;"	v
+results	protected/library/ajax/WsModelGrid.php	/^if ($searchStr == '') {$/;"	v
+ret	protected/library/views/wsauth_register.php	/^        $auth = new WsAuth();$/;"	v
+rolePerms	protected/library/controllers/WsauthController.php	/^    public function rolePerms()$/;"	f	class:WsauthController
+roles	protected/library/views/wsauth_rolePerms.php	/^}$/;"	v
+roles	protected/library/views/wsauth_userRoles.php	/^$list_of_users = $users->getAll();$/;"	v
+roles	protected/library/views/wsauth_userRoles.php	/^if (filter_input(INPUT_POST, 'role') !== NULL) {$/;"	v
+roles_grid	protected/library/views/wsauth_admin.php	/^        <?php$/;"	v
+rp_form	protected/library/views/wsauth_rolePerms.php	/^echo '<form method="post" action="'.WsUrl::link('wsauth','rolePerms').'">';$/;"	v
+sSoftware	protected/library/ajax/WsEditModel.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	v
+sSoftware	protected/library/ajax/WsModelGrid.php	/^define('WsROOT', dirname(dirname(dirname(dirname(__FILE__)))));$/;"	v
+sale	application/views/product/card.php	/^    $purchase = $totals['purchase'];$/;"	v
+sale	application/views/product/inventory_list.php	/^                    $purchase = floatval($product['purchase']);$/;"	v
+sale_draft	application/views/product/card.php	/^    $purchase_draft = $totals['purchase_draft'];$/;"	v
+sale_price	application/views/document/view.php	/^                        echo '<\/td>';$/;"	v
+sale_price	application/views/document/view.php	/^                    } else {$/;"	v
+sales_tax	application/views/document/view.php	/^                        echo '<\/td>';$/;"	v
+save	protected/library/WsModel.class.php	/^    public function save()$/;"	f	class:WsModel
+save_document	application/controllers/DocumentController.php	/^    public function save_document()$/;"	f	class:DocumentController
+search	protected/library/WsModel.class.php	/^    public function search($condition='', $order='', $limit=0, $offset=0)$/;"	f	class:WsModel
+searchStr	protected/library/ajax/WsModelGrid.php	/^    : 'id';$/;"	v
+selectInput	protected/library/WsForm.class.php	/^    public function selectInput($list, $params = array())$/;"	f	class:WsForm
+sendResponse	protected/library/WsController.class.php	/^    public function sendResponse($data, $status = 200)$/;"	f	class:WsController
+set	protected/library/WsConfig.class.php	/^    public static function set($_name, $_value)$/;"	f	class:WsConfig
+setTableName	protected/library/WsModel.class.php	/^    public function setTableName($name)$/;"	f	class:WsModel
+setType	protected/library/WsChart.class.php	/^    public function setType($type)$/;"	f	class:WsChart
+show	protected/library/WsChart.class.php	/^    public function show()$/;"	f	class:WsChart
+show	protected/library/WsForm.class.php	/^    public function show()$/;"	f	class:WsForm
+show	protected/library/WsImage.class.php	/^    public function show()$/;"	f	class:WsImage
+show	protected/library/WsModelForm.class.php	/^    public function show()$/;"	f	class:WsModelForm
+show	protected/library/WsModelGridView.class.php	/^    public function show()$/;"	f	class:WsModelGridView
+showEdit	protected/library/WsModelGridView.class.php	/^    public $showEdit = true;$/;"	v	class:WsModelGridView
+showEdit	protected/library/ajax/WsModelGrid.php	/^        : WsLocalize::msg('no data found');$/;"	v
+showThumbnail	protected/library/WsImage.class.php	/^    public function showThumbnail($width = 100, $height = 100, $text = '')$/;"	f	class:WsImage
+size	protected/thirdparty/barcode.php	/^$text = (isset($_GET["text"])?$_GET["text"]:"0");$/;"	v
+sql	protected/library/WsInit.php	/^    $auth = new WsAuth();$/;"	v
+sql	protected/library/views/wsauth_rolePerms.php	/^$list_of_permissions = $permissions->getAll();$/;"	v
+sql	protected/library/views/wsauth_userRoles.php	/^$list_of_roles = $roles->getAll();$/;"	v
+status	protected/library/ajax/WsModelGrid.php	/^                    if ($value === '1' or $value === true) {$/;"	v
+status	protected/library/ajax/WsModelGrid.php	/^                    } else {$/;"	v
+status	protected/library/views/wsauth_rolePerms.php	/^    }$/;"	v
+status	protected/library/views/wsauth_rolePerms.php	/^} else {$/;"	v
+status	protected/library/views/wsauth_userRoles.php	/^    }$/;"	v
+status	protected/library/views/wsauth_userRoles.php	/^} else {$/;"	v
+submitButtonText	protected/library/WsForm.class.php	/^    public $submitButtonText = '';$/;"	v	class:WsForm
+table	protected/library/ajax/WsModelGrid.php	/^    );$/;"	v
+table	protected/library/ajax/WsModelGrid.php	/^if ($m->nRows < 1) {$/;"	v
+tableName	protected/library/WsModel.class.php	/^    public $tableName = '';$/;"	v	class:WsModel
+table_name	protected/library/ajax/WsModelGrid.php	/^                    $m->foreignKeys[$column]['column'] : 'id';$/;"	v
+tax_rates	application/controllers/ProductController.php	/^    public function tax_rates() {$/;"	f	class:ProductController
+text	protected/thirdparty/barcode.php	/^$filepath = (isset($_GET["filepath"])?$_GET["filepath"]:"");$/;"	v
+textInput	protected/library/WsForm.class.php	/^    public function textInput($params = array())$/;"	f	class:WsForm
+textareaInput	protected/library/WsForm.class.php	/^    public function textareaInput($params = array())$/;"	f	class:WsForm
+title	protected/library/WsController.class.php	/^    public $title;$/;"	v	class:WsController
+title	protected/library/controllers/WsauthController.php	/^    public $title;$/;"	v	class:WsauthController
+total	application/views/document/view.php	/^                    }$/;"	v
+total	application/views/product/card.php	/^        <?php$/;"	v
+total	application/views/product/inventory_list.php	/^                    $min_qnty = floatval($product['min_qnty']);$/;"	v
+total_consumption_tax	application/views/document/view.php	/^                $total_vat = 0;$/;"	v
+total_price	application/views/document/view.php	/^                $product_no = 1;$/;"	v
+total_sales_tax	application/views/document/view.php	/^                $total_consumption_tax = 0;$/;"	v
+total_total	application/views/document/view.php	/^                $total_sales_tax = 0;$/;"	v
+total_vat	application/views/document/view.php	/^                $total_price = 0;$/;"	v
+url	protected/library/ajax/WsModelGrid.php	/^                } else if ($m->columnType[$key] == 'file_type') {$/;"	v
+url	protected/library/views/wsauth_login.php	/^    } else if ($error_message == 'success') {$/;"	v
+url	protected/library/views/wsauth_logout.php	/^<?php$/;"	v
+userRoles	protected/library/controllers/WsauthController.php	/^    public function userRoles()$/;"	f	class:WsauthController
+user_grid	protected/library/views/wsauth_admin.php	/^        <?php$/;"	v
+users	protected/library/views/wsauth_userRoles.php	/^}$/;"	v
+value	protected/library/ajax/WsModelGrid.php	/^        foreach ($row as $key => $value) {$/;"	v
+vars	protected/library/WsConfig.class.php	/^    private static $vars = array();$/;"	v	class:WsConfig
+vat	application/views/document/view.php	/^                    if ($document_model->d_type === 'sale') {$/;"	v
+verify	protected/library/controllers/WsauthController.php	/^    public function verify($verification_code=null)$/;"	f	class:WsauthController
+view	application/controllers/DocumentController.php	/^    public function view($id=0)$/;"	f	class:DocumentController
+x	application/views/document/edit.php	/^                            for ($x=0; $x < count($DP_product); $x++) {$/;"	v
