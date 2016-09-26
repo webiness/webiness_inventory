@@ -15,22 +15,32 @@
     
     <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/jquery-ui.min.css'); ?>" />
     <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/jquery-ui.theme.min.css'); ?>" />
-    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/select2.min.css'); ?>" />
     <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/bootstrap.min.css'); ?>" />
     <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/bootstrap-theme.min.css'); ?>" />
-
-        <?php
-        $lang = substr(filter_input(INPUT_SERVER,
-            'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING), 0,2);
+    <style>
+        @media print {
+            .no-print, .no-print *{
+                display: none !important;
+                height: 0;
+            }
+        }
+    </style>
+    
+    <?php
+        $lang = WsLocalize::getLang();
     ?>
 
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery.validate.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/Chart.bundle.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery-ui.min.js'); ?>"></script>
+    <?php
+    if (WsUrl::asset('js/i18n/datepicker-'.$lang.'.js') !== '') {
+    ?>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/i18n/datepicker-'.$lang.'.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo WsUrl::asset('js/select2.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo WsUrl::asset('js/i18n/'.$lang.'.js'); ?>"></script>
+    <?php
+    }
+    ?>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/webiness.js'); ?>"></script>
 </head>
 
@@ -213,11 +223,12 @@
             </div>
         </div>
         
+        <br/>
+        <br/>
+        
         <?php
             if (WsConfig::get('app_stage') == 'development') {
         ?>
-        <br/>
-        <br/>
         <div class="row no-print">
             <div class="col-sm-12 col-md-6">
                 <div class="alert alert-info">
@@ -238,6 +249,10 @@
                 </div>
             </div>
         </div>
+        
+        <br/>
+        <br/>
+        
         <?php
             }
         ?>

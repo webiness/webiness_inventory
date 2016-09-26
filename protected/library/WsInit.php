@@ -276,8 +276,10 @@ unset($now, $files);
 // create database tables if they are not exists
 if (WsConfig::get('db_driver') == 'pgsql') {
     $db_file = WsROOT.'/schema_pgsql.sql';
-} else {
+} else if (WsConfig::get('db_driver') == 'mysql') {
     $db_file = WsROOT.'/schema_mysql.sql';
+} else {
+    $db_file = WsROOT.'/schema_sqlite.sql';
 }
 if (file_exists($db_file)) {
     $auth = new WsAuth();

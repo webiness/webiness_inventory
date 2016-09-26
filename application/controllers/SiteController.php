@@ -5,7 +5,7 @@ class SiteController extends WsController {
     /**
      * index
      *
-    */
+     */
     public function index()
     {
         $auth = new WsAuth();

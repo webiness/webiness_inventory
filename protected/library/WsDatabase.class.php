@@ -63,7 +63,8 @@ class WsDatabase
         try {
             $this->_dbh = new PDO($cs,
                 WsConfig::get('db_user'), WsConfig::get('db_password'));
-            $this->_dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            // $this->_dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $this->_dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->isConnected = true;
             // enable foreign keys in sqlite
             if (WsConfig::get('db_driver') === 'sqlite') {
@@ -101,9 +102,16 @@ class WsDatabase
         }
 
         // prepare SQL statment
-        $sth = $this->_dbh->prepare($sql,
-            array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-
+        try {
+            $sth = $this->_dbh->prepare($sql,
+                array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        } catch(PDOException $ex) {
+            header('HTTP/1.1 500 Internal Server Error');
+            trigger_error('WsDatabase: <code>'.$ex->getMessage().'</code>',
+                E_USER_ERROR);
+            return false;
+        }
+        
         // bind values
         foreach ($parameters as $key => &$value) {
             if (is_int($value)) {

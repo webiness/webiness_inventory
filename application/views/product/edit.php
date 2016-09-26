@@ -107,7 +107,7 @@
                     <?php echo WsLocalize::msg('item category'); ?>
                 </label>
                 <div class="col-sm-4">
-                    <select name="category_id" class="webiness_select"
+                    <select name="category_id" class="form-control"
                         id="category_id"
                         style="width: 100%">
                         <?php
@@ -332,7 +332,6 @@
     });
 
     (function() {
-        $(".webiness_select").select2();
         get_tax_rates();
     })();
 </script>

@@ -510,9 +510,9 @@ class WsForm
 
         // custom class
         if (isset($params['class'])) {
-            $class = 'webiness_select '.$params['class'];
+            $class = $params['class'];
         } else {
-            $class = 'webiness_select';
+            $class = '';
         }
 
         // value is required

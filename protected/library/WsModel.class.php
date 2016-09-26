@@ -218,16 +218,16 @@ FROM information_schema.key_column_usage
 WHERE table_name = :table_name
 AND referenced_table_name IS NOT NULL;
 ';
+            $results = $this->query($query, array(
+                'table_name' => $this->tableName
+            ));
         } else if (WsConfig::get('db_driver') === 'sqlite') {
-            $query = 'PRAGMA foreign_key_list(:table_name)';
+            $query = 'PRAGMA foreign_key_list(\''.$this->tableName.'\')';
+            $results = $this->query($query);
         }
 
         // clear array of foreign keys
         $this->foreignKeys = array();
-
-        $results = $this->query($query, array(
-            'table_name' => $this->tableName
-        ));
 
         // foreign key detection for PostgreSQL and MySQL/MariaDB
         if (WsConfig::get('db_driver') !== 'sqlite') {
@@ -238,84 +238,152 @@ AND referenced_table_name IS NOT NULL;
                     'display' => $result['parent_column']
                 );
             }
-        }
-
-        // get column names, types, nulls
-        if (WsConfig::get('db_driver') === 'sqlite') {
-            $query = 'PRAGMA table_info(:table_name)';
         } else {
-            $query = '
-SELECT column_name, is_nullable, data_type
-FROM information_schema.columns
-WHERE table_name= :table_name';
+            foreach ($results as $result) {
+                $this->foreignKeys[$result['from']] = array(
+                    'table' => $result['table'],
+                    'column' => $result['to'],
+                    'display' => $result['to']
+                );
+            }
         }
-
-        $results2 = $this->query($query, array(
-            'table_name' => $this->tableName
-        ));
-
+        
         // clear all values that are defined before
         $this->columns = array();
         $this->columnHeaders = array();
         $this->columnIsNull = array();
         $this->columnType = array();
+        
+        // get column names, types, nulls
+        if (WsConfig::get('db_driver') === 'sqlite') {
+            $query = 'PRAGMA table_info(\''.$this->tableName.'\')';
+            $results2 = $this->query($query);
+            
+            foreach ($results2 as $result) {
+                array_push($this->columns, $result['name']);
+                // create all model variables from column
+                $this->columnCanBeNull[$result['name']] =
+                    (($result['notnull'] == 0) ? true : false);
+                // column headers
+                $this->columnHeaders[$result['name']] =
+                    $this->tableName.'-'.$result['name'];
 
-        foreach ($results2 as $result) {
-            array_push($this->columns, $result['column_name']);
-            // create all model variables from column
-            $this->columnCanBeNull[$result['column_name']] =
-                (($result['is_nullable'] =='YES') ? true: false);
-            // column headers
-            $this->columnHeaders[$result['column_name']] =
-                $this->tableName.'-'.$result['column_name'];
-
-            // column type by database column type
-            if (stripos($result['data_type'], 'int') !== false) {
-                // INTEGER, SMALLINT, BIGINT, TINYINT, MEDIUMINT
-                $this->columnType[$result['column_name']] = 'int_type';
-            } else if (stripos($result['data_type'], 'float') !== false
-                or stripos($result['data_type'], 'real') !== false
-                or stripos($result['data_type'], 'double') !== false
-                or stripos($result['data_type'], 'dec') !== false
-                or stripos($result['data_type'], 'fixed') !== false
-                or stripos($result['data_type'], 'numeric') !== false
-            ) {
-                // NUMERIC, DOUBLE, REAL FLOAT, DECIMAL, FIXED numeric types
-                $this->columnType[$result['column_name']] = 'numeric_type';
-            } else if (stripos($result['data_type'], 'datetime') !== false
-                or stripos($result['data_type'], 'timestamp') !== false
-            ) {
-                // DATETIME or TIMESTAMP type
-                $this->columnType[$result['column_name']] = 'timestamp_type';
-            } else if (stripos($result['data_type'], 'date') !== false) {
-                // DATE type
-                $this->columnType[$result['column_name']] = 'date_type';
-            } else if (stripos($result['data_type'], 'time') !== false) {
-                // TIME type
-                $this->columnType[$result['column_name']] = 'time_type';
-            } else if (stripos($result['data_type'], 'text') !== false) {
-                // TEXT type
-                $this->columnType[$result['column_name']] = 'textarea_type';
-            } else if (stripos($result['data_type'], 'bool') !== false) {
-                // BOOLEAN type
-                $this->columnType[$result['column_name']] = 'bool_type';
-            } else {
-                // column type by column name
-                if (stripos($result['column_name'], 'pass') !== false) {
-                    // field is password
-                    $this->columnType[$result['column_name']] = 'password_type';
-                } else if (stripos($result['column_name'], 'url') !== false) {
-                    // field is url address
-                    $this->columnType[$result['column_name']] = 'url_type';
-                } else if (stripos($result['column_name'], 'mail') !== false) {
-                    // field is e-mail address
-                    $this->columnType[$result['column_name']] = 'mail_type';
-                } else if (stripos($result['column_name'], 'phone') !== false) {
-                    // field is phone number
-                    $this->columnType[$result['column_name']] = 'phone_type';
+                // column type by database column type
+                if (stripos($result['type'], 'int') !== false) {
+                    // INTEGER, SMALLINT, BIGINT, TINYINT, MEDIUMINT
+                    $this->columnType[$result['name']] = 'int_type';
+                } else if (stripos($result['type'], 'float') !== false
+                    or stripos($result['type'], 'real') !== false
+                    or stripos($result['type'], 'double') !== false
+                    or stripos($result['type'], 'dec') !== false
+                    or stripos($result['type'], 'fixed') !== false
+                    or stripos($result['type'], 'numeric') !== false
+                ) {
+                    // NUMERIC, DOUBLE, REAL FLOAT, DECIMAL, FIXED numeric types
+                    $this->columnType[$result['name']] = 'numeric_type';
+                } else if (stripos($result['type'], 'datetime') !== false
+                    or stripos($result['type'], 'timestamp') !== false
+                ) {
+                    // DATETIME or TIMESTAMP type
+                    $this->columnType[$result['name']] = 'timestamp_type';
+                } else if (stripos($result['type'], 'date') !== false) {
+                    // DATE type
+                    $this->columnType[$result['name']] = 'date_type';
+                } else if (stripos($result['type'], 'time') !== false) {
+                    // TIME type
+                    $this->columnType[$result['name']] = 'time_type';
+                } else if (stripos($result['type'], 'text') !== false) {
+                    // TEXT type
+                    $this->columnType[$result['name']] = 'textarea_type';
+                } else if (stripos($result['type'], 'bool') !== false) {
+                    // BOOLEAN type
+                    $this->columnType[$result['name']] = 'bool_type';
                 } else {
-                    // column type can't be determinate
-                    $this->columnType[$result['column_name']] = 'misc_type';
+                    // column type by column name
+                    if (stripos($result['name'], 'pass') !== false) {
+                        // field is password
+                        $this->columnType[$result['name']] = 'password_type';
+                    } else if (stripos($result['name'], 'url') !== false) {
+                        // field is url address
+                        $this->columnType[$result['name']] = 'url_type';
+                    } else if (stripos($result['name'], 'mail') !== false) {
+                        // field is e-mail address
+                        $this->columnType[$result['name']] = 'mail_type';
+                    } else if (stripos($result['name'], 'phone') !== false) {
+                        // field is phone number
+                        $this->columnType[$result['name']] = 'phone_type';
+                    } else {
+                        // column type can't be determinate
+                        $this->columnType[$result['name']] = 'misc_type';
+                    }
+                }
+            }
+        } else {
+            $query = '
+SELECT column_name, is_nullable, data_type
+FROM information_schema.columns
+WHERE table_name= :table_name';
+            $results2 = $this->query($query, array(
+                'table_name' => $this->tableName
+            ));
+                
+            foreach ($results2 as $result) {
+                array_push($this->columns, $result['column_name']);
+                // create all model variables from column
+                $this->columnCanBeNull[$result['column_name']] =
+                    (($result['is_nullable'] =='YES') ? true: false);
+                // column headers
+                $this->columnHeaders[$result['column_name']] =
+                    $this->tableName.'-'.$result['column_name'];
+
+                // column type by database column type
+                if (stripos($result['data_type'], 'int') !== false) {
+                    // INTEGER, SMALLINT, BIGINT, TINYINT, MEDIUMINT
+                    $this->columnType[$result['column_name']] = 'int_type';
+                } else if (stripos($result['data_type'], 'float') !== false
+                    or stripos($result['data_type'], 'real') !== false
+                    or stripos($result['data_type'], 'double') !== false
+                    or stripos($result['data_type'], 'dec') !== false
+                    or stripos($result['data_type'], 'fixed') !== false
+                    or stripos($result['data_type'], 'numeric') !== false
+                ) {
+                    // NUMERIC, DOUBLE, REAL FLOAT, DECIMAL, FIXED numeric types
+                    $this->columnType[$result['column_name']] = 'numeric_type';
+                } else if (stripos($result['data_type'], 'datetime') !== false
+                    or stripos($result['data_type'], 'timestamp') !== false
+                ) {
+                    // DATETIME or TIMESTAMP type
+                    $this->columnType[$result['column_name']] = 'timestamp_type';
+                } else if (stripos($result['data_type'], 'date') !== false) {
+                    // DATE type
+                    $this->columnType[$result['column_name']] = 'date_type';
+                } else if (stripos($result['data_type'], 'time') !== false) {
+                    // TIME type
+                    $this->columnType[$result['column_name']] = 'time_type';
+                } else if (stripos($result['data_type'], 'text') !== false) {
+                    // TEXT type
+                    $this->columnType[$result['column_name']] = 'textarea_type';
+                } else if (stripos($result['data_type'], 'bool') !== false) {
+                    // BOOLEAN type
+                    $this->columnType[$result['column_name']] = 'bool_type';
+                } else {
+                    // column type by column name
+                    if (stripos($result['column_name'], 'pass') !== false) {
+                        // field is password
+                        $this->columnType[$result['column_name']] = 'password_type';
+                    } else if (stripos($result['column_name'], 'url') !== false) {
+                        // field is url address
+                        $this->columnType[$result['column_name']] = 'url_type';
+                    } else if (stripos($result['column_name'], 'mail') !== false) {
+                        // field is e-mail address
+                        $this->columnType[$result['column_name']] = 'mail_type';
+                    } else if (stripos($result['column_name'], 'phone') !== false) {
+                        // field is phone number
+                        $this->columnType[$result['column_name']] = 'phone_type';
+                    } else {
+                        // column type can't be determinate
+                        $this->columnType[$result['column_name']] = 'misc_type';
+                    }
                 }
             }
         }

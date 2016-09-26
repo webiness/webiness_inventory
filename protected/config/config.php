@@ -1,7 +1,7 @@
 <?php
 // FRAMEWORK CONFIG VARIABLES
 // database driver (pgsql, mysql or sqlite)
-WsConfig::set('db_driver', 'mysql');
+WsConfig::set('db_driver', 'sqlite');
 // database host address
 WsConfig::set('db_host', 'localhost');
 // database port number
@@ -15,7 +15,7 @@ WsConfig::set('db_password', 'wsinventory');
 // application name
 WsConfig::set('app_name', 'Webiness Inventory Managment');
 // application development stage (development | production)
-WsConfig::set('app_stage', 'production');
+WsConfig::set('app_stage', 'development');
 // default timezone
 WsConfig::set('app_tz', 'Europe/Zagreb');
 // default character encoding

@@ -37,7 +37,7 @@
             <label for="d_partner">
                 <?php echo WsLocalize::msg('partner'); ?>
             </label>
-            <select name="d_partner" class="form-control webiness_select"
+            <select name="d_partner" class="form-control"
                 style="width: 100%">
                 <?php
                     foreach ($all_partners as $partner) {
@@ -57,7 +57,7 @@
                 <label for="d_type">
                     <?php echo WsLocalize::msg('document type'); ?>
                 </label>
-                <select name="d_type" class="form-control webiness_select"
+                <select name="d_type" class="form-control"
                     style="width: 100%">
                     <option value="purchase"
                             <?php $d_type == 'purchase' ? print ' selected'
@@ -78,7 +78,7 @@
                 <label for="d_status">
                     <?php echo WsLocalize::msg('document status'); ?>
                 </label>
-                <select name="d_status" class="form-control webiness_select"
+                <select name="d_status" class="form-control"
                     style="width: 100%">
                     <option value="draft"
                             <?php
@@ -158,8 +158,8 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input class="form-control" type="number"
-                                        class="webiness_numericinput"
+                                    <input type="number"
+                                        class="form-control webiness_numericinput"
                                         name="DP_qnty[]"/>
                                 </td>
                             </tr>
@@ -230,11 +230,6 @@
                 var newcell = row.insertCell(i);
                 newcell.className = "ws_td";
                 newcell.innerHTML = table.rows[1].cells[i].innerHTML;
-                s = newcell.getElementsByTagName("select")[0];
-                if (s != undefined) {
-                    $(s).select2();
-                }
-
             }
         } else {
             alert("Max products per document is 30");
@@ -261,11 +256,7 @@
         }
     }
 
-    $(function() {
-        $(".webiness_select").select2();
-    });
-
-        $(".webiness_numericinput").keydown(function (e) {
+    $(".webiness_numericinput").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
         // Allow: Ctrl+A, Command+A
