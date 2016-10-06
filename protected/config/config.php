@@ -1,7 +1,7 @@
 <?php
 // FRAMEWORK CONFIG VARIABLES
 // database driver (pgsql, mysql or sqlite)
-WsConfig::set('db_driver', 'sqlite');
+WsConfig::set('db_driver', 'mysql');
 // database host address
 WsConfig::set('db_host', 'localhost');
 // database port number

@@ -264,8 +264,8 @@ class WsForm
         }
 
         // add text input element
+        $this->_form .= '<div class="form-group">';
         if ($label !== '') {
-            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
@@ -285,7 +285,7 @@ class WsForm
                 $file = 'runtime/'.$this->getModelName().'/'.$value;
                 $file_url = WsSERVER_ROOT.'/runtime/'.$this->getModelName().'/'
                     .$value;
-                if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
+                if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)){
                     // if file is image then show it
                     $img = new WsImage();
                     if ($img->read($file)) {
@@ -377,8 +377,8 @@ class WsForm
         }
 
         // add text area element
+        $this->_form .= '<div class="form-group">';
         if ($label != '') {
-            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
@@ -523,8 +523,8 @@ class WsForm
         }
 
         // add select element
+        $this->_form .= '<div class="form-group">';
         if ($label != '') {
-            $this->_form .= '<div class="form-group">';
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';

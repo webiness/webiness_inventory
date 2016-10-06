@@ -24,14 +24,22 @@ Webiness Inventory
 ```bash
 git clone https://github.com/webiness/webiness_inventory
 ```
-* create database in your MySQL/MariaDB or PostgreSQL database server (SQLite support is planned in the future)
+* make runtime directory writable by the web server
+```bash
+chmod 777 webiness_inventory/runtime
+# on Linux distributions that use SELinux security mechanism (CentOS, Fedora, RedHat EL, etc.)
+# also enter the following commands:
+chcon -R -t httpd_sys_rw_content_t user
+chcon -R -t httpd_sys_rw_content_t webiness_inventory/runtime
+```
+* create database in your MySQL/MariaDB or PostgreSQL database server. (If you use SQLite DB then skip this step)
 * edit __webiness_inventory/protected/config/config.php__ file and change configuration to match your settings:
 ```php
-WsConfig::set('db_driver', 'pgsql'); // or mysql for MySQL server
-WsConfig::set('db_host', 'your_db_hostname');
-WsConfig::set('db_name', 'database_name');
-WsConfig::set('db_user', 'database_user_name');
-WsConfig::set('db_password', 'database_user_password');
+WsConfig::set('db_driver', 'pgsql'); // change to 'mysql' for MySQL server or to 'sqlite' for SQLite DB
+WsConfig::set('db_host', 'your_db_hostname'); // ignored for SQLite DB
+WsConfig::set('db_name', 'database_name'); // ignored for SQLite DB
+WsConfig::set('db_user', 'database_user_name'); // ignored for SQLite DB
+WsConfig::set('db_password', 'database_user_password'); // ignored for SQLite DB
 ```
 * in the same file find line:
 ```php
@@ -43,7 +51,7 @@ Default password will be automaticaly set to: __admin__
 
 ### __Requirements__
 
-* web server with PHP 5.4 or above, with PDO extensions for MySQL or PostgreSQL
+* web server with PHP 5.4 or above with PDO extensions for MySQL, PostgreSQL or SQLite
 * MySQL, MariaDB or PostgreSQL database server
 
 ### __License__

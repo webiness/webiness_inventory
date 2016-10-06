@@ -207,6 +207,9 @@ FROM
     JOIN pg_attribute att2 ON
         att2.attrelid = con.conrelid AND att2.attnum = con.parent;
 ';
+            $results = $this->query($query, array(
+                'table_name' => $this->tableName
+            ));
         // get forign keys from table in MySQL or MariaDB
         } else if (WsConfig::get('db_driver') === 'mysql') {
             $query = '
