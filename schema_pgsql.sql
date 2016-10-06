@@ -62,10 +62,10 @@ CREATE TABLE IF NOT EXISTS partner (
 --create types
 DO $$
 BEGIN
-    IF (SELECT 1 FROM pg_type WHERE typname = 'DOCUMENT_TYPE') = 1 THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'document_type') THEN
         CREATE TYPE DOCUMENT_TYPE AS ENUM ('purchase', 'sale', 'dismission');
     END IF;
-     IF (SELECT 1 FROM pg_type WHERE typname = 'DOCUMENT_STATUS') = 1 THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'document_status') THEN
         CREATE TYPE DOCUMENT_STATUS AS ENUM ('draft', 'approved');
     END IF;
 END$$;
