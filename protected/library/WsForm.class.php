@@ -59,10 +59,10 @@ class WsForm
         $this->_action = $action;
         $this->_id = 'WsForm_'.uniqid();
 
-        $this->_form = '<div class="row">';
-        $this->_form .= '<div class="col-sm-12">';
+        $this->_form = '<div class="uk-grid">';
+        $this->_form .= '<div class="uk-width-small-1-1 uk-width-medium-9-10">';
         $this->_form .= '<form id="'.$this->_id.'" ';
-        $this->_form .= 'class="ws_form" ';
+        $this->_form .= 'class="uk-form uk-form-horizontal" ';
         $this->_form .= 'method="POST" enctype="multipart/form-data" ';
         $this->_form .= 'role="form" action="'.$this->_action.'">';
 
@@ -91,7 +91,8 @@ class WsForm
      */
     private function formEnd()
     {
-        $this->_form .= '<button type="submit" class="btn btn-success" id="';
+        $this->_form .= '<button type="submit"'
+            .' class="uk-button uk-button-success" id="';
         $this->_form .= $this->_id.'_submit">';
         $this->_form .= $this->submitButtonText.'</button>';
 
@@ -153,6 +154,7 @@ class WsForm
             name="'.$name.'" value="'.$value.'"
             id="'.$id.'"
         />';
+        unset($name, $id, $value, $params);
     }
 
 
@@ -191,7 +193,6 @@ class WsForm
             $value = '';
         }
 
-
         // label
         if (isset($params['label'])) {
             $label = $params['label'];
@@ -214,20 +215,17 @@ class WsForm
                 case 'date':
                     $maxlength = 11;
                     $class .= ' webiness_datepicker';
-                    $type = 'text';
-                    $ro = 'readonly';
+                    $type = 'date';
                     break;
                 case 'time':
                     $class .= ' webiness_timepicker';
                     $maxlength = 8;
-                    $type = 'text';
-                    $ro = 'readonly';
+                    $type = 'time';
                     break;
                 case 'datetime-local':
                     $class .= ' webiness_datetimepicker';
                     $maxlength = 20;
-                    $type = 'text';
-                    $ro = 'readonly';
+                    $type = 'datetime-local';
                     break;
                 case 'number':
                     $class .= ' webiness_numericinput';
@@ -236,6 +234,10 @@ class WsForm
                     break;
                 case 'file':
                     $class .= ' inputfile';
+                    break;
+                case 'url':
+                    $type = 'url';
+                    $maxlength = 60;
                     break;
                 default:
                     $maxlength = 60;
@@ -264,12 +266,14 @@ class WsForm
         }
 
         // add text input element
-        $this->_form .= '<div class="form-group">';
+        $this->_form .= '<div class="uk-form-row">';
         if ($label !== '') {
-            $this->_form .= '<label class="text-left" for="'.$id.'">';
+            $this->_form .= '<label class="uk-form-label" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
         }
+
+        $this->_form .= '<div class="uk-form-controls">';
 
         // display link to file if type is file and picture thumbnail if file is
         // picture
@@ -305,11 +309,15 @@ class WsForm
             $this->_form .= '<input type="'.$type.'"'
                 .' name="'.$name.'" value="'.$value.'"'
                 .' id="'.$id.'"'
-                .' class="form-control '.$class.'"'
+                .' class="uk-form-width-large '.$class.'"'
                 .' placeholder="'.$placeholder.'"'
                 .' maxlength='.$maxlength.' '.$ro.' '.$rq.'/>';
         }
+
         $this->_form .= '</div>';
+        $this->_form .= '</div>';
+        unset($ro, $rq, $class, $maxlength, $placeholder, $id, $value, $name,
+            $type, $label, $params);
     }
 
 
@@ -377,22 +385,26 @@ class WsForm
         }
 
         // add text area element
-        $this->_form .= '<div class="form-group">';
+        $this->_form .= '<div class="uk-form-row">';
         if ($label != '') {
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
         }
+        $this->_form .= '<div class="uk-form-controls">';
         $this->_form .= '
             <textarea rows=5
                 name="'.$name.'"
                 id="'.$id.'"
-                class="form-control '.$class.'"
+                class="uk-form-width-large '.$class.'"
                 placeholder="'.$placeholder.'"
                 '.$ro.' '.$rq.'>';
         $this->_form .= $value;
         $this->_form .= '</textarea>';
         $this->_form .= '</div>';
+        $this->_form .= '</div>';
+
+        unset($rq, $ro, $placeholder, $class, $id, $name, $label, $params);
     }
 
 
@@ -446,8 +458,8 @@ class WsForm
         }
 
         // add boolean element
-        $this->_form .= '<div class="form-group">';
-        $this->_form .= '<div class="checkbox">';
+        $this->_form .= '<div class="uk-form-row">';
+        $this->_form .= '<div class="uk-form-controls">';
 
         if ($label != '') {
             $this->_form .= '<label for="'.$id.'">';
@@ -459,7 +471,7 @@ class WsForm
             id="'.$id.'"
             value="true"
             data-val="true"
-            class="'.$class.'"
+            class="uk-form-width-large '.$class.'"
             '.$ro.'
             '.$ch.' />';
 
@@ -469,6 +481,8 @@ class WsForm
         }
     
         $this->_form .= '</div></div>';
+
+        unset($label, $class, $ch, $ro, $id, $name, $params);
     }
 
 
@@ -523,18 +537,19 @@ class WsForm
         }
 
         // add select element
-        $this->_form .= '<div class="form-group">';
+        $this->_form .= '<div class="uk-form-row">';
         if ($label != '') {
             $this->_form .= '<label class="text-left" for="'.$id.'">';
             $this->_form .= $label;
             $this->_form .= '</label>';
         }
+        $this->_form .= '<div class="uk-form-controls">';
         $this->_form .= '
             <select
                 style="width: 100%"
                 name="'.$name.'"
                 id="'.$id.'"
-                class="form control '.$class.'"
+                class="uk-form-width-large '.$class.'"
                 '.$rq.' >';
 
         foreach ($list as $l) {
@@ -548,6 +563,9 @@ class WsForm
         }
         $this->_form .= '</select>';
         $this->_form .= '</div>';
+        $this->_form .= '</div>';
+
+        unset($l, $list, $rq, $value, $class, $id, $name, $label, $params);
     }
 
 

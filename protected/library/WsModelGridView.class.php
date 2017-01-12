@@ -131,11 +131,13 @@ class WsModelGridView
      */
     protected function getPagination($count)
     {
-        $paginationCount= floor($count / $this->itemsPerPage);
-        $paginationModCount= $count % $this->itemsPerPage;
+        $paginationCount = floor($count / $this->itemsPerPage);
+        $paginationModCount = $count % $this->itemsPerPage;
         if(!empty($paginationModCount)){
             $paginationCount++;
         }
+
+        unset($count);
         return $paginationCount;
     }
 
@@ -169,47 +171,42 @@ class WsModelGridView
             </script>
         ";
 
-        // master div element
-        $table .= '<div class="row">';
-
-        // header
-        //$table .= '<div class="table-dialog-header">'
-        //    .'<strong>'.$this->_model->metaName.'</strong>'
-        //    .'</div>';
-
         // container for edit dialog
         if ($this->showEdit) {
-            $table .= '<div id="'.$this->_formId.'"></div>';
+            $table .= '<div class="uk-modal" id="'.$this->_formId.'"></div>';
+            $table .= '<div class="uk-modal" id="'.$this->_formId.'_new"></div>';
         }
 
         // title
-        $table .= '<div class="row">';
-        $table .= '<div class="col-sm-12">';
+        $table .= '<div class="uk-grid">';
+        $table .= '<div class="uk-width-small-1-1 uk-width-medium-1-1">';
         $table .= '<h1>'.$this->_model->metaName.'</h1>';
         $table .= '</div>';
         $table .= '</div>';
 
-        // control row
-        $table .= '<div class="row">';
-        $table .= '<div class="col-sm-12 col-md-6 text-left">';
-        $table .= '<form class="form-inline">';
+        // add and search controls
+        $table .= '<div class="uk-grid">';
+        $table .= '<div class="uk-width-small-1-1 uk-width-medium-1-2">';
+        $table .= '<form class="uk-form uk-form-horizontal">';
+        $table .= '<fieldset data-uk-margin>';
         // new item button
         if ($this->showEdit) {
-            $table .= '<input class="btn btn-success"'
+            $table .= '<button class="uk-button uk-button-success"'
+                .' data-uk-modal="{target:\'#'.$this->_formId
+                .'_new\', center:true}"'
                 .' id="btn_create_'.$this->_id.'"'
-                .' value="+"'
                 .' type="button" onclick="WseditModelID('
-                .'\''.$this->_formId.'\', '
+                .'\''.$this->_formId.'_new\', '
                 .'\''.$this->_modelName.'\', '
-                .'0, \''.$this->_edit_action.'\', \''
-                .$this->_model->metaName.'\')"/>';
+                .'0, \''.$this->_edit_action.'\')">';
+            $table .= '<i class="uk-icon-plus"></i>';
+            $table .= '</button>';
         }
         // search control
-        $table .= '<input class="form-control"';
+        $table .= '<input';
         $table .= ' type="text" id="search_'.$this->_id.'"';
         $table .= '/>';
-        $table .= '<input class="btn btn-default"'
-            .' value="&#8981"'
+        $table .= '<button class="uk-button"'
             .' id="btn_search_'.$this->_id
             .'" type="button" onclick="WschangeModelPagination('
             .'\''.$this->_id.'\', '
@@ -222,17 +219,20 @@ class WsModelGridView
             .'\''.$this->_formId.'\', '
             .'0, \''.$this->_id.'\'+\'_0\', '
             .'\''.$this->_edit_action.'\', '
-            .'\''.$this->_delete_action.'\')"/>';
+            .'\''.$this->_delete_action.'\')">';
+        $table .= '<i class="uk-icon-search"></i>';
+        $table .= '</button>';
+
+        $table .= '</fieldset>';
         $table .= '</form>';
-        // end of control row
         $table .= '</div>';
         $table .= '</div>';
 
         // Grid View table
-        $table .= '<div class="row">';
-        $table .= '<div class="col-sm-12">';
-        $table .= '<div class="table-responsive">';
-        $table .= '<table class="table table-hover table-condensed">';
+        $table .= '<div class="uk-grid">';
+        $table .= '<div class="uk-width-1-1">';
+        $table .= '<div class="uk-overflow-container">';
+        $table .= '<table class="uk-table uk-table-hover uk-table-striped">';
         $table .= '<thead>';
         $table .= '<tr>';
         foreach ($this->_model->columns as $column) {
@@ -256,7 +256,8 @@ class WsModelGridView
         $table .= '<tbody id="'.$this->_id.'"></tbody>';
 
         // end of grid table
-        $table .= '</table></div>';
+        $table .= '</table>';
+        $table .= '</div>';
         $table .= '</div>';
         $table .= '</div>';
 
@@ -271,8 +272,7 @@ class WsModelGridView
         $nPages = $this->getPagination($this->nRows);
 
         // construct pager
-        $table .= '<div class="row">';
-        $table .= '<ul class="pagination">';
+        $table .= '<ul class="uk-pagination uk-pagination-left">';
         // links to pages
         for ($i = 0; $i < $nPages; $i++) {
             $table .= '<li>';
@@ -296,10 +296,9 @@ class WsModelGridView
         }
         // end of pager
         $table .= '</ul>';
-        $table .= '</div>';
 
         // end of master div element
-        $table .= '</div><br/>';
+        $table .= '<br/>';
 
         $table .= '<script type="text/javascript">'
             .'$("#search_'.$this->_id.'").keydown(function(event) {'
@@ -310,6 +309,7 @@ class WsModelGridView
             .'});'
             .'</script>';
 
+        unset($i, $nPages, $db, $result, $countQuery);
         return $table;
     }
 

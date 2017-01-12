@@ -33,6 +33,9 @@ CREATE TABLE IF NOT EXISTS product (
     declaration TEXT,
     picture VARCHAR(256),
     pos VARCHAR(80),
+    brand_name VARCHAR(50),
+    weight VARCHAR(20),
+    dimensions VARCHAR(50),
     category_id INTEGER NOT NULL,
     quantitymin FLOAT NOT NULL DEFAULT 0.0,
     uom VARCHAR(4),
@@ -40,6 +43,14 @@ CREATE TABLE IF NOT EXISTS product (
     trading_margin FLOAT NOT NULL DEFAULT 0.0,
 
     FOREIGN KEY (category_id) REFERENCES product_category(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS inactive_product (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    product_id INTEGER NOT NULL UNIQUE,
+
+    FOREIGN KEY (product_id) REFERENCES product(id)
 );
 
 

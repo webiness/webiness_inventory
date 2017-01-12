@@ -12,11 +12,8 @@
     <meta property="og:site_name" content=""/>
     <meta property="og:type" content="website"/>
     <title><?php echo $WsTitle; ?></title>
-    
-    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/jquery-ui.min.css'); ?>" />
-    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/jquery-ui.theme.min.css'); ?>" />
-    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/bootstrap.min.css'); ?>" />
-    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/bootstrap-theme.min.css'); ?>" />
+
+    <link type="text/css" rel="stylesheet" href="<?php echo WsUrl::asset('css/uikit.almost-flat.min.css'); ?>" />
     <style>
         @media print {
             .no-print, .no-print *{
@@ -25,186 +22,249 @@
             }
         }
     </style>
-    
     <?php
         $lang = WsLocalize::getLang();
     ?>
-
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery.min.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo WsUrl::asset('js/uikit.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery.validate.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo WsUrl::asset('js/Chart.bundle.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo WsUrl::asset('js/jquery-ui.min.js'); ?>"></script>
-    <?php
-    if (WsUrl::asset('js/i18n/datepicker-'.$lang.'.js') !== '') {
-    ?>
-    <script type="text/javascript" src="<?php echo WsUrl::asset('js/i18n/datepicker-'.$lang.'.js'); ?>"></script>
-    <?php
-    }
-    ?>
+    <script type="text/javascript" src="<?php echo WsUrl::asset('js/Chart.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo WsUrl::asset('js/webiness.js'); ?>"></script>
 </head>
 
 <body>
-    
+
     <?php
         // initialize auth module
         $auth = new WsAuth();
     ?>
-    
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                    <img width=25 height=25 
-                        src="<?php echo WsUrl::asset('img/webiness-box.png'); ?>"
-                        alt="<?php echo WsConfig::get('app_name'); ?>"/>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                <?php
-                if ($auth->checkSession()) {
-                ?>
-                    <li>
-                        <a href="<?php echo WsUrl::link('wsauth','edit') ?>">
-                            <?php echo $auth->currentUser() ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo WsUrl::link('wsauth','logout') ?>">
-                            <?php echo WsLocalize::msg('logout') ?>
-                        </a>
-                    </li>
-                <?php
-                } else {
-                ?>
-                    <li class="right">
-                        <a href="<?php echo WsUrl::link('wsauth','login') ?>">
-                            <?php echo WsLocalize::msg('login') ?>
-                        </a>
-                    </li>
-                <?php
-                }
-                ?>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo WsLocalize::msg('Documents'); ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu multi-level">
+
+    <nav class="uk-navbar no-print" style="top: 0; position: fixed; width: 100%;">
+        <a href="<?php echo WsUrl::link('site', 'index'); ?>" class="uk-navbar-brand">
+            <img width=25 height=25
+                src="<?php echo WsUrl::asset('img/webiness-box.png'); ?>"
+                alt="<?php echo WsConfig::get('app_name'); ?>"/>
+        </a>
+        <ul class="uk-navbar-nav uk-hidden-small">
+            <li>
+                <a href="<?php echo WsUrl::link('document', 'index'); ?>">
+<?php echo WsLocalize::msg('Documents'); ?></a>
+            </li>
+
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="#"><?php echo WsLocalize::msg('Inventory'); ?></a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'categories'); ?>">
+<?php echo WsLocalize::msg('Product categories'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'products'); ?>">
+<?php echo WsLocalize::msg('Products'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'inactive'); ?>">
+<?php echo WsLocalize::msg('Inactive products'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'inventory_list'); ?>">
+<?php echo WsLocalize::msg('Inventory summary'); ?></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
+<?php echo WsLocalize::msg('Partners'); ?></a>
+            </li>
+
+            <li class="uk-parent" data-uk-dropdown>
+                <a href="#"><?php echo WsLocalize::msg('Settings'); ?></a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li>
+                            <a href="<?php echo WsUrl::link('site', 'company'); ?>">
+<?php echo WsLocalize::msg('Edit company details'); ?></a>
+                        </li>
+                        <?php
+                        if ($auth->hasPermission('admin')) {
+                        ?>
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','register') ?>">
+<?php echo WsLocalize::msg('Add new user') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','admin') ?>">
+<?php echo WsLocalize::msg('Users, roles, permissions') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','rolePerms') ?>">
+<?php echo WsLocalize::msg('Role permissions') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','userRoles') ?>">
+<?php echo WsLocalize::msg('User roles') ?></a>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <div class="uk-navbar-flip">
+            <ul class="uk-navbar-nav uk-hidden-small">
+            <?php
+            if ($auth->checkSession()) {
+            ?>
+                <li class="uk-parent" data-uk-dropdown>
+                    <a href="#"><?php echo $auth->currentUser() ?></a>
+                    <div class="uk-dropdown uk-dropdown-navbar">
+                        <ul class="uk-nav uk-nav-navbar">
                             <li>
-                                <a href="<?php echo WsUrl::link('document', 'edit', array('id' => -1)); ?>">
-                                    <?php echo WsLocalize::msg('New document'); ?>
-                                </a>
+                                <a href="<?php echo WsUrl::link('wsauth','edit') ?>">
+<?php echo WsLocalize::msg('Edit account') ?></a>
                             </li>
                             <li>
-                                <a href="<?php echo WsUrl::link('document', 'index'); ?>">
-                                    <?php echo WsLocalize::msg('Manage documents'); ?>
-                                </a>
+                                <a href="<?php echo WsUrl::link('wsauth','logout') ?>">
+<?php echo WsLocalize::msg('logout') ?></a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo WsLocalize::msg('Inventory'); ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?php echo WsUrl::link('product', 'categories'); ?>">
-                                    <?php echo WsLocalize::msg('Product categories'); ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo WsUrl::link('product', 'products'); ?>">
-                                    <?php echo WsLocalize::msg('Products'); ?>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo WsUrl::link('product', 'inventory_list'); ?>">
-                                    <?php echo WsLocalize::msg('Inventory summary'); ?>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo WsLocalize::msg('Partners'); ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
-                                    <?php echo WsLocalize::msg('Manage partners'); ?>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo WsLocalize::msg('Settings'); ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
+                    </div>
+                </li>
+            <?php
+            } else {
+            ?>
+                <li>
+                    <a href="<?php echo WsUrl::link('wsauth','login') ?>">
+<?php echo WsLocalize::msg('login') ?></a>
+                </li>
+            <?php
+            }
+            ?>
+            </ul>
+        </div>
+
+        <a href="#small_menu" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+    </nav>
+
+    <div id="small_menu" class="uk-offcanvas no-print">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+                <li>
+                    <a href="<?php echo WsUrl::link('document', 'index'); ?>">
+<?php echo WsLocalize::msg('Documents'); ?></a>
+                </li>
+
+                <li class="uk-parent">
+                    <a href="#"><?php echo WsLocalize::msg('Inventory'); ?></a>
+                    <ul class="uk-nav-sub">
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'categories'); ?>">
+<?php echo WsLocalize::msg('Product categories'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'products'); ?>">
+<?php echo WsLocalize::msg('Products'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'inactive'); ?>">
+<?php echo WsLocalize::msg('Inactive products'); ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('product', 'inventory_list'); ?>">
+<?php echo WsLocalize::msg('Inventory summary'); ?></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="<?php echo WsUrl::link('partners', 'index'); ?>">
+<?php echo WsLocalize::msg('Partners'); ?></a>
+                </li>
+
+                <li class="uk-parent">
+                    <a href="#"><?php echo WsLocalize::msg('Settings'); ?></a>
+                        <ul class="uk-nav-sub">
                             <li>
                                 <a href="<?php echo WsUrl::link('site', 'company'); ?>">
-                                    <?php echo WsLocalize::msg('Edit company details'); ?>
-                                </a>
+<?php echo WsLocalize::msg('Edit company details'); ?></a>
                             </li>
                             <?php
                             if ($auth->hasPermission('admin')) {
                             ?>
                             <li>
                                 <a href="<?php echo WsUrl::link('wsauth','register') ?>">
-                                    <?php echo WsLocalize::msg('Add new user') ?>
-                                </a>
+<?php echo WsLocalize::msg('Add new user') ?></a>
                             </li>
                             <li>
                                 <a href="<?php echo WsUrl::link('wsauth','admin') ?>">
-                                    <?php echo WsLocalize::msg('Users, roles, permissions') ?>
-                                </a>
+<?php echo WsLocalize::msg('Users, roles, permissions') ?></a>
                             </li>
                             <li>
                                 <a href="<?php echo WsUrl::link('wsauth','rolePerms') ?>">
-                                    <?php echo WsLocalize::msg('Role permissions') ?>
-                                </a>
+<?php echo WsLocalize::msg('Role permissions') ?></a>
                             </li>
                             <li>
                                 <a href="<?php echo WsUrl::link('wsauth','userRoles') ?>">
-                                    <?php echo WsLocalize::msg('User roles') ?>
-                                </a>
+<?php echo WsLocalize::msg('User roles') ?></a>
                             </li>
                             <?php
                             }
                             ?>
                         </ul>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
+                </li>
+
+                <?php
+                if ($auth->checkSession()) {
+                ?>
+                <li class="uk-parent">
+                    <a href="#"><?php echo $auth->currentUser() ?></a>
+                    <ul class="uk-nav-sub">
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','edit') ?>">
+<?php echo WsLocalize::msg('Edit account') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?php echo WsUrl::link('wsauth','logout') ?>">
+<?php echo WsLocalize::msg('logout') ?></a>
+                        </li>
+                    </ul>
+                </li>
+                <?php
+                } else {
+                ?>
+                <li>
+                    <a href="<?php echo WsUrl::link('wsauth','login') ?>">
+<?php echo WsLocalize::msg('login') ?></a>
+                </li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </div>
 
     <br/>
     <br/>
     <br/>
-    
+
     <div id="ws_image_preview"></div>
-    
-    <div class="container-fluid">
-        <!-- BREADCRUMBS -->
-        <div class="row no-print">
-            <div class="col-sm-12">
-                <ol class="breadcrumb">
+
+    <div class="uk-grid uk-grid-small no-print">
+        <div class="uk-width-small-1-1 uk-width-medium-9-10 uk-container-center">
+            <ul class="uk-breadcrumb">
+            <!-- BREADCRUMBS -->
                 <?php
                     if (isset($WsBreadcrumbs)) {
                         foreach($WsBreadcrumbs as $text => $url) {
                             if (next($WsBreadcrumbs) == '') {
-                                echo '<li class="active">'.$text.'</li>';
+                                echo '<li class="uk-active"><span>'
+                                    .$text
+                                    .'</span></li>';
                             } else {
                                 echo '<li><a href="'
                                     .WsUrl::link($url[0], $url[1]).'">'.
@@ -213,67 +273,52 @@
                         }
                     }
                 ?>
-                </ol>
-            </div>
+            </ul>
+            <hr/>
         </div>
-        
-        <div class="row">
-            <div class="col-sm-12">
-                <?php echo $WsContent ?>
-            </div>
-        </div>
-        
-        <br/>
-        <br/>
-        
-        <?php
-            if (WsConfig::get('app_stage') == 'development') {
-        ?>
-        <div class="row no-print">
-            <div class="col-sm-12 col-md-6">
-                <div class="alert alert-info">
-                    <?php echo
-                    '<strong>MEMORY USAGE: </strong>'
-                    .WsSTART_MEMORY_USAGE.' kb (s), '
-                    .number_format(memory_get_peak_usage() / 1024, 2).' kb (p), '
-                    .number_format(memory_get_usage() / 1024, 2).' kb (e)'
-                    ?>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <div class="alert alert-info">
-                    <?php echo
-                    '<strong>EXECUTION TIME: </strong>'
-                    .number_format((microtime(true) - WsSTART_TIME), 4).' sec'
-                    ?>
-                </div>
-            </div>
-        </div>
-        
-        <br/>
-        <br/>
-        
-        <?php
-            }
-        ?>
     </div>
-    
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?php echo WsUrl::asset('js/bootstrap.min.js'); ?>"></script>
-        <!-- INITIALIZE JavaScript  functions -->
+
+    <div class="uk-grid uk-grid-small">
+        <div class="uk-width-small-1-1 uk-width-medium-9-10 uk-container-center">
+            <?php
+                echo $WsContent;
+                unset ($lang, $auth, $WsTitle, $WsBreadcrumbs, $WsContent);
+            ?>
+        </div>
+    </div>
+
+    <?php
+        if (WsConfig::get('app_stage') == 'development') {
+    ?>
+    <br/>
+    <br/>
+    <div class="uk-grid no-print uk-container-center uk-grid-small">
+        <div class="uk-width-small-1-1 uk-width-medium-5-10">
+            <div class="uk-alert uk-alert-warning">
+                <?php echo
+                '<strong>MEMORY USAGE: </strong>'
+                .WsSTART_MEMORY_USAGE.' kb (s), '
+                .number_format(memory_get_peak_usage(false) / 1024, 2).' kb (p), '
+                .number_format(memory_get_usage(false) / 1024, 2).' kb (e)'
+                ?>
+            </div>
+        </div>
+        <div class="uk-width-small-1-1 uk-width-medium-5-10">
+            <div class="uk-alert uk-alert-warning">
+                <?php echo
+                '<strong>EXECUTION TIME: </strong>'
+                .number_format((microtime(true) - WsSTART_TIME), 4).' sec'
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+        }
+    ?>
+
+    <!-- INITIALIZE JavaScript  functions -->
     <script type="text/javascript">
         jQuery("document").ready(function($) {
-
-            jQuery('.webiness_datepicker').datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    gotoCurrent: true
-                },
-                "option", $.datepicker.regional["<?php echo $lang; ?>"]
-            );
-            
             $(".webiness_numericinput").keydown(function (e) {
                 // Allow: backspace, delete, tab, escape, enter and .
                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -290,7 +335,6 @@
                     e.preventDefault();
                 }
             });
-
         });
     </script>
   </body>

@@ -37,16 +37,12 @@ class WsModelForm extends WsForm
      */
     private $_model;
     /**
-     * @var string $_dialog ID of popup dialog container used for CRUD
-     */
-    private $_dialog;
-    /**
      * @var string $_id ID of form
      */
     private $_id;
 
 
-    function __construct($model, $dialog)
+    function __construct($model)
     {
         if (! $model instanceof WsModel) {
             return false;
@@ -55,17 +51,15 @@ class WsModelForm extends WsForm
         $this->_model = $model;
         // headers
         $this->fieldLabels = $model->columnHeaders;
-        // dialog
-        $this->_dialog = $dialog;
         $this->_id = 'WsForm_'.uniqid();
 
         // submit button text
         $this->submitButtonText = WsLocalize::msg('Save');
 
-        $this->_form = '<div class="row">'
-            .'<div class="col-sm-12">';
+        $this->_form = '<div class="uk-grid">'
+            .'<div class="uk-width-small-1-1">';
         $this->_form .= '<form id="'.$this->_id.'" '
-            .'class="ws_form" '
+            .'class="uk-form uk-form-horizontal" '
             .'method="POST" enctype="multipart/form-data">';
 
         // model name
@@ -82,6 +76,16 @@ class WsModelForm extends WsForm
         // parameters for form widget
         $params = array();
 
+        // get locale settings
+        $lang = WsLocalize::getLang();
+        setlocale(LC_ALL, $lang,
+            $lang.'_'.strtoupper($lang),
+            $lang.'_'.strtoupper($lang).'.utf8'
+        );
+
+        // database connection
+        $db = new WsDatabase();
+
         // form items
         foreach ($this->_model->columns as $column) {
             // widget name
@@ -89,11 +93,14 @@ class WsModelForm extends WsForm
             // widget id
             $params['id'] = $this->_id.'_'.$column;
             // widget label
-            isset($this->fieldLabels[$column]) ?
-                $label = $this->fieldLabels[$column] :
+            if (isset($this->fieldLabels[$column])) {
+                $label = $this->fieldLabels[$column];
+            } else {
                 $label = $column;
+            }
             $params['label'] = $label;
             // widget value
+
             if (isset($this->_model->$column)) {
                 if ($this->_model->columnType[$column] == 'bool_type') {
                     if ($this->_model->$column == true
@@ -105,47 +112,16 @@ class WsModelForm extends WsForm
                         $params['checked'] = false;
                     }
                 } else if ($this->_model->columnType[$column] == 'date_type') {
-                    // get locale settings
-                    $lang = substr(
-                        filter_input(
-                            INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE',
-                            FILTER_SANITIZE_STRING
-                        ), 0,2
-                    );
-                    setlocale(LC_ALL, $lang,
-                        $lang.'_'.strtoupper($lang),
-                        $lang.'_'.strtoupper($lang).'.utf8'
-                    );
-                    $date = strftime('%x', strtotime($this->_model->$column));
+                    $date = strftime('%F', strtotime($this->_model->$column));
                     $params['value'] = $date;
                     unset($lang, $date);
                 } else if ($this->_model->columnType[$column] == 'time_type') {
-                    // get locale settings
-                    $lang = substr(
-                        filter_input(
-                            INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'
-                        ), 0,2
-                    );
-                    setlocale(LC_ALL, $lang,
-                        $lang.'_'.strtoupper($lang),
-                        $lang.'_'.strtoupper($lang).'.utf8'
-                    );
-                    $date = strftime('%X', strtotime($this->_model->$column));
+                    $date = strftime('%R', strtotime($this->_model->$column));
                     $params['value'] = $date;
                     unset($lang, $date);
                 } else if ($this->_model->columnType[$column]
                     == 'timestamp_type') {
-                    // get locale settings
-                    $lang = substr(
-                        filter_input(
-                            INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'
-                        ), 0,2
-                    );
-                    setlocale(LC_ALL, $lang,
-                        $lang.'_'.strtoupper($lang),
-                        $lang.'_'.strtoupper($lang).'.utf8'
-                    );
-                    $date = strftime('%x %X',strtotime($this->_model->$column));
+                    $date = strftime('%F %R',strtotime($this->_model->$column));
                     $params['value'] = $date;
                     unset($lang, $date);
                 } else {
@@ -162,15 +138,7 @@ class WsModelForm extends WsForm
             if ($column == 'id') {
                 $params['readonly'] = true;
                 if (intval($params['value']) < 1) {
-                    $query = 'SELECT CASE WHEN max(id) IS NULL THEN 1'
-                        .' ELSE max(id)+1 END AS next_id FROM '
-                        .$this->_model->tableName;
-                    $db = new WsDatabase();
-                    $result = $db->query($query);
-
-                    $params['value'] = $result[0]['next_id'];
-
-                    unset($query, $result, $db);
+                    $params['value'] = $this->_model->getNextId();
                 }
             }
 
@@ -195,16 +163,15 @@ class WsModelForm extends WsForm
                         .' ORDER BY option';
                 }
 
-                $db = new WsDatabase();
                 $result = $db->query($query);
-
                 $this->selectInput($result, $params);
 
-                unset($query, $result, $db);
-            } else if (in_array($column, $this->_model->hiddenColumns)) {
-                $this->hiddenInput($params);
+                unset($query, $result);
             } else {
                 switch ($this->_model->columnType[$column]) {
+                    case 'hidden_type':
+                        $this->hiddenInput($params);
+                        break;
                     case 'bool_type':
                         $this->booleanInput($params);
                         break;
@@ -261,7 +228,9 @@ class WsModelForm extends WsForm
             $params = array();
         }
 
-        $this->_form .= '<button type="submit" class="btn btn-success">';
+        $this->_form .= '<br/><br/>'
+            .'<button type="submit" '
+            .'class="uk-button uk-button-success">';
         $this->_form .= $this->submitButtonText;
         $this->_form .= '</button>';
         $this->_form .= '</form>';
@@ -273,12 +242,13 @@ class WsModelForm extends WsForm
         // for form validation
         $this->_form .= '$("#'.$this->_id.'").validate({';
         $this->_form .= 'submitHandler: function(form) {';
-        $this->_form .= 'var form_object = $("#'.$this->_id.'");';
-        $this->_form .= 'WssaveModel("'.$this->_id.'", "'.$this->_dialog.'"'
-            .',"'.WsSERVER_ROOT.'/protected/library/ajax/WsSaveToModel.php");';
+        $this->_form .= 'WssaveModel("'.$this->_id.'", '
+            .'"'.WsSERVER_ROOT.'/protected/library/ajax/WsSaveToModel.php");';
         $this->_form .= '}';
         $this->_form .= '});';
         $this->_form .= '</script>';
+
+        unset($params, $lang, $label, $date, $db);
     }
 
 

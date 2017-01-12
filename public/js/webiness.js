@@ -1,4 +1,4 @@
-function WssaveModel(form, dialog, url) {
+function WssaveModel(form, url) {
     var fd = new FormData();
 
     var $inputs = $( "#"+form+" :input");
@@ -17,7 +17,6 @@ function WssaveModel(form, dialog, url) {
         contentType: false,
         processData: false,
         data: fd,
-        //data: $("#"+form).serialize(),
         error: function (request, status, error) {
             alert(request.responseText);
         },
@@ -25,9 +24,6 @@ function WssaveModel(form, dialog, url) {
         },
     }).done(function(result) {
         $("#"+form).find("div#form_status").text("Values are saved into model.");
-        if (dialog !== "") {
-            parent.$("#"+dialog).dialog('close');
-        }
         // TODO: replace this with ajax call that will only reload grid that was
         // changed
         window.setTimeout(function(){location.reload();},100);
@@ -41,58 +37,29 @@ function WssaveModel(form, dialog, url) {
 
 function WsdeleteModelID(form_id, model, id, url, title, yes_text, no_text)
 {
-    $("#"+form_id).html(
-        "Delete item: <strong>"
-        + id + "</strong> from <strong>"
-        + model + "</strong>?");
-    $("#"+form_id).dialog({
-        title: title,
-        modal: true,
-        show: {
-            effect: "blind",
-            duration: 150
-        },
-        hide: {
-            effect: "explode",
-            duration: 150
-        },
-        buttons: {
-            "Yes": {
-                text: yes_text,
-                click : function() {
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: {
-                            model: model,
-                            id: id
-                        },
-                        error: function (request, status, error) {
-                            alert(request.responseText);
-                        },
-                        cache: false,
-                        dataType: "text xml"
-                    }).done(function(result) {
-                        parent.$("#"+form_id).dialog('close');
-                        window.setTimeout(function(){location.reload();},100);
-                    }).fail(function() {
-                        alert("Sorry. Server unavailable.");
-                    });
-                }
+    UIkit.modal.confirm(
+            "Delete item: <strong>" + id +"</strong> from <strong>" + model + "</strong>?",
+            function(){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                model: model,
+                id: id
             },
-            "No": {
-                text: no_text,
-                class: "error",
-                click: function() {
-                    $(this).dialog("close");
-                }
-            }
-        }
+            error: function (request, status, error) {
+                window.setTimeout(function(){location.reload();},100);
+            },
+            cache: false,
+            dataType: "text xml"
+        }).done(function(result) {
+            window.setTimeout(function(){location.reload();},100);
+        });
     });
 }
 
 
-function WseditModelID(form_id, model, id, url, title)
+function WseditModelID(form_id, model, id, url)
 {
     $.ajax({
         type: "POST",
@@ -108,20 +75,6 @@ function WseditModelID(form_id, model, id, url, title)
         cache: false
     }).done(function(result) {
         $("#"+form_id).html(result);
-        $("#"+form_id).dialog({
-            title: title,
-            width: '80%',
-            maxHeight: 450,
-            modal: true,
-            show: {
-                effect: "blind",
-                duration: 150
-            },
-            hide: {
-                effect: "explode",
-                duration: 150
-            }
-        });
     }).fail(function() {
         alert("Sorry. Server unavailable.");
     });
@@ -182,10 +135,17 @@ function randomColorFactor() {
     return Math.round(Math.random() * 255);
 };
 function randomColor(opacity) {
-    return 'rgba(' + randomColorFactor() +
-        + ',' + randomColorFactor()
-        + ',' + randomColorFactor()
-        + (opacity || '.3') + ');';
+    return "#"
+        + randomColorFactor().toString(16)
+        + randomColorFactor().toString(16)
+        + randomColorFactor().toString(16);
+
+    //
+    //return 'rgba(' + randomColorFactor()
+    //   + ',' + randomColorFactor()
+    //    + ',' + randomColorFactor()
+    //    + (opacity || '.3') + ');';
+    //    */
 };
 
 

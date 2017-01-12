@@ -49,180 +49,131 @@ class WsAuth
         // auth database tables for PostgreSQL server
         if (WsConfig::get('db_driver') === 'pgsql') {
             $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(128) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    user_salt VARCHAR(50) NOT NULL,
-    is_verified BOOLEAN NOT NULL,
-    is_active BOOLEAN NOT NULL,
-    verification_code VARCHAR(65) NOT NULL
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_logged_in (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES ws_user(id),
-    session_id CHAR(32) NOT NULL,
-    token CHAR(128) NOT NULL
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_roles (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_permissions (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_role_perm (
-    role_id INTEGER NOT NULL REFERENCES ws_roles(id),
-    permissions_id INTEGER NOT NULL REFERENCES ws_permissions(id)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user_role (
-    user_id INTEGER NOT NULL REFERENCES ws_user(id),
-    role_id INTEGER NOT NULL REFERENCES ws_roles(id)
-);
-';
-            $this->_db->execute($create_table);
-
+                CREATE TABLE IF NOT EXISTS ws_user (
+                    id SERIAL PRIMARY KEY,
+                    email VARCHAR(128) NOT NULL,
+                    password VARCHAR(128) NOT NULL,
+                    user_salt VARCHAR(50) NOT NULL,
+                    is_verified BOOLEAN NOT NULL,
+                    is_active BOOLEAN NOT NULL,
+                    verification_code VARCHAR(65) NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS ws_logged_in (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL REFERENCES ws_user(id),
+                    session_id CHAR(32) NOT NULL,
+                    token CHAR(128) NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS ws_roles (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_permissions (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_role_perm (
+                    role_id INTEGER NOT NULL REFERENCES ws_roles(id),
+                    permissions_id INTEGER NOT NULL REFERENCES ws_permissions(id)
+                );
+                CREATE TABLE IF NOT EXISTS ws_user_role (
+                    user_id INTEGER NOT NULL REFERENCES ws_user(id),
+                    role_id INTEGER NOT NULL REFERENCES ws_roles(id)
+                );';
+            $this->_db->execute_batch($create_table);
         // auth tables for MariaDB/MySql database server
         } else if (WsConfig::get('db_driver') === 'mysql') {
             $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(128) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    user_salt VARCHAR(50) NOT NULL,
-    is_verified BOOLEAN NOT NULL,
-    is_active BOOLEAN NOT NULL,
-    verification_code VARCHAR(65) NOT NULL
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_logged_in (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    user_id INTEGER NOT NULL,
-    session_id CHAR(32) NOT NULL,
-    token CHAR(128) NOT NULL,
+                CREATE TABLE IF NOT EXISTS ws_user (
+                    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                    email VARCHAR(128) NOT NULL,
+                    password VARCHAR(128) NOT NULL,
+                    user_salt VARCHAR(50) NOT NULL,
+                    is_verified BOOLEAN NOT NULL,
+                    is_active BOOLEAN NOT NULL,
+                    verification_code VARCHAR(65) NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS ws_logged_in (
+                    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                    user_id INTEGER NOT NULL,
+                    session_id CHAR(32) NOT NULL,
+                    token CHAR(128) NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES ws_user(id)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_roles (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_permissions (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_role_perm (
-    role_id INTEGER NOT NULL,
-    permissions_id INTEGER NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES ws_user(id)
+                );
+                CREATE TABLE IF NOT EXISTS ws_roles (
+                    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_permissions (
+                    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_role_perm (
+                    role_id INTEGER NOT NULL,
+                    permissions_id INTEGER NOT NULL,
 
-    FOREIGN KEY (role_id) REFERENCES ws_roles(id),
-    FOREIGN KEY (permissions_id) REFERENCES ws_permissions(id)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user_role (
-    user_id INTEGER NOT NULL,
-    role_id INTEGER NOT NULL,
+                    FOREIGN KEY (role_id) REFERENCES ws_roles(id),
+                    FOREIGN KEY (permissions_id) REFERENCES ws_permissions(id)
+                );
+                CREATE TABLE IF NOT EXISTS ws_user_role (
+                    user_id INTEGER NOT NULL,
+                    role_id INTEGER NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES ws_user(id),
-    FOREIGN KEY (role_id) REFERENCES ws_roles(id)
-);
-';
-            $this->_db->execute($create_table);
+                    FOREIGN KEY (user_id) REFERENCES ws_user(id),
+                    FOREIGN KEY (role_id) REFERENCES ws_roles(id)
+                );';
+            $this->_db->execute_batch($create_table);
 
         // auth tables for sqlite database
         } else if (WsConfig::get('db_driver') === 'sqlite') {
             $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email VARCHAR(128) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    user_salt VARCHAR(50) NOT NULL,
-    is_verified BOOLEAN NOT NULL,
-    is_active BOOLEAN NOT NULL,
-    verification_code VARCHAR(65) NOT NULL
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_logged_in (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    session_id CHAR(32) NOT NULL,
-    token CHAR(128) NOT NULL,
+                CREATE TABLE IF NOT EXISTS ws_user (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email VARCHAR(128) NOT NULL,
+                    password VARCHAR(128) NOT NULL,
+                    user_salt VARCHAR(50) NOT NULL,
+                    is_verified BOOLEAN NOT NULL,
+                    is_active BOOLEAN NOT NULL,
+                    verification_code VARCHAR(65) NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS ws_logged_in (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    session_id CHAR(32) NOT NULL,
+                    token CHAR(128) NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES ws_user(id)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_roles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_permissions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(25) NOT NULL,
-    description VARCHAR(50)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_role_perm (
-    role_id INTEGER NOT NULL,
-    permissions_id INTEGER NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES ws_user(id)
+                );
+                CREATE TABLE IF NOT EXISTS ws_roles (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_permissions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name VARCHAR(25) NOT NULL,
+                    description VARCHAR(50)
+                );
+                CREATE TABLE IF NOT EXISTS ws_role_perm (
+                    role_id INTEGER NOT NULL,
+                    permissions_id INTEGER NOT NULL,
 
-    FOREIGN KEY (role_id) REFERENCES ws_roles(id),
-    FOREIGN KEY (permissions_id) REFERENCES ws_permissions(id)
-);
-';
-            $this->_db->execute($create_table);
-            $create_table = '
-CREATE TABLE IF NOT EXISTS ws_user_role (
-    user_id INTEGER NOT NULL,
-    role_id INTEGER NOT NULL,
+                    FOREIGN KEY (role_id) REFERENCES ws_roles(id),
+                    FOREIGN KEY (permissions_id) REFERENCES ws_permissions(id)
+                );
+                CREATE TABLE IF NOT EXISTS ws_user_role (
+                    user_id INTEGER NOT NULL,
+                    role_id INTEGER NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES ws_user(id),
-    FOREIGN KEY (role_id) REFERENCES ws_roles(id)
-);
-';
-            $this->_db->execute($create_table);
+                    FOREIGN KEY (user_id) REFERENCES ws_user(id),
+                    FOREIGN KEY (role_id) REFERENCES ws_roles(id)
+                );';
+            $this->_db->execute_batch($create_table);
         }
 
         // create admin user account if it doesent exists
@@ -263,6 +214,8 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
         $user_model->verification_code = $user_model->randomString(65);
 
         $user_model->save();
+
+        unset($email, $user_model);
 
         return true;
     }
@@ -353,8 +306,12 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
 
             // send user verification mail
             mail($to, $subject, $html, $headers);
+
+            unset($to, $subject, $html, $headers, $link, $server,
+                $verification_code, $password, $user_model);
             return true;
         } else {
+            unset($verification_code, $password, $user_model);
             return false;
         }
     }
@@ -399,13 +356,17 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
 
         // account is not verified, send user verification email.
         if (!$is_verified) {
+            unset($is_verified, $is_active, $password1, $password2, $user_model,
+                $password, $email);
             // send verification mail
             return WS_AUTH_NOT_VERIFIED;
         }
 
         // account is not active/
         if (!$is_active) {
-           return WS_AUTH_NOT_ACTIVE;
+            unset($is_verified, $is_active, $password1, $password2, $user_model,
+                $password, $email);
+            return WS_AUTH_NOT_ACTIVE;
         }
 
         // all OK; login user
@@ -440,6 +401,9 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
         $logged_in_model->token = $token;
         $logged_in_model->save();
 
+        unset($is_verified, $is_active, $password1, $password2, $random,
+            $user_model, $token, $user_id, $session_id, $logged_in_model,
+            $password, $email);
         return WS_AUTH_LOGIN_OK;
     }
 
@@ -494,16 +458,18 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
             if(session_id() == trim($logged_in_model->session_id)
                 && $_SESSION['ws_auth_token'] == trim($logged_in_model->token)){
 
-                    // expand expiration time for 1 hour
-                    $_SESSION['ws_auth_generated_time'] = time();
+                // expand expiration time for 1 hour
+                $_SESSION['ws_auth_generated_time'] = time();
 
-                    /** Id and token match, refresh the session
-                     * for the next request
-                     */
-                    return true;
+                /** Id and token match, refresh the session
+                 * for the next request
+                 */
+                unset($user_id, $logged_in_model);
+                return true;
             }
         }
 
+        unset($user_id, $logged_in_model);
         return false;
     }
 
@@ -531,6 +497,7 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
 
         session_destroy();
 
+        unset($user_id, $logged_in_model);
         return true;
     }
 
@@ -584,9 +551,11 @@ CREATE TABLE IF NOT EXISTS ws_user_role (
         ));
 
         if ($db->nRows >= 1) {
+            unset($sql, $user_id, $db);
             return true;
         }
 
+        unset($sql, $user_id, $db);
         return false;
     }
 

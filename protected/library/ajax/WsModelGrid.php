@@ -197,7 +197,7 @@ if ($m->nRows < 1) {
                     $link = WsSERVER_ROOT.'/runtime/'.$model.'/'.$value;
                     if (file_exists($url)) {
                         $table .= '<a href="'.$link.'" target="_blank">';
-                        if(@is_array(getimagesize($url))) {
+                        if(is_array(@getimagesize($url))) {
                             $table.='<img src="'.$link.'" width=40 height=40/>';
                         } else {
                             $table .= $value;
@@ -216,8 +216,21 @@ if ($m->nRows < 1) {
         if ($showEdit) {
             $id = $row['id'];
             $table .= '<td>';
-            $table .= '<input class="btn btn-danger" id="delete_'
-                .$gridId.'_'.$id.'" type="button" value="&#x2718;"'
+
+            // edit button
+            $table .= '<button class="uk-button uk-button-primary"'
+                .' data-uk-modal="{target:\'#'.$formId.'\', center:true}"'
+                .' id="edit_'.$gridId.'_'.$id.'" type="button"'
+                .' onclick="WseditModelID('
+                .'\''.$formId.'\', '
+                .'\''.get_class($m).'\', '
+                .$id.', \''.$edit_action.'\')">';
+            $table .= '<i class="uk-icon-edit"></i>';
+            $table .= '</button>';
+
+            // delete button
+            $table .= '<button class="uk-button uk-button-danger" id="delete_'
+                .$gridId.'_'.$id.'" type="button" '
                 .' onclick="WsdeleteModelID('
                 .'\''.$formId.'\', '
                 .'\''.get_class($m).'\', '
@@ -225,14 +238,10 @@ if ($m->nRows < 1) {
                 .', \''.WsLocalize::msg('Confirm').'\''
                 .', \''.WsLocalize::msg('Yes').'\''
                 .', \''.WsLocalize::msg('No').'\''
-                .')"/>';
-            $table .= '<input class="btn btn-primary" id="edit_'
-                .$gridId
-                .'_'.$id.'" type="button" value="&#x270e;"'
-                .' onclick="WseditModelID('
-                .'\''.$formId.'\', '
-                .'\''.get_class($m).'\', '
-                .$id.', \''.$edit_action.'\', \''.$m->metaName.'\')"/>';
+                .')">';
+            $table .= '<i class="uk-icon-trash"></i>';
+            $table .= '</button>';
+
             $table .= '</td>';
         }
         $table .= '</tr>';

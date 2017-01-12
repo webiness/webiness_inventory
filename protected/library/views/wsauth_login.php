@@ -1,6 +1,6 @@
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-md-offset-3">
-        <h3 class="text-center">
+<div class="uk-grid">
+    <div class="uk-width-small-1-1 uk-grid-medium-1-2 uk-container-center">
+        <h3 class="uk-text-center">
             <?php echo WsConfig::get('app_name'); ?>
             -
             <?php echo WsLocalize::msg('Login'); ?>
@@ -50,8 +50,8 @@
 
         $login_form->submitButtonText = WsLocalize::msg('login');
 ?>
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-md-offset-3">
+    <div class="uk-grid">
+        <div class="uk-width-small-9-10 uk-width-medium-1-2 uk-container-center">
 <?php
         // email field
         $login_form->textInput(array(
@@ -77,12 +77,14 @@
         </div>
     </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-6 col-md-offset-3 alert alert-error">
+<div class="uk-grid">
+    <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-container-center">
+        <div class="uk-alert uk-alert-danger">
         <?php
             header('HTTP/1.1 401 Unauthorized');
             echo $error_message;
         ?>
+        </div>
     </div>
 </div>
 

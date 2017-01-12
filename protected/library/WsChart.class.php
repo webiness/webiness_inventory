@@ -23,6 +23,11 @@ class WsChart
      */
     protected $_datasets = array();
     /**
+     * @var array $_datasetsLabels Labels for datasets
+     *
+     */
+    protected $_datasetsLabels = array();
+    /**
      * @var array $_options Global Chart.js options
      *
      */
@@ -126,15 +131,17 @@ class WsChart
      * @var array $dataset Dataset to add
      *
      */
-    public function addDataset($dataset, $reset=null)
+    public function addDataset($dataset, $label ='', $reset=null)
     {
         // new list of dataset
         if ($reset) {
             $this->_datasets = array();
+            $this->_datasetsLabels = array();
         }
 
         if (is_array($dataset)) {
             array_push($this->_datasets, $dataset);
+            array_push($this->_datasetsLabels, $label);
         }
     }
 
@@ -168,33 +175,35 @@ class WsChart
         // begining of chart script
         $this->_chart .= '<script language="javascript">';
 
-        // prepare chart data
+        $label_index = 0;
+
+        // prepare dataset
         $data = '';
         foreach ($this->_datasets as $dataset) {
             $data .= '{';
-            $separator = '';
 
-            // check for background color
-            if (!array_key_exists('backgroundColor', $dataset)) {
-                $data .= 'backgroundColor: randomColor(),';
-            }
+            // random color for background
+            $data .= 'backgroundColor: randomColor(), ';
+
+            // labels
+            $data .= 'label: "'.$this->_datasetsLabels[$label_index].'", ';
+            $label_index++;
+
+            // chart data values
+            $data .= 'data: [';
             foreach ($dataset as $key=>$val) {
-                $data .= $separator.$key.': ';
+
 
                 if (is_int( $val )) {
                     $data .= $val;
                 } elseif (is_string($val)) {
                     $data .= '"'.str_replace('"', '\"', $val).'"';
-                } elseif (is_bool($val)) {
-                    $data .= $val ? 'true' : 'false';
-                } elseif (is_array($val)) {
-                    $data .= json_encode($val);
                 } else {
                     $data .= $val;
                 }
-                $separator = ', ';
+                $data .= ', ';
             }
-            $data .= '},';
+            $data .= ']}';
         }
 
 
@@ -209,9 +218,11 @@ class WsChart
 
         // caller for Chart.js
         $this->_chart .= 'var ctx_'.$this->_id
-                .' = document.getElementById("'.$this->_id.'").getContext("2d");'
-                .'var '.$this->_id.' = new Chart.'.$this->_type
-                .'(ctx_'.$this->_id.', {data: '.$this->_id.'_data});';
+                .' = document.getElementById("'.$this->_id.'");'
+                .'var '.$this->_id.' = new Chart('.'ctx_'.$this->_id
+                .', {type: "'.$this->_type.'", data: '.$this->_id.'_data,'
+                .'options: {scales: {yAxes: [{ticks: {beginAtZero:true}}]}}'
+                .'});';
 
         // end of chart script
         $this->_chart .= '</script>';
@@ -227,12 +238,12 @@ class WsChart
     public function setType($type)
     {
         $accepted_types = array(
-          'Line',
-          'Bar',
-          'Radar',
-          'PolarArea',
-          'Pie',
-          'Doughnut'
+          'line',
+          'bar',
+          'radar',
+          'polarArea',
+          'pie',
+          'doughnut'
         );
 
         if (in_array($type, $accepted_types)) {
@@ -240,3 +251,4 @@ class WsChart
         }
     }
 }
+

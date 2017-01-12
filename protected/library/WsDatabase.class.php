@@ -74,6 +74,8 @@ class WsDatabase
             $this->isConnected = false;
             unset($cs);
             header('HTTP/1.1 500 Internal Server Error');
+            trigger_error('WsDatabase: <code>'.$ex->getMessage().'</code>',
+                E_USER_ERROR);
             return false;
         }
 
@@ -84,6 +86,7 @@ class WsDatabase
     public function __destruct()
     {
         $this->_dbh = null;
+        unset($this->_dbh);
     }
 
 
@@ -139,6 +142,7 @@ class WsDatabase
             header('HTTP/1.1 500 Internal Server Error');
             trigger_error('WsDatabase: <code>'.$ex->getMessage().'</code>',
                 E_USER_ERROR);
+            unset($parameters, $param, $sql, $sth);
             return false;
         }
 
@@ -149,8 +153,7 @@ class WsDatabase
         }
         $sth->closeCursor();
 
-        unset($row, $sth);
-
+        unset($parameters, $param, $sql, $row, $sth);
         return $values;
     }
 
@@ -199,6 +202,7 @@ class WsDatabase
             header('HTTP/1.1 500 Internal Server Error');
             trigger_error('WsDatabase: <code>'.$sql.'</code>',
                 E_USER_ERROR);
+            unset($sth, $sql, $parameters, $key, $value, $v);
             return false;
         } else {
             $this->_dbh->commit();
@@ -206,37 +210,39 @@ class WsDatabase
         }
         $sth->closeCursor();
 
-        unset($sth);
+        unset($sth, $sql, $parameters, $key, $value, $v);
         return true;
     }
 
 
-/**
- * Execute multiple custom SQL commands without parameters
- *
- * @param string $sql Custom SQL query
- *
- */
-public function execute_batch($sql)
-{
-    if (!$this->isConnected) {
-        return false;
-    }
+    /**
+     * Execute multiple custom SQL commands without parameters
+     *
+     * @param string $sql Custom SQL query
+     *
+     */
+    public function execute_batch($sql)
+    {
+        if (!$this->isConnected) {
+            return false;
+        }
 
-    // execute query
-    $this->_dbh->beginTransaction();
-    $count = $this->_dbh->exec($sql);
-    if ($count === false ) {
-        $this->_dbh->rollBack();
-        $this->nRows = 0;
-        return false;
-    } else {
-        $this->_dbh->commit();
-        $this->nRows = $count;
-    }
+        // execute query
+        $this->_dbh->beginTransaction();
+        $count = $this->_dbh->exec($sql);
+        if ($count === false ) {
+            $this->_dbh->rollBack();
+            $this->nRows = 0;
+            unset($count);
+            return false;
+        } else {
+            $this->_dbh->commit();
+            $this->nRows = $count;
+        }
 
-    return true;
-}
+        unset($count);
+        return true;
+    }
 
 
     /**
@@ -246,5 +252,6 @@ public function execute_batch($sql)
     public function close()
     {
         $this->_dbh = null;
+        unset($this->_dbh);
     }
 }

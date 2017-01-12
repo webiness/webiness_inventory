@@ -1,115 +1,130 @@
-<div class="row">
-    <div class="col-sm-12 col-md-8 col-md-offset-1">
-        <h3 class="text-left">
-            <?php
-            echo Wslocalize::msg('Document no: ').$id;
-            ?>
-        </h3>
+<div class="uk-modal-dialog">
+    <a class="uk-modal-close uk-close"></a>
+    <div class="uk-modal-header">
+        <div class="uk-grid">
+            <div class="uk-width-small-1-1 uk-width-medium-1-2">
+                <h3 class="uk-text-left">
+                    <?php
+                    echo Wslocalize::msg('Document no: ').$id;
+                    ?>
+                </h3>
+            </div>
+            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-text-right">
+                <a class="uk-button uk-button-primary" target="_blank"
+                    href="<?php echo WsUrl::link('document', 'view', array(
+                        'id' => $id)); ?>">
+                    <?php echo WsLocalize::msg('View Document'); ?>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-2 col-md-2 text-right">
-        <a class="btn btn-info" target="_blank"
-            href="<?php echo WsUrl::link('document', 'view', array(
-                'id' => $id)); ?>">
-            <?php echo WsLocalize::msg('View Document'); ?>
-        </a>
-    </div>
-</div>
 
-<br/>
-<br/>
-<div class="row">
-    <div class="col-sm-12 col-md-10 col-md-offset-1">
-    
-        <form id="document_form"
+<div class="uk-grid">
+    <div class="uk-width-1-1">
+
+        <form id="document_form" class="uk-form uk-form-horizontal"
             action="<?php echo WsUrl::link('document', 'edit'); ?>"
             method="post">
-        
-            <label for="d_date">
-                <?php echo WsLocalize::msg('document date'); ?>
-            </label>
+
             <input type="hidden" name="csrf"
                 value="<? echo $_SESSION['ws_auth_token']; ?>"/>
             <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-            <input type="text" name="d_date"
-                class="form-control webiness_datepicker" ro
-                value="<?php echo $d_date; ?>"/>
 
-            <label for="d_partner">
-                <?php echo WsLocalize::msg('partner'); ?>
-            </label>
-            <select name="d_partner" class="form-control"
-                style="width: 100%">
-                <?php
-                    foreach ($all_partners as $partner) {
-                        if ($partner['partner_name'] == $d_partner) {
-                            echo '<option value="'.$partner['id']
-                                .'" selected>';
-                        } else {
-                            echo '<option value="'.$partner['id'].'">';
-                        }
-                        echo $partner['partner_name'];
-                        echo '</option>';
-                    }
-                ?>
-            </select>
-            
-            <div class="col-sm-12 col-md-6">
-                <label for="d_type">
-                    <?php echo WsLocalize::msg('document type'); ?>
+            <div class="uk-form-row">
+                <label for="d_date" class="uk-form-label">
+                    <?php echo WsLocalize::msg('document date'); ?>
                 </label>
-                <select name="d_type" class="form-control"
-                    style="width: 100%">
-                    <option value="purchase"
+                <div class="uk-form-controls">
+                    <input type="date" name="d_date" maxlength=11
+                        class="webiness_datepicker uk-width-1-1"
+                        value="<?php echo $d_date; ?>" />
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <label for="d_partner" class="uk-form-label">
+                    <?php echo WsLocalize::msg('partner'); ?>
+                </label>
+                <div class="uk-form-controls">
+                    <select name="d_partner" class="uk-width-1-1">
+                        <?php
+                            foreach ($all_partners as $partner) {
+                                if ($partner['partner_name'] == $d_partner) {
+                                    echo '<option value="'.$partner['id']
+                                        .'" selected>';
+                                } else {
+                                    echo '<option value="'.$partner['id'].'">';
+                                }
+                                echo $partner['partner_name'];
+                                echo '</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="uk-grid uk-grid-small">
+                <div class="uk-width-1-2">
+                    <label for="d_type" class="uk-form-label">
+                        <?php echo WsLocalize::msg('document type'); ?>
+                    </label>
+                    <select name="d_type" class="uk-width-1-1">
+                        <option value="purchase"
                             <?php $d_type == 'purchase' ? print ' selected'
                                 :false; ?>>
 <?php echo WsLocalize::msg('purchase'); ?></option>
-                    <option value="sale"
+                        <option value="sale"
                             <?php $d_type == 'sale' ? print ' selected'
                                 :false; ?>>
 <?php echo WsLocalize::msg('sale'); ?></option>
-                    <option value="dismission"
+                        <option value="dismission"
                             <?php $d_type == 'dismission' ? print ' selected'
                                 :false; ?>>
 <?php echo WsLocalize::msg('dismission'); ?></option>
-                </select>
-            </div>
-
-            <div class="col-sm-12 col-md-6">
-                <label for="d_status">
-                    <?php echo WsLocalize::msg('document status'); ?>
-                </label>
-                <select name="d_status" class="form-control"
-                    style="width: 100%">
-                    <option value="draft"
+                    </select>
+                </div>
+                <div class="uk-width-1-2">
+                    <label for="d_status" class="uk-form-label">
+                        <?php echo WsLocalize::msg('document status'); ?>
+                    </label>
+                    <select name="d_status" class="uk-width-1-1">
+                        <option value="draft"
                             <?php
                                 $d_status == 'draft' ? print ' selected'
                                     :false; ?>>
 <?php echo WsLocalize::msg('draft'); ?></option>
-                    <option value="approved"
+                        <option value="approved"
                             <?php
                                 $d_status == 'approved' ? print ' selected'
                                     :false; ?>>
 <?php echo WsLocalize::msg('approved'); ?></option>
-                </select>
+                    </select>
+                </div>
             </div>
 
-            <label for="d_discount">
-                <?php echo WsLocalize::msg('discount'); ?>
-            </label>
-            <input type="number" name="discount"
-                class="form-control webiness_numericinput"
-                value="<?php echo $discount; ?>"/>
+            <br/>
+
+            <div class="uk-form-row">
+                <label for="d_discount" class="uk-form-label">
+                    <?php echo WsLocalize::msg('discount'); ?>
+                </label>
+                <div class="uk-form-controls">
+                    <input type="number" name="discount"
+                        class="uk-width-1-1 webiness_numericinput"
+                        value="<?php echo $discount; ?>"/>
+                </div>
+            </div>
 
             <hr/>
 
-            <div class="row">
-                <div class="column column-12">
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
                     <p>
                         <input type="button" onClick="addRow('dpTable')"
-                            class="btn btn-success" value="<?php
+                            class="uk-button uk-button-success" value="<?php
                             echo WsLocalize::msg('add product'); ?>"/>
                         <input type="button" onClick="removeRow('dpTable')"
-                            class="btn btn-danger" value="<?php
+                            class="uk-button uk-button-danger" value="<?php
                             echo WsLocalize::msg('remove product'); ?>"/>
                     </p>
                     <p class="text-primary">
@@ -120,11 +135,11 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="table-responsive">
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                    <div class="uk-overflow-container">
                     <table id="dpTable"
-                        class="table table-bordered table-hover table-condensed">
+                        class="uk-table uk-table-hover uk-table-condensed">
                         <thead>
                             <tr>
                                 <th>
@@ -139,16 +154,17 @@
                         </thead>
                         <tbody>
                             <tr style="display: none">
-                                <td>
-                                    <input class="form-control" type="checkbox"
+                                <td class="uk-width-1-10">
+                                    <input
+                                        type="checkbox"
                                         name="chk[]"/>
                                 </td>
-                                <td>
-                                    <select class="form-control"
-                                        name="DP_product[]"
-                                        style="width: 100%;">
+                                <td class="uk-width-6-10">
+                                    <select
+                                        class="uk-width-1-1"
+                                        name="DP_product[]">
                                         <?php
-                                        foreach ($all_products as $product) {
+                                        foreach ($all_active_products as $product) {
                                             echo '<option value="'
                                                     .$product['id'].'">';
                                             echo $product['product_name'];
@@ -157,9 +173,9 @@
                                         ?>
                                     </select>
                                 </td>
-                                <td>
+                                <td class="uk-width-3-10">
                                     <input type="number"
-                                        class="form-control webiness_numericinput"
+                                        class="webiness_numericinput uk-width-1-1"
                                         name="DP_qnty[]"/>
                                 </td>
                             </tr>
@@ -167,14 +183,13 @@
                             for ($x=0; $x < count($DP_product); $x++) {
                             ?>
                             <tr>
-                                <td>
-                                    <input class="form-control" type="checkbox"
+                                <td class="uk-width-1-10">
+                                    <input type="checkbox"
                                         name="chk[]"/>
                                 </td>
-                                <td>
+                                <td class="uk-width-6-10">
                                     <select name="DP_product[]"
-                                        class="form-control"
-                                        style="width: 100%;">
+                                        class="uk-width-1-1">
                                         <?php
                                         foreach ($all_products as $product) {
                                             if ($DP_product[$x] == $product['id']) {
@@ -191,9 +206,9 @@
                                         ?>
                                     </select>
                                 </td>
-                                <td>
+                                <td class="uk-width-3-10">
                                     <input type="number"
-                                        class="form-control webiness_numericinput"
+                                        class="uk-width-1-1 webiness_numericinput"
                                         name="DP_qnty[]"
                                         value="<?php
                                             echo $DP_qnty[$x]; ?>"/>
@@ -205,14 +220,17 @@
                         </tbody>
                     </table>
                     </div>
+                </div>
+            </div>
                     
             <br/><br/>
 
-                    <button type="submit" class="btn btn-success">
-                        <?php echo WsLocalize::msg('Save'); ?>
-                    </button>
+            <button type="submit" class="uk-button uk-button-success">
+                <?php echo WsLocalize::msg('Save'); ?>
+            </button>
         </form>
     </div>
+</div>
 </div>
 
 <script type="text/javascript">
@@ -290,5 +308,4 @@
 
         event.preventDefault();
     });
-
 </script>

@@ -30,11 +30,7 @@ class WsLocalize
 
         if (is_null($translations)) {
             // language
-            $lang = substr(
-                filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'),
-                0,
-                2
-            );
+            $lang = self::getLang();
 
             // language file
             $lang_file = WsROOT.'/lang/'.$lang.'.txt';
@@ -52,6 +48,8 @@ class WsLocalize
             $translations = json_decode($lang_file_content, true);
         }
         
+        unset($lang_file_content, $lang_file);
+
         if (!empty($translations[$str])) {
             return $translations[$str];
         } else {

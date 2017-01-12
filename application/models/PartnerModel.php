@@ -29,6 +29,15 @@ class PartnerModel extends WsModel
         $this->columnType['logo'] = 'file_type';
         $this->columnType['email'] = 'mail_type';
         $this->columnType['web'] = 'url_type';
+
+        $this->hiddenColumns = array(
+            'id_number',
+            'tax_number',
+            'iban',
+            'address2',
+            'region_state',
+            'country'
+        );
     }
 }
 

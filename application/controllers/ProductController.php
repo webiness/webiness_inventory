@@ -129,6 +129,12 @@ class ProductController extends WsController
                 FILTER_SANITIZE_STRING);
             $pos = filter_input(INPUT_POST, 'pos',
                 FILTER_SANITIZE_STRING);
+            $brand_name = filter_input(INPUT_POST, 'brand_name',
+                FILTER_SANITIZE_STRING);
+            $weight = filter_input(INPUT_POST, 'weight',
+                FILTER_SANITIZE_STRING);
+            $dimensions = filter_input(INPUT_POST, 'dimensions',
+                FILTER_SANITIZE_STRING);
             $category_id = filter_input(INPUT_POST, 'category_id',
                 FILTER_SANITIZE_NUMBER_INT);
             $quantitymin = filter_input(INPUT_POST, 'quantitymin',
@@ -146,6 +152,9 @@ class ProductController extends WsController
             $product_model->description = $description;
             $product_model->declaration = $declaration;
             $product_model->pos = $pos;
+            $product_model->brand_name = $brand_name;
+            $product_model->weight = $weight;
+            $product_model->dimensions = $dimensions;
             $product_model->category_id = $category_id;
             $product_model->quantitymin = $quantitymin;
             $product_model->uom = $uom;
@@ -170,6 +179,9 @@ class ProductController extends WsController
                 $declaration = $product_model->declaration;
                 $picture = $product_model->picture;
                 $pos = $product_model->pos;
+                $brand_name = $product_model->brand_name;
+                $weight = $product_model->weight;
+                $dimensions = $product_model->dimensions;
                 $category_id = $product_model->category_id;
                 $quantitymin = $product_model->quantitymin;
                 $uom = $product_model->uom;
@@ -184,6 +196,9 @@ class ProductController extends WsController
                 $declaration = '';
                 $picture = '';
                 $pos = '';
+                $brand_name = '';
+                $weight = '';
+                $dimensions = '';
                 $category_id = '';
                 $quantitymin = 0;
                 $uom = '';
@@ -199,6 +214,9 @@ class ProductController extends WsController
             $declaration = '';
             $picture = '';
             $pos = '';
+            $brand_name = '';
+            $weight = '';
+            $dimensions = '';
             $category_id = '';
             $quantitymin = 0;
             $uom = '';
@@ -236,6 +254,9 @@ class ProductController extends WsController
             'declaration' => $declaration,
             'picture' => $picture,
             'pos' => $pos,
+            'brand_name' => $brand_name,
+            'weight' => $weight,
+            'dimensions' => $dimensions,
             'category_id' => $category_id,
             'quantitymin' => $quantitymin,
             'uom' => $uom,
@@ -289,6 +310,7 @@ class ProductController extends WsController
 
         $sql = '
             SELECT
+                product.id AS id,
                 product.barcode AS barcode,
                 product.product_name AS name,
                 product.pos AS pos,
@@ -335,8 +357,10 @@ class ProductController extends WsController
                     AND d.d_status = \'approved\'
                 GROUP BY dp.product_id
             ) dismission ON dismission.id = product.id
-            GROUP BY barcode, name,
-                pos, min_qnty, uom, sale.sale, dismission.dismission
+            LEFT JOIN inactive_product ON inactive_product.product_id=product.id
+                WHERE inactive_product.product_id IS NULL
+            GROUP BY product.id, product.barcode, product.product_name,
+                product.pos, product.quantitymin, product.uom, sale.sale, dismission.dismission
             ORDER BY pos, name, min_qnty, uom
         ';
 
@@ -514,17 +538,17 @@ class ProductController extends WsController
 
         $sql = '
             SELECT
-            	d.id AS document_id,
+                d.id AS document_id,
                 d.d_date AS document_date,
                 p.partner_name AS partner_name,
                 d.discount AS discount,
                 SUM(dp.quantity) AS quantity
             FROM
-            	document d,
+                document d,
                 partner p,
                 document_product dp
             WHERE dp.product_id = :id
-            	AND dp.document_id = d.id
+                AND dp.document_id = d.id
                 AND d.d_partner = p.id
                 AND d.d_type = \'purchase\'
             GROUP BY d.id, d.d_date, p.partner_name, d.discount
@@ -534,17 +558,17 @@ class ProductController extends WsController
 
         $sql = '
             SELECT
-            	d.id AS document_id,
+                d.id AS document_id,
                 d.d_date AS document_date,
                 p.partner_name AS partner_name,
                 d.discount AS discount,
                 SUM(dp.quantity) AS quantity
             FROM
-            	document d,
+                document d,
                 partner p,
                 document_product dp
             WHERE dp.product_id = :id
-            	AND dp.document_id = d.id
+                AND dp.document_id = d.id
                 AND d.d_partner = p.id
                 AND d.d_status = \'approved\'
                 AND d.d_type = \'sale\'
@@ -580,4 +604,78 @@ class ProductController extends WsController
         ));
     }
 
+
+    public function add_product()
+    {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+
+        $db = new WsDatabase();
+        $product_model = new ProductModel();
+        $document_model = new DocumentModel();
+        $doc_id = $document_model->getNextId();
+
+        $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+        // list of all partners
+        $all_partners = $db->query('SELECT id, partner_name FROM partner');
+        // get product by id
+        $product_model->getOne(intval($id));
+        $product = $product_model->product_name;
+
+        // free memory
+        unset ($document_model, $product_model, $db);
+
+        if ($this->isAjax()) {
+            $this->layout = 'nonexisting_layout';
+        }
+
+        $this->render('add_product', array(
+            'id' => $id,
+            'all_partners' => $all_partners,
+            'doc_id' => $doc_id,
+            'product' => $product,
+        ));
+    }
+
+
+    public function inactive()
+    {
+        $auth = new WsAuth();
+        // redirect to login page if no user is loged in
+        if (!$auth->checkSession()) {
+            $this->redirect('wsauth', 'login');
+        }
+        unset ($auth);
+
+        // breadcrumbs
+        $this->breadcrumbs = array(
+            WsLocalize::msg('home') => array(
+                'site',
+                'index'
+            ),
+            WsLocalize::msg('products') => array(
+                'product',
+                'products'
+            ),
+            WsLocalize::msg('inactive products') => array(
+                'product',
+                'inactive'
+            ),
+        );
+        // title
+        $this->title = WsConfig::get('app_name')
+            .' -  '.WsLocalize::msg('inactive products');
+
+
+        $model = new Inactive_productModel();
+
+        $this->render('inactive', array(
+            'model' => $model,
+        ));
+    }
 }

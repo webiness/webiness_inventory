@@ -41,15 +41,11 @@ class DocumentController extends WsController
         if (!$auth->checkSession()) {
             $this->redirect('wsauth', 'login');
         }
-        unset ($auth);
 
         $db = new WsDatabase();
-        $auth = new WsAuth();
-
         $document_model = new DocumentModel();
 
-        $lang = substr(filter_input(INPUT_SERVER,
-            'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING), 0,2);
+        $lang = WsLocalize::getLang();
         setlocale(LC_ALL, $lang,
             $lang.'_'.strtoupper($lang),
             $lang.'_'.strtoupper($lang).'.utf8');
@@ -69,7 +65,7 @@ class DocumentController extends WsController
             && (isset($_POST['d_date']) && !empty($_POST['d_date']))) {
             $id = intval(filter_input(INPUT_POST, 'id',
                 FILTER_SANITIZE_NUMBER_INT));
-            $d_date = strftime('%x', strtotime(
+            $d_date = strftime('%F', strtotime(
                 filter_input(INPUT_POST, 'd_date', FILTER_SANITIZE_STRING)));
             $d_type = filter_input(INPUT_POST, 'd_type',
                 FILTER_SANITIZE_STRING);
@@ -123,7 +119,7 @@ class DocumentController extends WsController
             if ($document_model->idExists($id)) {
                 $document_model->getOne($id);
 
-                $d_date = strftime('%x',
+                $d_date = strftime('%F',
                     strtotime($document_model->d_date));
                 $d_type = $document_model->d_type;
                 $d_status = $document_model->d_status;
@@ -146,7 +142,7 @@ class DocumentController extends WsController
             } else {
                 // default values for document fields
                 $id = $document_model->getNextId();
-                $d_date = strftime('%x');
+                $d_date = strftime('%F');
                 $d_type = 'entrance';
                 $d_status = 'draft';
                 $d_user = $auth->currentUserID();
@@ -158,7 +154,7 @@ class DocumentController extends WsController
         } else {
             // default values for document fields
             $id = $document_model->getNextId();
-            $d_date = strftime('%x');
+            $d_date = strftime('%F');
             $d_type = 'entrance';
             $d_status = 'draft';
             $d_user = $auth->currentUserID();
@@ -171,7 +167,21 @@ class DocumentController extends WsController
         // list of all partners
         $all_partners = $db->query('SELECT id, partner_name FROM partner');
         // list of all products
-        $all_products = $db->query('SELECT id, product_name FROM product');
+        $all_products = $db->query('
+            SELECT
+                product.id AS id,
+                product.product_name AS product_name
+            FROM product'
+        );
+        // list of all active products
+        $all_active_products = $db->query('
+            SELECT
+                product.id AS id,
+                product.product_name AS product_name
+            FROM product
+            LEFT JOIN inactive_product ON inactive_product.product_id=product.id
+                WHERE inactive_product.product_id IS NULL'
+        );
 
         $this->title = WsLocalize::msg('Webiness Inventory - Document '.$id);
         // breadcrumbs
@@ -202,6 +212,7 @@ class DocumentController extends WsController
             'DP_qnty' => $DP_qnty,
             'all_partners' => $all_partners,
             'all_products' => $all_products,
+            'all_active_products' => $all_active_products,
         ));
     }
 

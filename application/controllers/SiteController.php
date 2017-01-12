@@ -25,8 +25,31 @@ class SiteController extends WsController {
         // title
         $this->title = WsConfig::get('app_name')
             .WsLocalize::msg(' - Dashboard');
-            
-        $this->render('index');
+
+        $db = new WsDatabase();
+
+        $top_purchases_sql = '
+            SELECT
+	            p.product_name AS product_name,
+                SUM(dp.quantity) AS purchased
+            FROM
+	            product p,
+	            document_product dp,
+	            document d
+            WHERE dp.product_id = p.id
+	            AND dp.document_id = d.id
+	            AND d.d_type = \'purchase\'
+	            AND d.d_status = \'approved\'
+            GROUP BY product_name
+            ORDER BY purchased
+            LIMIT 10;
+        ';
+        $top_purchases = $db->query($top_purchases_sql);
+
+
+        $this->render('index', array(
+            'top_purchases' => $top_purchases,
+        ));
     }
 
 

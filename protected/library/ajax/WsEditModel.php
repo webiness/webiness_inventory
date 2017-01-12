@@ -47,37 +47,38 @@ if (!file_exists($model_file)) {
 require_once $model_file;
 
 
-// id of modal dialog that shows model form
-if (filter_input(INPUT_POST, 'form_id', FILTER_SANITIZE_STRING) !== NULL) {
-    $form_id = filter_input(INPUT_POST, 'form_id', FILTER_SANITIZE_STRING);
-} else {
-    $form_id = '';
-}
+echo '<div class="uk-modal-dialog">';
+echo '<a class="uk-modal-close uk-close"></a>';
 
 // if ID is set then show specific record from model, else show empty form
 $m = new $model;
 if (filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT) !== NULL) {
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-    $m->getOne($id);
+
+    if ($m->idExists($id)) {
+        $m->getOne($id);
+        echo '<div class="uk-modal-header">'
+            .WsLocalize::msg('Editing: ').'<span class="uk-text-primary">'
+            .$m->metaName.'</span>'
+            .WsLocalize::msg(' - record: ').'<strong>'.$id.'</strong></div>';
+    } else {
+        $id = $m->getNextId();
+        echo '<div class="uk-modal-header">'
+            .WsLocalize::msg('New: ').'<span class="uk-text-primary">'
+            .$m->metaName.'</span>'
+            .WsLocalize::msg(' - record: ').'<strong>'.$id.'</strong></div>';
+    }
+} else {
+    $id = $m->getNextId();
+    echo '<div class="uk-modal-header">'
+        .WsLocalize::msg('New: ').'<span class="uk-text-primary">'
+        .$m->metaName.'</span>'
+        .WsLocalize::msg(' - record: ').'<strong>'.$id.'</strong></div>';
 }
 
-$form = new WsModelForm($m, $form_id);
+
+$form = new WsModelForm($m);
 $form->show();
+echo '</div>';
 
-$lang = substr(filter_input(
-    INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING), 0,2);
-?>
-
-
-<script type="text/javascript">
-    jQuery('document').ready(function($) {
-        $('.webiness_select').select2();
-        $('.webiness_datepicker').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            gotoCurrent: true
-            },
-            "option", $.datepicker.regional["<?php echo $lang; ?>"]
-        );
-    });
-</script>
+unset($form, $m, $model_file, $model, $sSoftware);

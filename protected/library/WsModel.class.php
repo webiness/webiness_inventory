@@ -441,8 +441,7 @@ WHERE table_name= :table_name';
             $result = false;
         }
 
-        unset($query);
-
+        unset($query, $id, $from, $where);
         return $result;
     }
 
@@ -581,12 +580,9 @@ WHERE table_name= :table_name';
                 }
             }
 
-            // remove last "," from updates
-            $updates = substr($updates, 0, -2);
-
             // query for UPDATE
             $query = 'UPDATE '.$this->tableName.' SET '
-                .$updates.' WHERE '.$this->primary_key.'=:id';
+                .substr($updates, 0, -2).' WHERE '.$this->primary_key.'=:id';
 
             unset($updates);
         } else {
@@ -608,19 +604,17 @@ WHERE table_name= :table_name';
             // query for INSERT
             $query = 'INSERT INTO '.$this->tableName.' ('.$fields
                 .') VALUES ('.$field_val.')';
-
-            unset($fields, $field_val);
         }
 
         if($this->execute($query, $values)) {
-            unset($query, $values);
+            unset($fields, $field_val, $values, $column, $fields, $id, $query);
             return true;
         } else {
             header('HTTP/1.1 500 Internal Server Error');
             trigger_error($this->className
                 .': error occurred while saving record to model',
                 E_USER_ERROR);
-            unset($query, $values);
+            unset($fields, $field_val, $values, $column, $fields, $id, $query);
             return false;
         }
     }
@@ -715,7 +709,8 @@ WHERE table_name= :table_name';
             $result = false;
         }
 
-        unset($query, $query2);
+        unset($query, $query2, $where, $from, $column, $display, $foreign_id,
+            $foreign_table, $id);
 
         return $result[0];
     }
@@ -804,7 +799,8 @@ WHERE table_name= :table_name';
 
         $result = $this->query($query2);
 
-        unset($query, $query2);
+        unset($query, $query2, $limit, $offset, $order, $where, $display,
+            $foreign_id, $foreign_table, $column, $from);
 
         // check for any result
         if ($this->nRows >= 1) {
@@ -906,7 +902,8 @@ WHERE table_name= :table_name';
 
         $result = $this->query($query2);
 
-        unset($query, $query2);
+        unset($query, $query2, $offset, $limit, $order, $condition, $from,
+            $where, $foreign_table, $foreign_id, $display, $column);
 
         // check for any result
         if ($this->nRows >= 1) {
@@ -938,10 +935,7 @@ WHERE table_name= :table_name';
             .'), 0) + 1 AS next_id FROM '.$this->tableName;
         $result = $this->query($query);
 
-        $next_id = intval($result[0]['next_id']);
-
-        unset ($query, $result);
-
-        return $next_id;
+        unset ($query);
+        return intval($result[0]['next_id']);
     }
 }

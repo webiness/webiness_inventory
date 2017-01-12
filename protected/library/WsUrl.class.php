@@ -57,6 +57,7 @@ class WsUrl
             }
         }
 
+        unset($controller, $action, $params);
         return $url;
     }
 
@@ -79,6 +80,7 @@ class WsUrl
             $asset = WsSERVER_ROOT.'/public/'.$file;
         }
 
+        unset($file, $fileName);
         return $asset;
     }
 }

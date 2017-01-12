@@ -1,6 +1,6 @@
 <?php
 
-Class ProductModel extends WsModel
+class ProductModel extends WsModel
 {
     public function __construct()
     {
@@ -11,11 +11,14 @@ Class ProductModel extends WsModel
         $this->columnHeaders = array(
             'id' => 'ID',
             'barcode' => WsLocalize::msg('product barcode'),
-            'item_name' => WsLocalize::msg('name of product'),
+            'product_name' => WsLocalize::msg('name of product'),
             'description' => WsLocalize::msg('product description'),
             'declaration' => WsLocalize::msg('declaration text'),
             'picture' => WsLocalize::msg('image of product'),
             'pos' => WsLocalize::msg('product position'),
+            'brand_name' => WsLocalize::msg('brand name'),
+            'weight' => WsLocalize::msg('weight'),
+            'dimensions' => WsLocalize::msg('dimensions'),
             'category_id' => WsLocalize::msg('product category'),
             'quantitymin' => WsLocalize::msg('minimum quantity'),
             'uom' => WsLocalize::msg('measuring unit'),

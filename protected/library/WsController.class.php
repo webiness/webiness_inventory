@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WsController
  * Is controller part of Model-View-Controller. WsController manages a set of
@@ -24,42 +25,43 @@
  * </code>
  *
  */
-class WsController
-{
+class WsController {
+
     /**
      * @var string $layout Name of layout file located in '/public/layouts'
      *
      */
     public $layout;
+
     /**
      * @var string $title Web page title
      *
      */
     public $title;
+
     /**
      * @var array $breadcrumbs List of links that indicate position in Web app
      *
      */
     public $breadcrumbs;
+
     /**
      * @var string $_action Name of controller action
      *
      */
     private $_action;
+
     /**
      * @var array $_params List of parameters that would be passed to the action
      *
      */
     private $_params = array();
 
-
-    public function __construct()
-    {
+    public function __construct() {
         $this->layout = WsConfig::get('html_layout');
         $this->title = WsConfig::get('app_name');
         $this->breadcrumbs = array();
     }
-
 
     /**
      * Read 'view' and return its contet.
@@ -67,8 +69,7 @@ class WsController
      * @return string content of 'view'.
      *
      */
-    private function renderView()
-    {
+    private function renderView() {
         // get directory name which contains view file of controller
         $className = get_class($this);
         $dirName = strtolower(
@@ -76,24 +77,25 @@ class WsController
         );
 
         // file to render
-        $fileName = WsROOT.'/application/views/'.$dirName.'/'
-            .$this->_action.'.php';
+        $fileName = WsROOT . '/application/views/' . $dirName . '/'
+            . $this->_action . '.php';
 
         // extract parameters so that they can be used in view
         if (!empty($this->_params)) {
             extract($this->_params);
         }
 
-        ob_start();
+        if (!ob_start('ob_gzhandler')) {
+            ob_start();
+        }
 
         if (is_file($fileName)) {
             include($fileName);
         } else {
             ob_get_clean();
             trigger_error(get_class($this)
-                .': The view file <strong>'.$fileName
-                .'</strong> is not available.',
-                E_USER_ERROR);
+                . ': The view file <strong>' . $fileName
+                . '</strong> is not available.', E_USER_ERROR);
         }
 
         $content = ob_get_clean();
@@ -111,14 +113,12 @@ class WsController
      * }
      *
      */
-    public function render($action = 'index', $params = array())
-    {
+    public function render($action = 'index', $params = array()) {
         // name of action
         $this->_action = $action;
 
         $this->_params = $params;
         // $this->params = array_unique($this->params);
-
         // page title
         $WsTitle = $this->title;
         // breadcrumbs
@@ -135,6 +135,10 @@ class WsController
             // or if not exists, show the content of view, only
             echo $WsContent;
         }
+
+        unset($WsTitle, $WsBreadcrumbs, $layoutFile, $WsContent);
+        unset($this->_action, $this->_params, $this->title, $this->breadcrumbs);
+        unset($this->layout, $params, $action);
     }
 
     /**
@@ -144,10 +148,9 @@ class WsController
      * @param string $string Text that will be send to CSV file
      * @return string CSV encoded sting
      *
-    */
-    public function encodeCSVField($string)
-    {
-        if(
+     */
+    public function encodeCSVField($string) {
+        if (
             strpos($string, ',') !== false ||
             strpos($string, '"') !== false ||
             strpos($string, "\n") !== false
@@ -158,7 +161,6 @@ class WsController
         return $string;
     }
 
-
     /**
      *
      * Get HTTP request method. It's used for implementation of RESTful API.
@@ -166,9 +168,9 @@ class WsController
      * @return string HTTP method
      *
      */
-    public function getRequestMethod()
-    {
-        $method = $_SERVER['REQUEST_METHOD'];
+    public function getRequestMethod() {
+        $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD',
+            FILTER_SANITIZE_STRING);
 
         if ($method == 'POST'
             and array_key_exists('HTTP_X_HTTP_METHOD', $_SERVER)) {
@@ -185,7 +187,6 @@ class WsController
         return ($method);
     }
 
-
     /**
      * Send HTTP response with status and JSON data. It's used for
      * implementation of RESTful API.
@@ -194,8 +195,7 @@ class WsController
      * @param integer $status HTTP status code
      *
      */
-    public function sendResponse($data, $status = 200)
-    {
+    public function sendResponse($data, $status = 200) {
         // list of supported response codes
         $response_code = array(
             200 => 'OK',
@@ -216,10 +216,11 @@ class WsController
         header('Access-Control-Allow-Orgin: *');
         header('Access-Control-Allow-Methods: *');
         header('Content-Type: application/json');
-        header('HTTP/1.1 '.$status.' '.$response_code[$status]);
+        header('HTTP/1.1 ' . $status . ' ' . $response_code[$status]);
         echo json_encode($data);
-    }
 
+        unset($response_code, $status, $data);
+    }
 
     /**
      * Redirect HTTP request
@@ -229,13 +230,12 @@ class WsController
      * @param array $params Optional parameters
      *
      */
-    public function redirect($controller, $action = 'index', $params = array())
-    {
+    public function redirect($controller, $action = 'index', $params = array()) {
         $url = WsUrl::link($controller, $action, $params);
 
-        header('Location: '.$url);
+        header('Location: ' . $url);
+        unset($url);
     }
-
 
     /**
      *
@@ -244,13 +244,13 @@ class WsController
      * @return boolean isAjax
      *
      */
-    public function isAjax()
-    {
+    public function isAjax() {
         return (
             isset(
                 $_SERVER['HTTP_X_REQUESTED_WITH']
             ) &&
             strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
-        );
+            );
     }
+
 }

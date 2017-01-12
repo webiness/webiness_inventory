@@ -1,0 +1,92 @@
+Requirements:
+
+        * Web server software with support for PHP 5.4 or above
+        * PHP PDO drivers for PostgreSQL or MySQL/MariaDB or SQLite
+        * Database server (except if you are using SQLite database)
+
+
+Installation step-by-step:
+
+1. Extract this archive into web server root directory or clone
+   git repository with command:
+
+        git clone https://github.com/webiness/webiness_inventory
+
+
+2. Make runtime directory writable by web server.
+
+   On unix/linux servers enter command:
+
+        chmod 777 webiness_inventory/runtime
+
+   If you are using Linux server distributions, that uses SELinux secirity
+   mechanism, like RHEL, CentOS, Fedora, you will also need to enter following
+   commands as root user:
+
+        chcon -R -t httpd_sys_rw_content_t user
+        chcon -R -t httpd_sys_rw_content_t webiness_inventory/runtime
+
+3. If you want to use this applicatio with 'real' database servers like
+   PostgreSQL or MySQl, you will also need to create database user and
+   database itself. If you intend to use SQLite database you can skip this
+   step.
+
+   For PostgreSQL enter following as postgres user:
+
+        createuser -l -R -S -P <new_dbuser_name>
+        (enter <password> for new user on prompt)
+        createdb -O <new_dbuser_name> -T template0 -E utf8 <new_db_name>
+
+   For MySQl or MariaDB database servers:
+
+        mysql -u root -p mysql
+        (enter your mysql root password on prompt)
+        create database <new_db_name> default character set = utf8;
+        grant all on <new_db_name>.* to '<new_dbuser_name>'@'localhost'
+                IDENTIFIED BY '<password>';
+
+
+    Also, you may use gui administration tools, if you have one, to do
+    same job as described above.
+
+4. Configure application to use your database settings by opening file
+   webiness_inventory/protected/config/config.php in your favorite text
+   editor and changing these lines:
+
+        WsConfig::set('db_driver', 'mysql'); // or pgsql, or sqlite
+        WsConfig::set('db_host', '<your_db_hostname>'); // ignored for SQLite
+        WsConfig::set('db_name', '<naw_db_name'); // ignored for SQLite
+        WsConfig::set('db_user', '<new_dbuser_name>'); // ignored for SQLite
+        WsConfig::set('db_password', '<password>'); // ignored for SQLite
+
+    Enter settings that will match your database settings which are
+    defined in step 3.
+    Also, you can put these lines at end of file and live original lines
+    untuchet. It will have the same effect.
+
+    NOTE: Don't create database tables by executing schema_*.sql scripts
+    from application directory. Application will do this by it self, on
+    first load.
+
+5. Create admin user by changing or adding auth_admin config line
+   in the same file (webiness_inventory/protected/config/config.php):
+
+        WsConfig::set('auth_admin', '<admin_mail@whatewer.com>');
+
+   Default password will be set to admin, you can change that after
+   first login. Admin user can add new users and he controls whole
+   user managment system.
+
+6. Point your web browser to address of installed app, and login.
+   First steps in application could be:
+
+        6.1. Change admin user password (click on email addres in top right corner)
+        6.2. Edit your company details (in settings menu)
+        6.3. Add bussiness partners
+             (suppliers and customers are treated same, as partners)
+        6.4. Add product categories
+             (each category can have different tax rates, you will need at least one)
+        6.5. Add products
+        6.6. Create documents
+
+

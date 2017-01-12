@@ -1,0 +1,35 @@
+3.0
+        * redesign user interface; switch from twitter bootstrap to uikit. (App)
+        * add options to create new document from inventory list
+          when number of available products is less then minimum. (App)
+        * add inactive product managment. (App)
+        * redesign error handling routine. (Webiness)
+        * use spl_autoload_register() instead of __autoload(). (Webiness)
+        * add isAjax() method to WsController class. (Webiness)
+        * add redirect() method to WsController class. (Webiness)
+        * add sendResponse() methot to WsController class. (Webiness)
+        * add currentUser() and currentUserID() methods to
+          WsAuth class. (Webiness)
+        * add getLang() method to WsLocalize class. (Webiness)
+        * code cleanup. (App and Webiness)
+        * bug fixes. (App and Webiness)
+
+2.3
+        * autocreate database tables on first run. (Webiness)
+        * add execute_batch methot to WsDatabase class which executes
+          SQL scripts on database. (Webiness)
+        * bug fixes. (App and Webiness)
+
+2.2
+        * add WsChart class for chart drawing. (Webiness)
+        * redesign user interface. (App)
+        * bug fixes. (App and Webiness)
+
+2.1
+        * add WsImage class for simple image manipulation. (Webiness)
+        * add support for SQLite database engine. (Webiness)
+        * bug fixes. (App and Webiness)
+
+2.0
+        * First stable/useful (to someone) version.
+

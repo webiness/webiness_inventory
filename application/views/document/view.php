@@ -7,20 +7,20 @@
     }
 </style>
 
-<div class="row">
-    <div class="col-sm-12 col-md-10 col-md-offset-1">
+<div class="uk-grid">
+    <div class="uk-width-small-1-1 uk-width-medium-1-1">
         <?php
             if ($error !== '') {
-                echo '<div class="alert alert-danger">';
+                echo '<div class="uk-alert uk-alert-danger">';
                 echo $error;
                 echo '</div>';
             } else {
         ?>
-        <div class="table-responsive">
-        <table class="table table-condensed">
+        <div class="uk-overflow-container">
+        <table class="uk-table uk-table-hover uk-table-striped">
             <tr class="no-print">
                 <td colspan=2 style="text-align: right;">
-                    <input type="button" class="btn btn-danger"
+                    <input type="button" class="uk-button uk-button-danger"
                         onclick="window.close()"
                         value="<?php echo WsLocalize::msg('close window'); ?>"/>
                 </td>
@@ -122,8 +122,8 @@
         
         <br/>
         
-        <div class="table-responsive">
-        <table class="table table-bordered table-condensed">
+        <div class="uk-overflow-container">
+        <table class="uk-table uk-table-hover uk-table-striped">
             <thead>
                 <tr>
                     <th>#</th>
@@ -238,8 +238,8 @@
         
         <br/>
         
-        <div class="table-responsive">
-        <table class="table table-condensed">
+        <div class="uk-overflow-container">
+        <table class="uk-table uk-table-hover uk-table-striped">
         <?php
         if ($document_model->d_type === 'sale') {
         ?>

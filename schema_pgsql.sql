@@ -33,11 +33,20 @@ CREATE TABLE IF NOT EXISTS product (
     declaration TEXT,
     picture VARCHAR(256),
     pos VARCHAR(80),
+    brand_name VARCHAR(50),
+    weight VARCHAR(20),
+    dimensions VARCHAR(50),
     category_id INTEGER NOT NULL REFERENCES product_category(id),
     quantitymin FLOAT NOT NULL DEFAULT 0.0,
     uom VARCHAR(4),
     purchase_price FLOAT NOT NULL DEFAULT 0.0,
     trading_margin FLOAT NOT NULL DEFAULT 0.0
+);
+
+
+CREATE TABLE IF NOT EXISTS inactive_product (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER NOT NULL UNIQUE REFERENCES product(id)
 );
 
 
@@ -58,6 +67,7 @@ CREATE TABLE IF NOT EXISTS partner (
     web VARCHAR(60),
     phone_number VARCHAR(20)
 );
+
 
 --create types
 DO $$

@@ -1,7 +1,4 @@
 <?php
-/* start or resume session */
-session_start();
-
 /* define some framework constants */
 /**
  * WS_AUTH_USER_EXISTS => user for WsAuth module allready exists
@@ -28,40 +25,44 @@ define('WS_AUTH_LOGIN_OK', 105);
 /**
  * autoload all neded classes from framework and web application
  */
-function __autoload($className)
+function wsAutoloader($class)
 {
     // load all framework classes
     if (file_exists(
-        WsROOT.'/protected/library/'.$className.'.class.php')) {
-        require_once WsROOT.'/protected/library/'.$className.'.class.php';
+        WsROOT.'/protected/library/'.$class.'.class.php')) {
+        require WsROOT.'/protected/library/'.$class.'.class.php';
         return;
     }
 
     // autoload all internal Controllers and Models
     if (file_exists(
-        WsROOT.'/protected/library/controllers/'.$className.'.php')) {
-        require_once WsROOT.'/protected/library/controllers/'.$className.'.php';
+        WsROOT.'/protected/library/controllers/'.$class.'.php')) {
+        require WsROOT.'/protected/library/controllers/'.$class.'.php';
         return;
     }
     if (file_exists(
-        WsROOT.'/protected/library/models/'.$className.'.php')) {
-        require_once WsROOT.'/protected/library/models/'.$className.'.php';
+        WsROOT.'/protected/library/models/'.$class.'.php')) {
+        require WsROOT.'/protected/library/models/'.$class.'.php';
         return;
     }
 
     // load all application Controlers
     if (file_exists(
-        WsROOT.'/application/controllers/'.$className.'.php')) {
-        require_once WsROOT.'/application/controllers/'.$className.'.php';
+        WsROOT.'/application/controllers/'.$class.'.php')) {
+        require WsROOT.'/application/controllers/'.$class.'.php';
         return;
     }
 
     // load all application Models
-    if (file_exists(WsROOT.'/application/models/'.$className.'.php')) {
-        require_once WsROOT.'/application/models/'.$className.'.php';
+    if (file_exists(WsROOT.'/application/models/'.$class.'.php')) {
+        require WsROOT.'/application/models/'.$class.'.php';
         return;
     }
 }
+spl_autoload_register('wsAutoloader');
+
+/* start or resume session */
+session_start();
 
 // load config
 require_once WsROOT.'/protected/config/config.php';
@@ -72,94 +73,80 @@ date_default_timezone_set(WsConfig::get('app_tz'));
 // track memory usage and script execution time if 'development'
 if (WsConfig::get('app_stage') == 'development') {
     define('WsSTART_MEMORY_USAGE',
-        number_format(memory_get_usage() / 1024, 2)
+        number_format(memory_get_usage(false) / 1024, 2)
     );
     define('WsSTART_TIME', microtime(true));
-}
 
-// disable standard error reporting in production
-if (WsConfig::get('app_stage') == 'development') {
+    // enable error reporting
     error_reporting(-1);
 } else {
     error_reporting(0);
 }
 
 // user defined error handling function
-function WsErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
+function WsErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    /* timestamp for the error entry */
-    $dt = date('Y-m-d H:i:s (T)');
+    if (!(error_reporting() & $errno)) {
+        // This error code is not included in error_reporting
+        return;
+    }
+    switch ($errno) {
+        case E_USER_ERROR:
+            $WsContent = '<div class="uk-allert uk-alert-danger">';
+            $WsContent .= '<strong>ERROR:</strong> ['.$errno.'] ';
+            $WsContent .= $errstr.'<br/>';
+            $WsContent .= '  Fatal error on line '.$errline;
+            $WsContent .= ' in file '.$errfile;
+            $WsContent .= ', PHP '.PHP_VERSION.' ('.PHP_OS.')<br/>';
+            $WsContent .= 'Aborting...<br/>';
+            $WsContent .= '</div>';
+            $WsTitle = WsConfig::get('app_name')
+                .WsLocalize::msg(' - Error');
+            $WsBreadcrumbs = array(
+            WsLocalize::msg('Error') => array(
+                'site',
+                'index'
+            )
+        );
+            break;
 
-    // write error log
-    $err = "****** ".$errno." ******\n";
-    $err .= "\tdatetime: ".$dt."\n";
-    $err .= "\terrormsg: ".$errmsg."\n";
-    $err .= "\tscriptname: ".$filename."\n";
-    $err .= "\tscriptlinenum: ".$linenum."\n";
-    /*if (in_array($errno, $user_errors)) {
-     *   $err .= "\tvariables: ".$vars."\n";
-     *}
-     */
-    $err .= "*******************\n";
-    // save to the error log
-    try {
-        error_log($err, 3, WsROOT.'/runtime/error.log');
-    }   catch (Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
+        case E_USER_WARNING:
+            $WsContent = '<div class="uk-allert uk-alert-warning">';
+            $WsContent .= '<strong>WARNING:</strong> [';
+            $WsContent .= $errno.'] '.$errstr.'<br/>';
+            $WsContent .= '</div>';
+            break;
+
+        case E_USER_NOTICE:
+            $WsContent = '<div class="uk-allert uk-alert-primary">';
+            $WsContent .= '<strong>NOTICE:</strong> ['.$errno.'] ';
+            $WsContent .= $errstr.'<br/>';
+            $WsContent .= '</div>';
+            break;
+
+        default:
+            $WsContent = '<div class="uk-allert">';
+            $WsContent .= 'Unknown error type: ['.$errno.'] '.$errstr.'<br/>';
+            $WsContent .= '</div>';
+            break;
     }
 
-    // display error message
-    // layout file
+    // display error message in layout file if it's possible
     $layoutFile = WsROOT.'/public/layouts/';
     $layoutFile .= WsConfig::get('html_layout');
-
-    $WsContent = '<div class="row"><div class="col-sm-12">';
-
-    switch($errno) {
-        case E_NOTICE:
-        case E_USER_NOTICE:
-            $WsContent .= '<div class="alert alert-info">';
-            break;
-        case E_WARNING:
-        case E_USER_WARNING:
-        case E_CORE_WARNING:
-        case E_COMPILE_WARNING:
-        case E_DEPRECATED:
-        case E_USER_DEPRECATED:
-            $WsContent .= '<div class="alwert alert-warning">';
-            break;
-        case E_ERROR:
-        case E_PARSE:
-        case E_CORE_ERROR:
-        case E_COMPILE_ERROR:
-        case E_USER_ERROR:
-        case E_RECOVERABLE_ERROR:
-            // e-mail the administrator if there is a critical user error
-            mail(WsConfig::get('auth_admin'),
-                WsConfig::get('app_name').' - Critical User Error',
-                $err
-            );
-            $WsContent .= '<div class="alert alert-danger">';
-    }
-
-    // construc error message depending of WsAPP_STAGE
-    if (WsConfig::get('app_stage') == 'development') {
-        $WsContent .= $errmsg.'<br/>';
-        $WsContent .= '<pre>'.$filename.'</pre><pre>line: '.$linenum.'</pre>';
-
-    } else {
-        $WsContent .= $errmsg;
-    }
-    $WsContent .= '</div></div></div>';
-
     // display error message
     if (is_file($layoutFile)) {
-        include($layoutFile);
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+            ) {
+            echo $WsContent;
+        } else {
+            include($layoutFile);
+        }
     } else {
         echo $WsContent;
     }
 
-    // if we have critical error then stop execution of script
     switch($errno) {
         case E_ERROR:
         case E_PARSE:

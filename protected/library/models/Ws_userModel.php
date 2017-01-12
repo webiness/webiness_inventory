@@ -24,7 +24,12 @@ class Ws_userModel extends WsModel
 
         // don't show user salt and verification code in admin or
         // edit forms
-        $this->hiddenColumns = array('user_salt', 'verification_code');
+        $this->columnType['user_salt'] = 'hidden_type';
+        $this->columnType['verification_code'] = 'hidden_type';
+        $this->hiddenColumns = array(
+            'user_salt',
+            'verification_code',
+        );
 
         // set metaName for displaying in grid and form
         $this->metaName = WsLocalize::msg('User Accounts');

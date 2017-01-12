@@ -1,229 +1,236 @@
-<div class="row">
-    <div class="col-sm-12 col-md-10 col-md-offset-1">
-        <h3 class="text-center">
-            <?php
-            echo Wslocalize::msg('Item no: ').$id;
-            ?>
-        </h3>
-
-        <div class="row">
-            <div class="col-sm-12 col-md-2 col-md-offset-10">
-                <a class="btn btn-info" target="_blank"
+<div class="uk-modal-dialog">
+    <a class="uk-modal-close uk-close"></a>
+    <div class="uk-modal-header">
+        <div class="uk-grid">
+            <div class="uk-width-small-1-1 uk-width-medium-1-2">
+                <h3 class="uk-text-left">
+                    <?php
+                    echo Wslocalize::msg('Item no: ').$id;
+                    ?>
+                </h3>
+            </div>
+            <div class="uk-width-small-1-1 uk-width-medium-1-2 uk-text-right">
+                <a class="uk-button uk-button-primary" target="_blank"
                     href="<?php echo WsUrl::link('product', 'card', array(
                         'id' => $id)); ?>">
                     <?php echo WsLocalize::msg('Product Card'); ?>
                 </a>
             </div>
         </div>
-        
-        <br/>
-        
-        <form id="item_form"
-            class="form-horizontal"
-            action="<?php echo WsUrl::link('product', 'edit'); ?>"
-            enctype="multipart/form-data"
-            method="post">
+    </div>
 
-            <div class="form-group">
-                <label for="item_name" class="col-sm-2 control-label">
+    <br/>
+
+    <form id="item_form"
+        class="uk-form uk-form-horizontal"
+        action="<?php echo WsUrl::link('product', 'edit'); ?>"
+        enctype="multipart/form-data"
+        method="post">
+
+        <div class="uk-grid uk-grid-small">
+            <div class="uk-width-1-2">
+                <label for="item_name" class="uk-form-label">
                     <?php echo WsLocalize::msg('product name'); ?>
                 </label>
                 <input type="hidden" name="csrf"
                     value="<? echo $_SESSION['ws_auth_token']; ?>"/>
                 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                <div class="col-sm-4">
-                    <input type="text" name="product_name" class="form-control"
-                        value="<?php echo $product_name; ?>"/>
-                </div>
-
-                <label for="barcode" class="col-sm-2 control-label">
+                <input type="text" name="product_name" class="uk-width-1-1"
+                    value="<?php echo $product_name; ?>"/>
+            </div>
+            <div class="uk-width-1-2">
+                <label for="item_name" class="uk-form-label">
                     <?php echo WsLocalize::msg('barcode'); ?>
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" name="barcode" class="form-control"
-                        value="<?php echo $barcode; ?>"/>
-                </div>
+                <input type="text" name="barcode" class="uk-width-1-1"
+                    value="<?php echo $barcode; ?>"/>
             </div>
-            
-            <div class="form-group">
-                <label for="description" class="col-sm-2 control-label">
+        </div>
+
+        <div class="uk-grid uk-grid-small">
+            <div class="uk-width-1-2">
+                <label for="description" class="uk-form-label">
                     <?php echo WsLocalize::msg('description'); ?>
                 </label>
-                <input type="hidden" name="csrf"
-                    value="<? echo $_SESSION['ws_auth_token']; ?>"/>
-                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                <div class="col-sm-4">
-                    <textarea class="form-control" name="description"><?php echo $description; ?></textarea>
-                </div>
-
-                <label for="declaration" class="col-sm-2 control-label">
+                <textarea  class="uk-width-1-1"
+                    name="description"><?php echo $description; ?></textarea>
+            </div>
+            <div class="uk-width-1-2">
+                <label for="declaration" class="uk-form-label">
                     <?php echo WsLocalize::msg('declaration'); ?>
                 </label>
-                <div class="col-sm-4">
-                    <textarea class="form-control" name="declaration"><?php echo $declaration; ?></textarea>
-                </div>
+                <textarea class="uk-width-1-1"
+                    name="declaration"><?php echo $declaration; ?></textarea>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="picture" class="col-sm-2 control-label">
-                    <?php echo WsLocalize::msg('product image'); ?>
-                </label>
-                <div class="col-sm-4">
-                    <input type="file" id="picture" name="picture"/>
-                </div>
-                <div class="col-sm-4">
+        <br/>
+
+        <div class="uk-form-row">
+            <label for="picture" class="uk-form-label">
+                <?php echo WsLocalize::msg('product image'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="file" class="uk-width-1-1"
+                    id="picture" name="picture"/>
+            </div>
+            <div>
+                <?php
+                    $file = 'runtime/ProductModel/'.$picture;
+                    $file_url = WsSERVER_ROOT.'/runtime/ProductModel/'.$picture;
+                    if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
+                        // if file is image then show it
+                        $img = new WsImage();
+                        if ($img->read($file)) {
+                            echo '<img width=100 height=100 src="'
+                                .$file_url.'" />';
+                        } else {
+                            echo '<a href="';
+                            echo WsUrl::link(WsSERVER_ROOT.'/'.$file_url);
+                            echo '">';
+                            echo $value;
+                            echo '</a>';
+                        }
+                        unset ($img, $file, $file_url);
+                    }
+                ?>
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label for="position" class="uk-form-label">
+                <?php echo WsLocalize::msg('position'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="pos" class="uk-width-1-1"
+                    value="<?php echo $pos; ?>"/>
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label for="category_id" class="uk-form-label" >
+                <?php echo WsLocalize::msg('item category'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <select name="category_id" class="uk-width-1-1"
+                    id="category_id">
                     <?php
-                        $file = 'runtime/ProductModel/'.$picture;
-                        $file_url = WsSERVER_ROOT.'/runtime/ProductModel/'.$picture;
-                        if (file_exists(WsROOT.'/'.$file) && is_file(WsROOT.'/'.$file)) {
-                            // if file is image then show it
-                            $img = new WsImage();
-                            if ($img->read($file)) {
-                                echo '<img width=100 height=100 src="'
-                                    .$file_url.'" />';
-                            } else {
-                                echo '<a href="';
-                                echo WsUrl::link(WsSERVER_ROOT.'/'.$file_url);
-                                echo '">';
-                                echo $value;
-                                echo '</a>';
-                            }
-                            unset ($img, $file, $file_url);
+                    foreach ($all_product_categories as $category) {
+                        if ($category['category_name'] == $category_id) {
+                            echo '<option value="'.$category['id']
+                                    .'" selected>';
+                        } else {
+                            echo '<option value="'.$category['id'].'">';
                         }
+                        echo $category['category_name'];
+                        echo '</option>';
+                    }
                     ?>
-                </div>
+                </select>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="position" class="col-sm-2 control-label">
-                    <?php echo WsLocalize::msg('position'); ?>
-                </label>
-                <div class="col-sm-4">
-                    <input type="text" name="pos" class="form-control"
-                        value="<?php echo $pos; ?>"/>
-                </div>
-                
-                <label for="category_id" class="col-sm-2 control-label" >
-                    <?php echo WsLocalize::msg('item category'); ?>
-                </label>
-                <div class="col-sm-4">
-                    <select name="category_id" class="form-control"
-                        id="category_id"
-                        style="width: 100%">
-                        <?php
-                        foreach ($all_product_categories as $category) {
-                            if ($category['category_name'] == $category_id) {
-                                echo '<option value="'.$category['id']
-                                        .'" selected>';
-                            } else {
-                                echo '<option value="'.$category['id'].'">';
-                            }
-                            echo $category['category_name'];
-                            echo '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="quantitymin" class="col-sm-2 control-label">
+        <div class="uk-grid uk-grid-small">
+            <div class="uk-width-1-2">
+                <label for="quantitymin" class="uk-form-label">
                     <?php echo WsLocalize::msg('minimum quantity'); ?>
                 </label>
-                <div class="col-sm-4">
                     <input type="text" name="quantitymin"
-                        class="webiness_numericinput form-control"
+                        class="webiness_numericinput uk-width-1-1"
                         value="<?php echo $quantitymin; ?>"/>
-                </div>
-
-                <label for="uom" class="col-sm-2 control-label">
+            </div>
+            <div class="uk-width-1-2">
+                <label for="uom" class="uk-form-label">
                     <?php echo WsLocalize::msg('unit of measurement'); ?>
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" name="uom" class="form-control"
-                        value="<?php echo $uom; ?>"/>
-                </div>
+                <input type="text" name="uom" class="uk-width-1-1"
+                    value="<?php echo $uom; ?>"/>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="purchase_price" class="col-sm-2 control-label">
+        <div class="uk-grid uk-grid-small">
+            <div class="uk-width-1-2">
+                <label for="purchase_price" class="uk-form-label">
                     <?php echo WsLocalize::msg('purchase price'); ?>
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" name="purchase_price" id="purchase_price"
-                        class="webiness_numericinput form-control"
-                        value="<?php echo $purchase_price; ?>"/>
-                </div>
-
-                <label for="trading_margin" class="col-sm-2 control-label">
+                <input type="text" name="purchase_price" id="purchase_price"
+                    class="webiness_numericinput uk-width-1-1"
+                    value="<?php echo $purchase_price; ?>"/>
+            </div>
+            <div class="uk-width-1-2">
+                <label for="trading_margin" class="uk-form-label">
                     <?php echo WsLocalize::msg('trading margin (%)'); ?>
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" name="trading_margin" id="trading_margin"
-                        class="webiness_numericinput form-control"
-                        value="<?php echo $trading_margin; ?>"/>
-                </div>
+                <input type="text" name="trading_margin" id="trading_margin"
+                    class="webiness_numericinput uk-width-1-1"
+                    value="<?php echo $trading_margin; ?>"/>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label class="text-primary col-sm-2 control-label"
-                    for="tax_base">
-                    <?php echo WsLocalize::msg('tax base'); ?>
-                </label>
-                <div class="col-sm-4">
-                    <input type="text" name="tax_base" id="tax_base"
-                        class="webiness_numericinput form-control" readonly />
-                </div>
+        <br/>
+
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="tax_base">
+                <?php echo WsLocalize::msg('tax base'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="tax_base" id="tax_base"
+                    class="webiness_numericinput uk-width-1-1 uk-form-danger"
+                    readonly />
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="vat" class="col-sm-3 control-label">
-                    <?php echo WsLocalize::msg('vat rate (%)'); ?>
-                </label>
-                <div class="col-sm-1">
-                    <input type="text" name="vat" id="vat"
-                        class="webiness_numericinput form-control"
-                        readonly />
-                </div>
-
-                <label for="consumption_tax" class="col-sm-3 control-label">
-                    <?php
-                        echo WsLocalize::msg('consumption tax rate (%)');
-                    ?>
-                </label>
-                <div class="col-sm-1">
-                    <input type="text" name="consumption_tax"
-                        id="consumption_tax"
-                        class="webiness_numericinput form-control"
-                        readonly />
-                </div>
-
-                <label for="sales_tax" class="col-sm-3 control-label">
-                    <?php echo WsLocalize::msg('sales tax rate (%)'); ?>
-                </label>
-                <div class="col-sm-1">
-                    <input type="text" name="sales_tax" id="sales_tax"
-                        class="webiness_numericinput form-control"
-                        readonly />
-                </div>
+        <div class="uk-form-row">
+            <label for="vat" class="uk-form-label">
+                <?php echo WsLocalize::msg('vat rate (%)'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="vat" id="vat"
+                    class="webiness_numericinput uk-width-1-1 uk-form-danger"
+                    readonly />
             </div>
-            
-            <div class="form-group">
-                <label class="text-primary col-sm-2 control-label" for="price">
-                    <?php echo WsLocalize::msg('sell price'); ?>
-                </label>
-                <div class="col-sm-4">    
-                    <input type="text" name="price" id="price" readonly
-                        class="webiness_numericinput form-control"/>
-                </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label for="consumption_tax" class="uk-form-label">
+                <?php
+                    echo WsLocalize::msg('consumption tax rate (%)');
+                ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="consumption_tax"
+                    id="consumption_tax"
+                    class="webiness_numericinput uk-width-1-1 uk-form-danger"
+                    readonly />
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-success">
-                <?php echo WsLocalize::msg('Save'); ?>
-            </button>
-        </form>
+        <div class="uk-form-row">
+            <label for="sales_tax" class="uk-form-label">
+                <?php echo WsLocalize::msg('sales tax rate (%)'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="sales_tax" id="sales_tax"
+                    class="webiness_numericinput uk-width-1-1 uk-form-danger"
+                    readonly />
+            </div>
+        </div>
 
-    </div>
+        <div class="uk-form-row">
+            <label class="uk-form-label" for="price">
+                <?php echo WsLocalize::msg('sell price'); ?>
+            </label>
+            <div class="uk-form-controls">
+                <input type="text" name="price" id="price" readonly
+                    class="webiness_numericinput uk-width-1-1 uk-form-success"/>
+            </div>
+        </div>
+
+        <button type="submit" class="uk-button uk-button-success">
+            <?php echo WsLocalize::msg('Save'); ?>
+        </button>
+    </form>
+
 </div>
 
 <script type="text/javascript">
